@@ -1,0 +1,12 @@
+[Unit]
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=oneshot
+RemainAfterExit=true
+ExecStart=/usr/bin/podman compose -f up -d
+ExecStop=/usr/bin/podman compose -f down
+
+[Install]
+WantedBy=default.target

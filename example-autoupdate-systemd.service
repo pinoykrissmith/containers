@@ -1,0 +1,23 @@
+[Service]
+Restart=always
+Environment=PODMAN_SYSTEMD_UNIT=%n
+KillMode=mixed
+ExecStop=/usr/bin/podman rm -v -f -i --cidfile=%t/%N.cid
+ExecStopPost=-/usr/bin/podman rm -v -f -i --cidfile=%t/%N.cid
+Delegate=yes
+Type=notify
+RemainAfterExit=true
+NotifyAccess=all
+SyslogIdentifier=%N
+ExecStart=/usr/bin/podman
+
+[Unit]
+Wants=podman-user-wait-network-online.service
+After=podman-user-wait-network-online.service
+RequiresMountsFor=%t/containers
+RequiresMountsFor=/home
+Requires=database.service
+After=databaser.service
+
+[Install]
+WantedBy=default.target
