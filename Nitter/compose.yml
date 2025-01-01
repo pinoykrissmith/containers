@@ -1,15 +1,14 @@
 services:
     nitter:
-      image: ghcr.io/sekai-soft/nitter-self-contained:latest
+      image: ghcr.io/pinoykrissmith/containers:nitter
       container_name: nitter
       user: "3004:3004"
       labels:
         com.centurylinklabs.watchtower.enable: "true"
         io.containers.autoupdate: "registry"
-      entrypoint: ["/bin/bash", "-c", "python /src/scripts/auth.py /nitter-data/guest_accounts.json && /src/nitter"]
       volumes:
         - ./twitter-credentials.json:/nitter-data/twitter-credentials.json:Z,ro
-        - ./nitter.conf:/src/nitter.conf:Z,ro
+        - ./nitter.conf:/app/nitter.conf:Z,ro
         - /elysium/nitter-data:/nitter-data:Z
       depends_on:
         nitter-redis:
