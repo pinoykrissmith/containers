@@ -9,8 +9,8 @@ on:
       - '.github/workflows/build-traccar.yml'
       - 'Tracacr/Dockerfile'
   schedule:
-    # Build the image daily
-    - cron: '15 0 * * *'
+    # Build the image weekly
+    - cron: '15 0 * * 5'
 
 env:
   REGISTRY: ghcr.io
