@@ -20,7 +20,7 @@ RUN apk --no-cache add pcre ca-certificates bash python3 py3-pip
 RUN addgroup -g ${UID} nitter \
     && adduser -g ${UID} --ingroup nitter --disabled-password --system nitter
 COPY --from=nim /src/nitter/scripts/requirements.txt ./
-RUN pip install -r ./requirements.txt --break-system-packages
+RUN pip install --no-cache-dir -r ./requirements.txt --break-system-packages
 
 USER nitter
 COPY --chown=${UID}:${UID} --from=nim /src/nitter/nitter ./
