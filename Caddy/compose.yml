@@ -1,0 +1,69 @@
+services:
+  caddy:
+    image: ghcr.io/pinoykrissmith/containers:caddy
+    container_name: caddy
+    restart: unless-stopped
+    tty: true
+    read_only: true
+    user: "65532:65532"
+    ports:
+      - "443:443"
+      - "443:443/udp"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:Z,ro
+      - /elysium/caddy-data:/config:Z
+      - /elysium/caddy-data:/data:Z
+      - /elysium/caddy-logs:/data/logs:z
+    environment:
+      TZ: UTC
+      LOG_FILE: "/data/logs/access.log"
+      CLOUDFLARE_EMAIL: "${CLOUDFLARE_EMAIL}"
+      CLOUDFLARE_AUTH_TOKEN: "${CLOUDFLARE_AUTH_TOKEN}"
+      MY_DOMAIN: "${MY_DOMAIN}"
+      TORRENTS_PASS: "${TORRENTS_PASS}"
+      CROWDSEC_API_KEY: "${CROWDSEC_API_KEY}"
+      CADDY_ADMIN: "off"
+    env_file:
+      - .env
+    security_opt:
+      - "no-new-privileges=true"
+    cap_add:
+      - "NET_BIND_SERVICE"
+    cap_drop:
+      - "ALL"
+    networks:
+      - caddy_net
+      - crowdsec
+    labels:
+      com.centurylinklabs.watchtower.enable: "true"
+      io.containers.autoupdate: "registry"
+
+  crowdsec:
+    image: docker.io/crowdsecurity/crowdsec
+    container_name: crowdsec
+    restart: unless-stopped
+    security_opt:
+      - "no-new-privileges=true"
+    environment:
+      GID: "65532"
+      COLLECTIONS: crowdsecurity/caddy crowdsecurity/http-cve crowdsecurity/whitelist-good-actors crowdsecurity/linux
+      BOUNCER_KEY_CADDY: "${CROWDSEC_API_KEY}"
+      PARSERS: crowdsecurity/whitelists
+      USE_WAL: true
+    env_file:
+      - .env
+    networks:
+      - crowdsec
+    volumes:
+      - ./acquis.yaml:/etc/crowdsec/acquis.yaml:Z,ro
+      - /elysium/crowdsec-data:/var/lib/crowdsec/data:Z
+      - /elysium/caddy-logs:/var/log/caddy:z,ro
+    labels:
+      com.centurylinklabs.watchtower.enable: "true"
+      io.containers.autoupdate: "registry"
+
+networks:
+  crowdsec:
+  caddy_net:
+    name: caddy_net
+    external: true

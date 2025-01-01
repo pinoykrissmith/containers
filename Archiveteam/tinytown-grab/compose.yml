@@ -1,0 +1,20 @@
+services:
+  archiveteam-warrior:
+    image: atdr.meo.ws/archiveteam/warrior-dockerfile
+    container_name: tinytown-grab
+    restart: unless-stopped
+    tty: true
+    labels:
+      com.centurylinklabs.watchtower.enable: "true"
+      io.containers.autoupdate: "registry"
+    platform: linux/amd64
+    environment:
+      DOWNLOADER: "Trans_Palestine"
+      SELECTED_PROJECT: "urlteam2"
+    cap_drop:
+      - ALL
+    user: "1000:1000"
+    security_opt:
+      - "no-new-privileges=true"
+    volumes:
+      - /elysium/tinytown-grab-data:/home/warrior/projects:Z

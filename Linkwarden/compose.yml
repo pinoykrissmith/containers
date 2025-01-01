@@ -1,0 +1,68 @@
+services:
+  linkwarden:
+    container_name: linkwarden
+    image: ghcr.io/linkwarden/linkwarden:latest
+    environment:
+      - DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@lw-postgres:5432/postgres
+      - NEXTAUTH_URL=${NEXTAUTH_URL}
+      - NEXTAUTH_SECRET=${NEXTAUTH_SECRET}
+      - NEXTAUTH_URL_INTERNAL=http://localhost:3000
+      - NEXT_PUBLIC_DISABLE_REGISTRATION=true
+      - NEXT_PUBLIC_CREDENTIALS_ENABLED=false
+      - DISABLE_PRESERVATION=true
+    env_file:
+      - .env
+    restart: always
+    labels:
+      com.centurylinklabs.watchtower.enable: "true"
+      io.containers.autoupdate: "registry"
+    tty: true
+    user: "1000:1000"
+    read_only: true
+    depends_on:
+      - postgres
+    networks:
+      - caddy_net
+    security_opt:
+      - "no-new-privileges=true"
+    cap_drop:
+      - ALL
+    tmpfs:
+      - /home/node:noexec,nosuid,nodev
+      - /tmp:noexec,nosuid,nodev
+      - /data/data:mode=0770,noexec,nosuid,nodev
+      - /data/.next/cache/images:mode=0770,noexec,nosuid,nodev
+
+  postgres:
+    container_name: lw-postgres
+    image: ghcr.io/polarix-containers/postgres:16
+    restart: unless-stopped
+    tty: true
+    labels:
+      com.centurylinklabs.watchtower.enable: "true"
+      io.containers.autoupdate: "registry"
+    volumes:
+      - /elysium/linkwarden-postgres:/var/lib/postgresql/data:Z
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - LD_PRELOAD=""
+    env_file:
+      - .env
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "lw"]
+      interval: 15s
+      timeout: 5s
+    user: "70:70"
+    read_only: true
+    tmpfs:
+      - /var/run/postgresql:noexec,nosuid,nodev
+    security_opt:
+      - "no-new-privileges=true"
+    networks:
+      - caddy_net
+
+networks:
+  caddy_net:
+    name: caddy_net
+    external: true

@@ -1,0 +1,63 @@
+services:
+  headwind:
+    image: ghcr.io/pinoykrissmith/containers:headwind
+    container_name: headwind
+    networks:
+      - caddy_net
+    volumes:
+      - /elysium/headwind-data:/usr/local/tomcat/work:Z
+    environment:
+      SQL_HOST: hmdm-postgres
+      SQL_USER: ${SQL_USER}
+      SQL_PASS: ${SQL_PASS}
+      BASE_DOMAIN: ${BASE_DOMAIN}
+      LOCAL_IP: ${LOCAL_IP}
+      ADMIN_EMAIL: ${ADMIN_EMAIL}
+      SHARED_SECRET: ${SHARED_SECRET}
+      HMDM_VARIANT: ${HMDM_VARIANT}
+      DOWNLOAD_CREDENTIALS: ${DOWNLOAD_CREDENTIALS}
+      HMDM_URL: ${HMDM_URL}
+      CLIENT_VERSION: ${CLIENT_VERSION}
+      FORCE_RECONFIGURE: ${FORCE_RECONFIGURE}
+    env_file:
+      - .env
+    security_opt:
+      - "no-new-privileges=true"
+    cap_drop:
+      - "ALL"
+    user: "3006:3006"
+    labels:
+      com.centurylinklabs.watchtower.enable: "true"
+      io.containers.autoupdate: "registry"
+
+  hmdm-postgres:
+    image: ghcr.io/polarix-containers/postgres:13
+    container_name: hmdm-postgres
+    restart: unless-stopped
+    volumes:
+      - /elysium/headwind-postgres:/var/lib/postgresql/data:z
+    environment:
+      - POSTGRES_USER=${SQL_USER}
+      - POSTGRES_PASSWORD=${SQL_PASS}
+      - POSTGRES_DB=${SQL_BASE}
+      - LD_PRELOAD=""
+    env_file:
+      - .env
+    user: "70:70"
+    read_only: true
+    labels:
+      com.centurylinklabs.watchtower.enable: "true"
+      io.containers.autoupdate: "registry"
+    tmpfs:
+      - /var/run/postgres:noexec,nosuid,nodev
+    security_opt:
+      - "no-new-privileges=true"
+    cap_drop:
+      - ALL
+    networks:
+      - caddy_net
+
+networks:
+  caddy_net:
+    name: caddy_net
+    external: true

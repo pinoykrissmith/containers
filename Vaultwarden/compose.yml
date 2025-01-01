@@ -1,0 +1,64 @@
+services:
+  vaultwarden:
+    image: ghcr.io/polarix-containers/vaultwarden:latest
+    container_name: vaultwarden
+    restart: unless-stopped
+    tty: true
+    user: "3001:3001"
+    read_only: true
+    labels:
+      com.centurylinklabs.watchtower.enable: "true"
+      io.containers.autoupdate: "registry"
+    environment:
+      DOMAIN: ${DOMAIN}
+      SIGNUPS_ALLOWED: false
+      LD_PRELOAD: ""
+      ROCKET_PORT: 80
+      DATABASE_URL: "postgresql://vw:${POSTGRES_PASSWORD}@vw-postgres:5432/postgres"
+      ADMIN_TOKEN: ${ADMIN_TOKEN}
+    env_file:
+      - .env
+    volumes:
+      - /elysium/vaultwarden-data:/data:Z
+    networks:
+      - caddy_net
+    security_opt:
+      - "no-new-privileges=true"
+    cap_drop:
+      - "ALL"
+    cap_add:
+      - NET_BIND_SERVICE
+
+  postgres:
+    container_name: vw-postgres
+    image: ghcr.io/polarix-containers/postgres:17
+    restart: unless-stopped
+    tty: true
+    labels:
+      com.centurylinklabs.watchtower.enable: "true"
+      io.containers.autoupdate: "registry"
+    volumes:
+      - /elysium/vaultwarden-postgres:/var/lib/postgresql/data:Z
+    environment:
+      - POSTGRES_USER=vw
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - LD_PRELOAD=""
+    env_file:
+      - .env
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "vw"]
+      interval: 15s
+      timeout: 5s
+    user: "70:70"
+    read_only: true
+    networks:
+      - caddy_net
+    tmpfs:
+      - /var/run/postgresql:noexec,nosuid,nodev
+    security_opt:
+      - "no-new-privileges=true"
+
+networks:
+  caddy_net:
+    name: caddy_net
+    external: true

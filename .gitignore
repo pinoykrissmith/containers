@@ -1,0 +1,11 @@
+ArchiveBox/.env
+Caddy/.env
+Linkwarden/.env
+Nitter/.env
+Nitter/nitter.conf
+Nitter/twitter-credentials.json
+Immich/.env
+Traccar/.env
+Traccar/traccar.xml
+Vaultwarden/.env
+Headwind/.env

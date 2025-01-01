@@ -1,0 +1,199 @@
+{
+	admin off
+	servers {
+		trusted_proxies cloudflare {
+			interval 12h
+			timeout 15s
+		}
+	}
+	crowdsec {
+		api_url http://crowdsec:8080
+		api_key {env.CROWDSEC_API_KEY}
+		ticker_interval 15s
+	}
+}
+
+(safe) {
+	header /* {
+		# HSTS support (enable only in production environment)
+		Strict-Transport-Security "max-age=15768000;" # Uncomment if used
+		# Enable cross-site filter (XSS) and tell browser to block detected attacks
+		X-XSS-Protection "1; mode=block"
+		# Disallow the site to be rendered within a frame (clickjacking protection)
+		X-Frame-Options "DENY"
+		# Prevent search engines from indexing (optional)
+		X-Robots-Tag "noindex, nofollow"
+		# Server name removing
+		-Server
+	}
+}
+
+(log) {
+	log {
+		output file {$LOG_FILE} {
+			roll_size 10MB
+			roll_keep 10
+		}
+	}
+}
+
+(nolog) {
+	log {
+		output discard
+	}
+}
+
+(cloudflare) {
+	tls {$CLOUDFLARE_EMAIL} {
+		dns cloudflare {env.CLOUDFLARE_AUTH_TOKEN}
+	}
+}
+
+(lan) {
+	@allowed {
+		remote_ip 192.168.0.0/24
+		remote_ip 192.168.1.0/24
+		remote_ip 100.64.0.0/10
+		remote_ip 127.0.0.0/8
+		remote_ip 10.0.0.0/8
+		remote_ip 172.16.0.0/12
+	}
+	handle {
+		abort
+	}
+}
+
+vw.{$MY_DOMAIN} {
+	import safe
+	import nolog
+	import cloudflare
+	import lan
+	encode zstd gzip
+	handle @allowed {
+		reverse_proxy vaultwarden:80
+	}
+}
+
+hmdm.{$MY_DOMAIN} {
+	import safe
+	import nolog
+	import cloudflare
+	import lan
+	encode zstd gzip
+	handle @allowed {
+		reverse_proxy headwind:8080
+	}
+}
+
+eb2ab.{$MY_DOMAIN} {
+	import safe
+	import nolog
+	import cloudflare
+	import lan
+	encode zstd gzip
+	handle @allowed {
+		reverse_proxy ebook2audiobookpiper:7860
+	}
+}
+
+nitter.{$MY_DOMAIN} {
+	import safe
+	import nolog
+	import cloudflare
+	import lan
+	encode zstd gzip
+	header {
+		Strict-Transport-Security "max-age=63072000"
+		Referrer-Policy no-referrer
+		X-Permitted-Cross-Domain-Policies none
+		X-Content-Type-Options nosniff
+		Permissions-Policy "Permissions-Policy: accelerometer=(), ambient-light-sensor=(), autoplay=(self), battery=(), camera=(), cross-origin-isolated=(), display-capture=(), document-domain=(), encrypted-media=(), execution-while-not-rendered=(), execution-while-out-of-viewport=(), fullscreen=(self), geolocation=(), gyroscope=(), keyboard-map=(), magnetometer=(), microphone=(), midi=(), navigation-override=(), payment=(), picture-in-picture=(self), publickey-credentials-get=(), screen-wake-lock=(), sync-xhr=(), usb=(), web-share=(), xr-spatial-tracking=()"
+		header Content-Security-Policy "default-src 'none'; script-src 'self' 'unsafe-inline'; img-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; object-src 'none'; media-src 'self' blob:; worker-src 'self' blob:; base-uri 'self'; form-action 'self'; frame-ancestors 'self'; connect-src 'self' https://*.twimg.com; manifest-src 'self'"
+	}
+	handle @allowed {
+		reverse_proxy nitter-gluetun:8090 {
+			transport http {
+				compression off
+			}
+		}
+	}
+}
+
+sync.{$MY_DOMAIN} {
+	import safe
+	import nolog
+	import cloudflare
+	import lan
+	encode zstd gzip
+	handle @allowed {
+		reverse_proxy resilio-sync:8888
+	}
+}
+
+{$MY_DOMAIN} {
+	import safe
+	import log
+	import cloudflare
+	encode zstd gzip
+	route {
+		crowdsec
+		reverse_proxy linkwarden:3000
+	}
+}
+
+www.{$MY_DOMAIN} {
+	import nolog
+	import cloudflare
+	route {
+		crowdsec
+		redir https://{$MY_DOMAIN}{uri} 301
+	}
+}
+
+immich.{$MY_DOMAIN} {
+	import safe
+	import log
+	import cloudflare
+	encode zstd gzip
+	route {
+		crowdsec
+		reverse_proxy immich_server:2283
+	}
+}
+
+archive.{$MY_DOMAIN} {
+	import safe
+	import log
+	import cloudflare
+	redir /archive/* https://archiveusercontent.{$MY_DOMAIN}{uri} 302
+	encode zstd gzip
+	route {
+		crowdsec
+		reverse_proxy archivebox:8000
+	}
+}
+
+archiveusercontent.{$MY_DOMAIN} {
+	import safe
+	import log
+	import cloudflare
+	encode zstd gzip
+	redir / https://archive.{$MY_DOMAIN}{uri} 301 {
+		not path /archive
+	}
+	route {
+		crowdsec
+		reverse_proxy archivebox:8000
+	}
+}
+
+traccar.{$MY_DOMAIN} {
+	import safe
+	import log
+	import cloudflare
+	encode zstd gzip
+	route {
+		crowdsec
+		reverse_proxy traccar:8082
+	}
+}

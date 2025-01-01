@@ -1,0 +1,25 @@
+services:
+  ebook2audiobookpiper:  
+    image: ghcr.io/pinoykrissmith/containers:ebook2audiobookpiper
+    container_name: ebook2audiobookpiper
+    user: "3009:3009"
+    volumes:
+      - /elysium/ebook2audiobookpiper-data:/app:Z
+    tmpfs:
+      - /nonexistent/nltk_data:noexec,nosuid,nodev
+    read_only: true
+    cap_drop:
+      - "ALL"
+    security_opt:
+      - "no-new-privileges=true"
+    tty: true
+    networks:
+      - caddy_net
+    labels:
+      com.centurylinklabs.watchtower.enable: "true"
+      io.containers.autoupdate: "registry"
+
+networks:
+  caddy_net:
+    name: caddy_net
+    external: true

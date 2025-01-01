@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM 'http://java.sun.com/dtd/properties.dtd'>
+<properties>
+
+    <!-- Documentation: https://www.traccar.org/configuration-file/ -->
+
+    <entry key='web.url'></entry>
+    <entry key='web.allowRegistration'></entry>
+    <entry key='openid.force'></entry>
+    <entry key='openid.clientId'></entry>
+    <entry key='openid.clientSecret'></entry>
+    <entry key='openid.issuerUrl'></entry>
+
+</properties>

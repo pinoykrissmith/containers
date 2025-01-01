@@ -1,0 +1,97 @@
+services:
+    nitter:
+      image: ghcr.io/sekai-soft/nitter-self-contained:latest
+      container_name: nitter
+      user: "3004:3004"
+      labels:
+        com.centurylinklabs.watchtower.enable: "true"
+        io.containers.autoupdate: "registry"
+      entrypoint: ["/bin/bash", "-c", "python /src/scripts/auth.py /nitter-data/guest_accounts.json && /src/nitter"]
+      volumes:
+        - ./twitter-credentials.json:/nitter-data/twitter-credentials.json:Z,ro
+        - ./nitter.conf:/src/nitter.conf:Z,ro
+        - /elysium/nitter-data:/nitter-data:Z
+      depends_on:
+        nitter-redis:
+          condition: service_healthy
+      environment:
+        - NITTER_ACCOUNTS_FILE=/nitter-data/guest_accounts.json
+        - DISABLE_REDIS=1
+        - REDIS_HOST=nitter-redis
+        - TWITTER_CREDENTIALS_FILE=/nitter-data/twitter-credentials.json
+        - DISABLE_NGINX=1
+      restart: unless-stopped
+      cap_drop:
+        - "ALL"
+      security_opt:
+        - "no-new-privileges=true"
+      read_only: true
+      network_mode: service:nitter-gluetun
+
+    nitter-redis:
+      image: ghcr.io/polarix-containers/redis:6
+      container_name: nitter-redis
+      command: redis-server --save 60 1 --loglevel warning
+      volumes:
+        - /elysium/nitter-redis:/data:Z
+      restart: unless-stopped
+      networks:
+        - caddy_net
+      healthcheck:
+        test: ["CMD", "redis-cli", "ping"]
+        interval: 5s
+        timeout: 5s
+        retries: 12
+      user: "3008:3008"
+      read_only: true
+      security_opt:
+        - "no-new-privileges=true"
+      cap_drop:
+        - ALL
+      environment:
+        LD_PRELOAD: ""
+      labels:
+        com.centurylinklabs.watchtower.enable: "true"
+        io.containers.autoupdate: "registry"
+
+    nitter-gluetun:
+      image: docker.io/qmcgaw/gluetun:latest
+      container_name: nitter-gluetun
+      restart: always
+      tty: true
+      read_only: true
+      labels:
+        com.centurylinklabs.watchtower.enable: "true"
+        io.containers.autoupdate: "registry"
+      cap_drop:
+        - ALL
+      cap_add:
+        - NET_ADMIN
+        - DAC_OVERRIDE
+        - CHOWN
+        - SETUID
+        - SETGID
+      security_opt:
+        - "no-new-privileges=true"
+        - "label=disable"
+      networks:
+        - caddy_net  
+      devices:
+        - /dev/net/tun:/dev/net/tun
+      env_file:
+        - .env  
+      environment:
+        - TZ=Europe/Paris
+        - FREE_ONLY=true
+        - DNS_KEEP_NAMESERVER=true
+      volumes:
+        - ./passwd:/etc/passwd:Z
+      tmpfs:
+        - /gluetun:noexec,nosuid,nodev
+        - /tmp:noexec,nosuid,nodev
+        - /etc/openvpn:noexec,nosuid,nodev
+
+networks:
+  caddy_net:
+    name: caddy_net
+    external: true

@@ -1,0 +1,73 @@
+services:
+  traccar:
+    image: ghcr.io/pinoykrissmith/containers:traccar
+    container_name: traccar
+    restart: unless-stopped
+    tty: true
+    read_only: true
+    user: "65532:65532"
+    volumes:
+      - /elysium/traccar-logs:/home/nonroot/traccar/logs:Z
+      - ./traccar.xml:/home/nonroot/traccar/conf/traccar.xml:Z,ro
+    depends_on:
+      - traccar_postgresql
+    security_opt:
+      - "no-new-privileges=true"
+    cap_drop:
+      - "ALL"
+    environment:
+      - CONFIG_USE_ENVIRONMENT_VARIABLES=true
+      - DATABASE_DRIVER=org.postgresql.Driver
+      - DATABASE_URL=jdbc:postgresql://traccar_postgresql/postgres
+      - DATABASE_USER=${POSTGRES_USER}
+      - DATABASE_PASSWORD=${POSTGRES_PASSWORD}
+    env_file:
+      - .env
+    networks:
+      - caddy_net
+    tmpfs:
+      - /tmp:noexec,nosuid,nodev
+    labels:
+      com.centurylinklabs.watchtower.enable: "true"
+      io.containers.autoupdate: "registry"
+
+  traccar_postgresql:
+    image: ghcr.io/polarix-containers/postgres:17
+    container_name: traccar_postgresql
+    restart: unless-stopped
+    tty: true
+    user: "70:70"
+    read_only: true
+    labels:
+      com.centurylinklabs.watchtower.enable: "true"
+      io.containers.autoupdate: "registry"
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}
+      start_period: 20s
+      interval: 30s
+      retries: 5
+      timeout: 5s
+    volumes:
+      - /elysium/traccar-postgres:/var/lib/postgresql/data:Z
+    environment:
+      - LD_PRELOAD=""
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    env_file:
+      - .env
+    security_opt:
+      - "no-new-privileges=true"
+    tmpfs:
+      - /var/run/postgresql:noexec,nosuid,nodev
+    networks:
+      - caddy_net
+
+networks:
+  caddy_net:
+    name: caddy_net
+    external: true
+
+volumes:
+  logs:

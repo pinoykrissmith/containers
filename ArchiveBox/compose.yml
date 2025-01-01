@@ -1,0 +1,78 @@
+services:
+    archivebox:
+        image: docker.io/archivebox/archivebox:latest
+        container_name: archivebox
+        labels:
+            com.centurylinklabs.watchtower.enable: "true"
+            io.containers.autoupdate: "registry"
+        tty: true
+        restart: unless-stopped
+        cap_drop:
+            - "ALL"
+        cap_add:
+            - "SETUID"
+            - "SETGID"
+            - "CHOWN"
+            - "DAC_OVERRIDE"
+        security_opt:
+            - "no-new-privileges=true"
+        volumes:
+            - /elysium/archivebox-data:/data:Z
+        environment:
+            - CSRF_TRUSTED_ORIGINS=${CSRF_TRUSTED_ORIGINS}
+            - ALLOWED_HOSTS=${ALLOWED_HOSTS}
+            - PUBLIC_INDEX=False
+            - PUBLIC_SNAPSHOTS=True
+            - PUBLIC_ADD_VIEW=False
+            - OUTPUT_PERMISSIONS=770
+        env_file:
+            - .env
+        networks:
+        #   - dns
+           - caddy_net
+        # For ad-blocking during archiving, uncomment this section and the pihole service below
+        # dns:
+        #   - 172.20.0.53
+
+    ######## Optional Addons: tweak examples below as needed for your specific use case ########
+
+    ### Example: To run pihole in order to block ad/tracker requests during archiving,
+    # uncomment this optional block and set up pihole using its admin interface
+
+    #   pihole:
+    #   image: pihole/pihole:latest
+    #   ports:
+    #     # access the admin HTTP interface on http://localhost:8090
+    #     - 127.0.0.1:8090:80
+    #   environment:
+    #     - WEBPASSWORD=SET_THIS_TO_SOME_SECRET_PASSWORD_FOR_ADMIN_DASHBOARD
+    #     - DNSMASQ_LISTENING=all
+    #   dns:
+    #     - 127.0.0.1
+    #     - 1.1.1.1
+    #   networks:
+    #     dns:
+    #       ipv4_address: 172.20.0.53
+    #   volumes:
+    #     - ./etc/pihole:/etc/pihole
+    #     - ./etc/dnsmasq:/etc/dnsmasq.d
+
+    ### Example: Run ChangeDetection.io to watch for changes to websites, then trigger ArchiveBox to archive them
+    # Documentation: https://github.com/dgtlmoon/changedetection.io
+    # More info: https://github.com/dgtlmoon/changedetection.io/blob/master/docker-compose.yml
+
+    # changedetection:
+    #     image: ghcr.io/dgtlmoon/changedetection.io
+    #     volumes:
+    #         - ./data-changedetection:/datastore
+
+networks:
+    caddy_net:
+        name: caddy_net
+        external: true
+    # network just used for pihole container to offer :53 dns resolving on fixed ip for archivebox container
+    dns:
+        ipam:
+            driver: default
+            config:
+                - subnet: 172.20.0.0/24
