@@ -68,6 +68,3 @@ networks:
   caddy_net:
     name: caddy_net
     external: true
-
-volumes:
-  logs:
