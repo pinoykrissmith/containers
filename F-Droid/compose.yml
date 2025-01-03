@@ -1,0 +1,27 @@
+services:
+  fdroid:
+    iamge: ghcr.io/pinoykrissmith/containers:caddy
+    container_name: fdroid
+    restart: always
+    environment:
+      - TZ=UTC
+    volumes:
+      - ./apks.json:/apks.json:Z,ro
+      - ./metadata:/fdroid/metadata:Z,ro
+      - ./config.yml:/fdroid/config.yml:Z,ro
+      - ./keystore.p12:/fdroid/keystore.p12:Z,ro
+      - /elysium/fdroid-data:/fdroid:Z
+      - /elysium/fdroid-data:/cache:Z
+    user: "101:101"
+    cap_drop:
+      - "ALL"
+    security_opt:
+      - "no-new-privileges=true"
+    read_only: true
+    networks:
+      caddy_net:
+
+networks:
+  caddy_net:
+    name: caddy_net
+    external: true

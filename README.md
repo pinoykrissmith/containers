@@ -6,6 +6,7 @@
 ![Build custom pgvecto.rs image, scan & push](https://github.com/pinoykrissmith/containers/actions/workflows/build-pgvecto.yml/badge.svg)
 ![Build custom Traccar image, scan & push](https://github.com/pinoykrissmith/containers/actions/workflows/build-traccar.yml/badge.svg)
 ![Build custom Nitter image, scan & push](https://github.com/pinoykrissmith/containers/actions/workflows/build-nitter.yml/badge.svg)
+![Build custom F-Droid image, scan & push](https://github.com/pinoykrissmith/containers/actions/workflows/build-fdroid.yml/badge.svg)
 
 ### Licensing
 - Any file that isn't a binary such as the Dockerfile and compose.yml in this repository is licensed under the WTFPL.

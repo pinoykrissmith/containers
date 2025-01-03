@@ -96,6 +96,17 @@ eb2ab.{$MY_DOMAIN} {
 	}
 }
 
+fdroid.{$MY_DOMAIN} {
+	import safe
+	import nolog
+	import cloudflare
+	import lan
+	encode zstd gzip
+	handle @allowed {
+		reverse_proxy fdroid:8080
+	}
+}
+
 nitter.{$MY_DOMAIN} {
 	import safe
 	import nolog
