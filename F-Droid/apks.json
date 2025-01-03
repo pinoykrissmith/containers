@@ -146,5 +146,25 @@
   {
     "name": "GCamPhotosPreview",
     "baseUrl": "https://gitlab.com/CalyxOS/calyx-fdroid-repo-apks/-/raw/main/GCamPhotosPreview/GCamPhotosPreview-common.apk"
+  },
+  {
+    "name": "TraccarClient",
+    "baseUrl": "https://github.com/traccar/traccar-client-android/releases/download/{ver}/app-regular-release.apk",
+    "version": {
+      "url": "https://api.github.com/repos/traccar/traccar-client-android/releases/latest",
+      "json": "tag_name"
+    }
+  },
+  {
+    "name": "GCamPhotosPreview",
+    "baseUrl": "https://gitlab.com/CalyxOS/calyx-fdroid-repo-apks/-/raw/main/GCamPhotosPreview/GCamPhotosPreview-common.apk"
+  },
+  {
+    "name": "InviziblePro",
+    "baseUrl": "https://github.com/Gedsh/InviZible/releases/download/v{ver}-stable/Invizible_Lite_ver.{ver}_arm64.apk",
+    "version": {
+      "url": "https://api.github.com/repos/Gedsh/InviZible/releases",
+      "regex": "\"tag_name\":\\s*\"v(\\d+\\.\\d+\\.\\d+)-stable\""
+    }
   }
 ]

@@ -1,0 +1,28 @@
+Categories:
+  - Navigation
+License: Apache-2.0
+AuthorName: Traccar
+AuthorEmail: support@traccar.org
+WebSite: https://www.traccar.org/
+SourceCode: https://github.com/traccar/traccar-client-android
+IssueTracker: https://github.com/traccar/traccar-client-android/issues
+Donate: https://www.traccar.org/donate.jsp
+
+AutoName: Traccar Client
+Description: |-
+  Client for Traccar server software. A demo server is setup in the app for trying
+  it out and the results can be viewed in a browser.
+
+  By default application is configured to use free Traccar service (address -
+  demo.traccar.org, port - 5055). To see your device on map register on
+  http://demo.traccar.org/ and add your device with identifier.
+
+  Traccar (Server) is a free open source server that supports more than 100
+  different protocols and GPS tracking devices. You can use this application with
+  your own hosted instance of Traccar. For more information visit
+  https://www.traccar.org/.
+
+RepoType: git
+Repo: https://github.com/traccar/traccar-client-android.git
+
+AllowedAPKSigningKeys: 4ee41f0eef8cc6e630e0f7344685bdfe55557bd450e3e777826993cb1d7c61a6

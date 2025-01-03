@@ -1,0 +1,20 @@
+Categories:
+  - Internet
+  - Security
+License: GPL-3.0-or-later
+AuthorName: Oleksandr Garmatin
+AuthorEmail: invizible.soft@gmail.com
+WebSite: https://invizible.net
+SourceCode: https://github.com/Gedsh/InviZible
+IssueTracker: https://github.com/Gedsh/InviZible/issues
+Translation: https://poeditor.com/join/project/h6ulNL9gEd
+Changelog: https://github.com/Gedsh/InviZible/blob/HEAD/ChangeLog.md
+Donate: https://invizible.net/en/donate
+Bitcoin: 1GfJwiHG6xKCQCpHeW6fELzFfgsvcSxVUR
+
+AutoName: InviZible Pro
+
+RepoType: git
+Repo: https://github.com/Gedsh/InviZible.git
+
+AllowedAPKSigningKeys: 884f59db4cce11b22471869d2ae3523a19a8a7219054c99438afcb9d05a0eaa8
