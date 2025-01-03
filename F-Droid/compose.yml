@@ -20,6 +20,9 @@ services:
     read_only: true
     networks:
       caddy_net:
+    labels:
+      com.centurylinklabs.watchtower.enable: "true"
+      io.containers.autoupdate: "registry"
 
 networks:
   caddy_net:
