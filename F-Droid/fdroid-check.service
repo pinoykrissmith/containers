@@ -1,6 +1,7 @@
 [Unit]
-Description=Check if fdroid.service is running and execute commands
+Requires=fdroid.service
+After=fdroid.service
 
 [Service]
 Type=oneshot
-ExecStart=/bin/bash -c 'if /usr/bin/systemctl --user is-active --quiet fdroid.service; then /usr/bin/podman exec --user 101:101 --workdir=/ fdroid python3 /download.py; /usr/bin/podman exec --user 101:101 --workdir=/fdroid fdroid fdroid update; fi'
+ExecStart=/bin/sh -c '/usr/bin/podman exec --user 101:101 --workdir=/ fdroid python3 /download.py; /usr/bin/podman exec --user 101:101 --workdir=/fdroid fdroid fdroid update;'
