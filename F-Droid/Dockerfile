@@ -11,13 +11,15 @@ RUN echo Etc/UTC > /etc/timezone \
 		'Dpkg::Use-Pty "0";' \
 		'quiet "1";' \
         >> /etc/apt/apt.conf.d/99fdroid
+
 RUN apt-get update \
 	&& apt-get upgrade \
 	&& apt-get dist-upgrade \
 	&& apt-get install apksigner git lzip openjdk-17-jdk-headless python3 python3-pip wget \
 	&& pip install --no-cache-dir --break-system-packages \
 		git+https://github.com/androguard/androguard@16a6bd21946bfe3d75639ffd3d96957971b6553f \
-		git+https://gitlab.com/fdroid/fdroidserver@$VERSION
+		git+https://gitlab.com/fdroid/fdroidserver@$VERSION \
+	&& rm -rf /var/cache/apt/*
 RUN printf '#!/bin/sh\njava -jar /usr/lib/android-sdk/build-tools/debian/apksigner.jar "$@"' > /usr/local/bin/apksigner \
 	&& chmod +x /usr/local/bin/apksigner
 RUN wget -qO /download.py https://gitlab.com/CalyxOS/calyxos-fdroid-repo/-/raw/99d7f16b53bf55b76bedc15985da1f1da7084c2b/download.py
