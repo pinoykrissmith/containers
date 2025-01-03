@@ -103,7 +103,13 @@ fdroid.{$MY_DOMAIN} {
 	import lan
 	encode zstd gzip
 	handle @allowed {
-		reverse_proxy fdroid:8080
+		reverse_proxy /repo/* fdroid:8080 {
+			header_up Location {http.request.scheme}://{http.request.host}/repo{http.request.uri}
+		}
+		@notRepo {
+			not path /repo*
+		}
+		redir @notRepo /repo/ 301
 	}
 }
 

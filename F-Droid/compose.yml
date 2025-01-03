@@ -7,7 +7,7 @@ services:
       - TZ=UTC
     volumes:
       - ./apks.json:/apks.json:Z,ro
-      - ./metadata:/fdroid/metadata:Z,ro
+      - ./metadata:/fdroid/metadata:Z
       - ./config.yml:/fdroid/config.yml:Z,ro
       - ./keystore.p12:/fdroid/keystore.p12:Z,ro
       - /elysium/fdroid-data:/fdroid:Z
