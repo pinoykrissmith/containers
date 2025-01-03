@@ -26,5 +26,3 @@ RUN wget -qO /download.py https://gitlab.com/CalyxOS/calyxos-fdroid-repo/-/raw/9
 COPY --chown=nginx:nginx nginx.conf /etc/nginx/nginx.conf
 USER nginx
 WORKDIR /fdroid
-RUN fdroid init -v \
-	&& fdroid update
