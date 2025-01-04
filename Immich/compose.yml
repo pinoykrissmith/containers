@@ -17,6 +17,8 @@ services:
       - database
     restart: always
     tty: true
+    ports:
+      - "2283:2283"
     healthcheck:
       disable: false
     security_opt:
