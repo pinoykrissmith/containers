@@ -142,9 +142,6 @@ sync.{$MY_DOMAIN} {
 	import cloudflare
 	import lan
 	encode zstd gzip
-	request_body {
-		max_size 50000MB
-	}
 	handle @allowed {
 		reverse_proxy resilio-sync:8888
 	}
@@ -175,9 +172,6 @@ immich.{$MY_DOMAIN} {
 	import log
 	import cloudflare
 	encode zstd gzip
-	request_body {
-		max_size 10000MB
-	}
 	route {
 		crowdsec
 		reverse_proxy immich_server:2283
