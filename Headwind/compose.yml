@@ -43,7 +43,7 @@ services:
       - LD_PRELOAD=""
     env_file:
       - .env
-    user: "70:70"
+    user: "200009:200009"
     read_only: true
     labels:
       com.centurylinklabs.watchtower.enable: "true"

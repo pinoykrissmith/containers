@@ -36,7 +36,7 @@ services:
     container_name: traccar_postgresql
     restart: unless-stopped
     tty: true
-    user: "70:70"
+    user: "200012:200012"
     read_only: true
     labels:
       com.centurylinklabs.watchtower.enable: "true"

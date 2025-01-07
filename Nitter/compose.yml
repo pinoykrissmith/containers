@@ -41,7 +41,7 @@ services:
         interval: 5s
         timeout: 5s
         retries: 12
-      user: "3008:3008"
+      user: "200009:200009"
       read_only: true
       security_opt:
         - "no-new-privileges=true"

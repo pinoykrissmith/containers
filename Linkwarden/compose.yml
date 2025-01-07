@@ -53,7 +53,7 @@ services:
       test: ["CMD", "pg_isready", "-U", "lw"]
       interval: 15s
       timeout: 5s
-    user: "70:70"
+    user: "200012:200012"
     read_only: true
     tmpfs:
       - /var/run/postgresql:noexec,nosuid,nodev

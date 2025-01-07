@@ -72,7 +72,7 @@ services:
       - "no-new-privileges=true"
     cap_drop:
       - "ALL"
-    user: "3008:3008"
+    user: "200009:200009"
     read_only: true
     environment:
       LD_PRELOAD: ""
