@@ -35,7 +35,7 @@ services:
     container_name: hmdm-postgres
     restart: unless-stopped
     volumes:
-      - /elysium/headwind-postgres:/var/lib/postgresql/data:z
+      - /elysium/headwind-postgres:/var/lib/postgresql/data:Z
     environment:
       - POSTGRES_USER=${SQL_USER}
       - POSTGRES_PASSWORD=${SQL_PASS}
@@ -43,7 +43,7 @@ services:
       - LD_PRELOAD=""
     env_file:
       - .env
-    user: "200009:200009"
+    user: "200012:200012"
     read_only: true
     labels:
       com.centurylinklabs.watchtower.enable: "true"
