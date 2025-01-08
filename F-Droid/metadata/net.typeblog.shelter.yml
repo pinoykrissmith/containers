@@ -1,0 +1,17 @@
+Categories:
+  - Security
+License: GPL-3.0-only
+AuthorName: PeterCxy
+AuthorEmail: peter@typeblog.net
+SourceCode: https://gitea.angry.im/PeterCxy/Shelter
+IssueTracker: https://lists.sr.ht/~petercxy/shelter
+Translation: https://weblate.typeblog.net/projects/shelter/shelter/
+Changelog: https://gitea.angry.im/PeterCxy/Shelter/src/branch/master/CHANGELOG.md
+Donate: https://www.patreon.com/PeterCxy
+
+AutoName: Shelter
+
+RepoType: git
+Repo: https://gitea.angry.im/PeterCxy/Shelter.git
+
+AllowedAPKSigningKeys: d73d3c715bde7fc86c1c156ff3d573cf8b9c670f5a1f3c5ef823be40e605298a

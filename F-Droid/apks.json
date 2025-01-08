@@ -1,10 +1,10 @@
 [
   {
     "name": "AuroraStore",
-    "baseUrl": "https://f-droid.org/repo/{ver}",
+    "baseUrl": "https://auroraoss.com/downloads/AuroraStore/Release/AuroraStore-{ver}.apk",
     "version": {
-      "fdroid": "com.aurora.store",
-      "fingerprint": "43238D512C1E5EB2D6569F4A3AFBF5523418B82E0A3ED1552770ABB9A9C9CCAB"
+      "url": "https://gitlab.com/api/v4/projects/6922885/releases",
+      "regex": "\"tag_name\":\"(.+?)\""
     }
   },
   {
@@ -17,10 +17,10 @@
   },
   {
     "name": "Briar",
-    "baseUrl": "https://f-droid.org/repo/{ver}",
+    "baseUrl": "https://briarproject.org/fdroid/repo/{ver}",
     "version": {
       "fdroid": "org.briarproject.briar.android",
-      "fingerprint": "43238D512C1E5EB2D6569F4A3AFBF5523418B82E0A3ED1552770ABB9A9C9CCAB"
+      "fingerprint": "1FB874BEE7276D28ECB2C9B06E8A122EC4BCB4008161436CE474C257CBF49BD6"
     }
   },
   {
@@ -36,14 +36,6 @@
     "baseUrl": "https://f-droid.org/repo/{ver}",
     "version": {
       "fdroid": "at.bitfire.davdroid",
-      "fingerprint": "43238D512C1E5EB2D6569F4A3AFBF5523418B82E0A3ED1552770ABB9A9C9CCAB"
-    }
-  },
-  {
-    "name": "F-Droid",
-    "baseUrl": "https://f-droid.org/repo/{ver}",
-    "version": {
-      "fdroid": "org.fdroid.fdroid",
       "fingerprint": "43238D512C1E5EB2D6569F4A3AFBF5523418B82E0A3ED1552770ABB9A9C9CCAB"
     }
   },
@@ -156,10 +148,6 @@
     }
   },
   {
-    "name": "GCamPhotosPreview",
-    "baseUrl": "https://gitlab.com/CalyxOS/calyx-fdroid-repo-apks/-/raw/main/GCamPhotosPreview/GCamPhotosPreview-common.apk"
-  },
-  {
     "name": "InviziblePro",
     "baseUrl": "https://github.com/Gedsh/InviZible/releases/download/v{ver}-stable/Invizible_Lite_ver.{ver}_arm64.apk",
     "version": {
@@ -189,6 +177,14 @@
     "version": {
       "fdroid": "com.termux",
       "fingerprint": "43238D512C1E5EB2D6569F4A3AFBF5523418B82E0A3ED1552770ABB9A9C9CCAB"
+    }
+  },
+  {
+    "name": "Shelter",
+    "baseUrl": "https://fdroid.typeblog.net/{ver}",
+    "version": {
+      "fdroid": "net.typeblog.shelter",
+      "fingerprint": "1A7E446C491C80BC2F83844A26387887990F97F2F379AE7B109679FEAE3DBC8C"
     }
   }
 ]
