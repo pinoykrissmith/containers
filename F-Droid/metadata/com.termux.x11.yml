@@ -1,0 +1,18 @@
+Categories:
+  - Development
+License: GPL-3.0-only
+WebSite: https://termux.com
+SourceCode: https://github.com/termux/termux-x11
+IssueTracker: https://github.com/termux/termux-x11/issues
+Changelog: https://github.com/termux/termux-x11/releases/
+Donate: https://termux.com/donate.html
+OpenCollective: Termux
+
+AutoName: Termux:X11
+Description: |-
+  This plugin for https://f-droid.org/packages/com.termux allows running X11 applications.
+
+RepoType: git
+Repo: https://github.com/termux/termux-boot
+
+AllowedAPKSigningKeys: b6da01480eefd5fbf2cd3771b8d1021ec791304bdd6c4bf41d3faabad48ee5e1
