@@ -176,6 +176,14 @@
     }
   },
   {
+    "name": "Immich",
+    "baseUrl": "https://github.com/immich-app/immich/releases/download/{ver}/app-arm64-v8a-release.apk",
+    "version": {
+      "url": "https://api.github.com/repos/immich-app/immich/releases/latest",
+      "json": "tag_name"
+    }
+  },
+  {
     "name": "Termux",
     "baseUrl": "https://f-droid.org/repo/{ver}",
     "version": {

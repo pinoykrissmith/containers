@@ -1,0 +1,18 @@
+Categories:
+  - Multimedia
+  - System
+License: AGPL-3.0-only
+AuthorName: FUTO
+AuthorWebSite: https://futo.org/
+WebSite: https://immich.app/
+SourceCode: https://github.com/immich-app/immich
+IssueTracker: https://github.com/immich-app/immich/issues
+Changelog: https://github.com/immich-app/immich/releases
+Donate: https://buy.immich.app/
+
+AutoName: Immich
+
+RepoType: git
+Repo: https://github.com/immich-app/immich.git
+
+AllowedAPKSigningKeys: 86c5c455dfaf4985923a8f35adb31d0c9e0b957d7f94c2d2af6a2438aa960020
