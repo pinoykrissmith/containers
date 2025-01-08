@@ -13,6 +13,6 @@ Description: |-
   This plugin for https://f-droid.org/packages/com.termux allows running X11 applications.
 
 RepoType: git
-Repo: https://github.com/termux/termux-boot
+Repo: https://github.com/termux/termux-x11
 
 AllowedAPKSigningKeys: b6da01480eefd5fbf2cd3771b8d1021ec791304bdd6c4bf41d3faabad48ee5e1
