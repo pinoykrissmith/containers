@@ -25,7 +25,7 @@ RUN printf '#!/bin/sh\njava -jar /usr/lib/android-sdk/build-tools/debian/apksign
 RUN sed -i -e '/repo_url/d' -e '/archive_url/d' /usr/local/lib/python*/dist-packages/fdroidserver/common.py
 RUN wget -qO /download.py https://gitlab.com/CalyxOS/calyxos-fdroid-repo/-/raw/99d7f16b53bf55b76bedc15985da1f1da7084c2b/download.py
 COPY --chown=nginx:nginx nginx.conf /etc/nginx/nginx.conf
-RUN echo -e '#!/bin/sh\n/usr/local/bin/fdroid update' > /docker-entrypoint.d/40-fdroid-update.sh
+RUN echo -e '#!/bin/sh\ncd /fdroid\n/usr/local/bin/fdroid update' > /docker-entrypoint.d/40-fdroid-update.sh
 RUN chmod +x /docker-entrypoint.d/40-fdroid-update.sh
 USER nginx
 WORKDIR /fdroid
