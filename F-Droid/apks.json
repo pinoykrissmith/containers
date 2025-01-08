@@ -166,5 +166,21 @@
       "url": "https://api.github.com/repos/Gedsh/InviZible/releases",
       "regex": "\"tag_name\":\\s*\"v(\\d+\\.\\d+\\.\\d+)-stable\""
     }
+  },
+  {
+    "name": "TermuxX11",
+    "baseUrl": "https://github.com/termux/termux-x11/releases/download/{ver}/app-arm64-v8a-debug.apk",
+    "version": {
+      "url": "https://api.github.com/repos/termux/termux-x11/releases/latest",
+      "json": "tag_name"
+    }
+  },
+  {
+    "name": "Termux",
+    "baseUrl": "https://f-droid.org/repo/{ver}",
+    "version": {
+      "fdroid": "com.termux",
+      "fingerprint": "43238D512C1E5EB2D6569F4A3AFBF5523418B82E0A3ED1552770ABB9A9C9CCAB"
+    }
   }
 ]
