@@ -1,0 +1,9 @@
+---
+sdk_path: /usr/lib/android-sdk
+repo_url: {env: REPO_URL}
+repo_name: {env: REPO_NAME}
+repo_keyalias: host.containers.internal
+keystore: /keystore.p12
+keystorepass: {env: KEYSTOREPASS}
+keypass: {env: KEYPASS}
+keydname: CN=host.containers.internal, OU=F-Droid

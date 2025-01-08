@@ -22,6 +22,8 @@ RUN apt-get update \
 	&& rm -rf /var/cache/apt/*
 RUN printf '#!/bin/sh\njava -jar /usr/lib/android-sdk/build-tools/debian/apksigner.jar "$@"' > /usr/local/bin/apksigner \
 	&& chmod +x /usr/local/bin/apksigner
+RUN sed -i -e '/repo_url/d' -e '/archive_url/d' /usr/local/lib/python*/dist-packages/fdroidserver/common.py
+COPY --chown=nginx:nginx config.yml /fdroid/config.yml
 RUN wget -qO /download.py https://gitlab.com/CalyxOS/calyxos-fdroid-repo/-/raw/99d7f16b53bf55b76bedc15985da1f1da7084c2b/download.py
 COPY --chown=nginx:nginx nginx.conf /etc/nginx/nginx.conf
 USER nginx

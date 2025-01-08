@@ -9,7 +9,7 @@ Traccar/.env
 Traccar/traccar.xml
 Vaultwarden/.env
 Headwind/.env
-F-Droid/config.yml
+F-Droid/.env
 F-Droid/keystore.p12
 F-Droid/metadata/*
 !F-Droid/metadata/*.yml

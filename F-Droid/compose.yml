@@ -8,8 +8,7 @@ services:
     volumes:
       - ./apks.json:/apks.json:Z,ro
       - ./metadata:/fdroid/metadata:Z
-      - ./config.yml:/fdroid/config.yml:Z,ro
-      - ./keystore.p12:/fdroid/keystore.p12:Z,ro
+      - ./keystore.p12:/keystore.p12:Z,ro
       - /elysium/fdroid-data:/fdroid:Z
       - /elysium/fdroid-data:/cache:Z
     user: "101:101"
@@ -18,6 +17,13 @@ services:
     security_opt:
       - "no-new-privileges=true"
     read_only: true
+    env_file:
+      - .env
+    environment:
+      - REPO_URL=${REPO_URL}
+      - REPO_NAME=${REPO_NAME}
+      - KEYSTOREPASS=${KEYSTOREPASS}
+      - KEYPASS=${KEYPASS}
     networks:
       caddy_net:
     labels:
