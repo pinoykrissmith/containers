@@ -10,7 +10,7 @@ services:
       - ./metadata:/fdroid/metadata:Z
       - ./keystore.p12:/keystore.p12:Z,ro
       - /elysium/fdroid-data:/fdroid/repo:Z
-      - /elysium/fdroid-data:/cache:Z
+      - /elysium/fdroid-cache:/cache:Z
     user: "101:101"
     cap_drop:
       - "ALL"
