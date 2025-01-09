@@ -1,6 +1,7 @@
 FROM ghcr.io/nginxinc/nginx-unprivileged:stable-bookworm
 USER root
 ARG VERSION=2.3.4
+
 ENV LANG=C.UTF-8 \
     DEBIAN_FRONTEND=noninteractive
 RUN echo Etc/UTC > /etc/timezone \
@@ -30,3 +31,4 @@ RUN chmod +x /docker-entrypoint.d/99-fdroid-update.sh
 USER nginx
 WORKDIR /fdroid
 RUN printf '\n---\nsdk_path: /usr/lib/android-sdk\nrepo_url: {env: REPO_URL}\nrepo_name: {env: REPO_NAME}\nrepo_keyalias: host.containers.internal\nkeystore: /keystore.p12\nkeystorepass: {env: KEYSTOREPASS}\nkeypass: {env: KEYPASS}\nkeydname: CN=host.containers.internal, OU=F-Droid' > config.yml
+RUN chmod 0600 config.yml
