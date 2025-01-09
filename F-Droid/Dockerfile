@@ -20,15 +20,15 @@ RUN apt-get update \
 	&& pip install --no-cache-dir --break-system-packages \
 		git+https://github.com/androguard/androguard@16a6bd21946bfe3d75639ffd3d96957971b6553f \
 		git+https://gitlab.com/fdroid/fdroidserver@$VERSION \
+	&& sed -i -e '/repo_url/d' -e '/archive_url/d' /usr/local/lib/python*/dist-packages/fdroidserver/common.py \
 	&& rm -rf /var/cache/apt/*
 RUN printf '#!/bin/sh\njava -jar /usr/lib/android-sdk/build-tools/debian/apksigner.jar "$@"' > /usr/local/bin/apksigner \
 	&& chmod +x /usr/local/bin/apksigner
-RUN sed -i -e '/repo_url/d' -e '/archive_url/d' /usr/local/lib/python*/dist-packages/fdroidserver/common.py
 RUN wget -qO /download.py https://gitlab.com/CalyxOS/calyxos-fdroid-repo/-/raw/99d7f16b53bf55b76bedc15985da1f1da7084c2b/download.py
 COPY --chown=nginx:nginx nginx.conf /etc/nginx/nginx.conf
-RUN printf '#!/bin/sh\n/usr/local/bin/fdroid update -v' > /docker-entrypoint.d/99-fdroid-update.sh
-RUN chmod +x /docker-entrypoint.d/99-fdroid-update.sh
+RUN printf '#!/bin/sh\n/usr/local/bin/fdroid update -v' > /docker-entrypoint.d/99-fdroid-update.sh \
+	&& chmod +x /docker-entrypoint.d/99-fdroid-update.sh
 USER nginx
 WORKDIR /fdroid
-RUN printf '\n---\nsdk_path: /usr/lib/android-sdk\nrepo_url: {env: REPO_URL}\nrepo_name: {env: REPO_NAME}\nrepo_icon: repo/icons/icon.png\nrepo_keyalias: host.containers.internal\nkeystore: /keystore.p12\nkeystorepass: {env: KEYSTOREPASS}\nkeypass: {env: KEYPASS}\nkeydname: CN=host.containers.internal, OU=F-Droid' > config.yml
-RUN chmod 0600 config.yml
+RUN printf '\n---\nsdk_path: /usr/lib/android-sdk\nrepo_url: {env: REPO_URL}\nrepo_name: {env: REPO_NAME}\nrepo_keyalias: host.containers.internal\nkeystore: /keystore.p12\nkeystorepass: {env: KEYSTOREPASS}\nkeypass: {env: KEYPASS}\nkeydname: CN=host.containers.internal, OU=F-Droid' > config.yml \
+	&& chmod 0600 config.yml
