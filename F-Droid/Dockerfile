@@ -29,4 +29,4 @@ RUN printf '#!/bin/sh\n/usr/local/bin/fdroid update\n' > /docker-entrypoint.d/40
 RUN chmod +x /docker-entrypoint.d/40-fdroid-update.sh
 USER nginx
 WORKDIR /fdroid
-RUN printf "---\nsdk_path: /usr/lib/android-sdk\nrepo_url: {env: REPO_URL}\nrepo_name: {env: REPO_NAME}\nrepo_keyalias: host.containers.internal\nkeystore: /keystore.p12\nkeystorepass: {env: KEYSTOREPASS}\nkeypass: {env: KEYPASS}\nkeydname: CN=host.containers.internal, OU=F-Droid" > config.yml
+RUN printf '---\nsdk_path: /usr/lib/android-sdk\nrepo_url: {env: REPO_URL}\nrepo_name: {env: REPO_NAME}\nrepo_keyalias: host.containers.internal\nkeystore: /keystore.p12\nkeystorepass: {env: KEYSTOREPASS}\nkeypass: {env: KEYPASS}\nkeydname: CN=host.containers.internal, OU=F-Droid' > config.yml
