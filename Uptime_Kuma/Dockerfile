@@ -1,4 +1,5 @@
 FROM docker.io/louislam/uptime-kuma:1-alpine
+
 RUN apk update && apk add ca-certificates iptables ip6tables && rm -rf /var/cache/apk/*
 COPY --from=docker.io/tailscale/tailscale:stable /usr/local/bin/tailscaled /app/tailscaled
 COPY --from=docker.io/tailscale/tailscale:stable /usr/local/bin/tailscale /app/tailscale
