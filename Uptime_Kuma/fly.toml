@@ -1,0 +1,29 @@
+[[mounts]]
+  source = "data"
+  destination = "/app/data"
+
+[[services]]
+  [[services.ports]]
+    handlers = ["tls", "http"]
+    port = "443"
+
+  [[services.http]]
+    internal_port = 3001
+    force_https = true
+    allow = ["100.64.0.0/10"]
+
+  [[services.http]]
+    handlers = ["http"]
+    port = "80"
+    force_https = true
+    allow = ["0.0.0.0/0"]
+    [[services.http.rules]]
+      path = "/*"
+      method = ["GET", "POST", "PUT", "DELETE"]
+      action = "deny"
+
+[http_service]
+  auto_stop_machines = false
+  auto_start_machines = true
+  min_machines_running = 1
+  processes = ["app"]
