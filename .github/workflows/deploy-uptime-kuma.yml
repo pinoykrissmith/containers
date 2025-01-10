@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - '.github/workflows/build-uptime-kuma.yml'
+      - '.github/workflows/deploy-uptime-kuma.yml'
       - 'Uptime_Kuma/Dockerfile'
       - 'Uptime_Kuma/fly.toml'
   schedule:
