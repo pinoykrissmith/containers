@@ -1,3 +1,5 @@
+app = "uptime-kuma-tailscale-asahi"
+
 [[mounts]]
   source = "data"
   destination = "/app/data"
