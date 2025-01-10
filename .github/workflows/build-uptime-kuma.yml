@@ -20,7 +20,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: superfly/flyctl-actions/setup-flyctl@master
-      - run: flyctl deploy --remote-only
+      - run: flyctl deploy
         working-directory: Uptime_Kuma
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_UPTIME_KUMA }}
