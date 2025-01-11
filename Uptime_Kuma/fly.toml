@@ -6,7 +6,7 @@ app = "uptime-kuma-tailscale-asahi"
 
 [[services]]
   [[services.ports]]
-    handlers = ["tls", "http"]
+    handlers = ["tls"]
     port = "443"
 
   [[services.http]]
