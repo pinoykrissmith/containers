@@ -10,7 +10,7 @@ app = "uptime-kuma-tailscale-asahi"
     port = "443"
 
   [[services.http]]
-    internal_port = 443
+    internal_port = 3001
     force_https = true
     allow = ["100.64.0.0/10"]
 
