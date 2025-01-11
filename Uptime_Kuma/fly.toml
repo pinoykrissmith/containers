@@ -18,7 +18,7 @@ app = "uptime-kuma-tailscale-asahi"
     force_https = true
     allow = ["100.64.0.0/10"]
 
-  [[services.http]]
+  [[services.ports]]
     handlers = []
     port = "80"
 
