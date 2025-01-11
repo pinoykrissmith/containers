@@ -3,6 +3,7 @@ RUN xcaddy build \
     --with github.com/caddy-dns/cloudflare \
     --with github.com/WeidiDeng/caddy-cloudflare-ip \
     --with github.com/caddyserver/transform-encoder \
+    --with github.com/tailscale/caddy-tailscale \
     --with github.com/hslatman/caddy-crowdsec-bouncer/http@main \
     --with github.com/hslatman/caddy-crowdsec-bouncer/layer4@main
 
@@ -16,11 +17,8 @@ COPY --from=curl /tmp/Caddyfile /etc/caddy/Caddyfile
 COPY --from=curl /tmp/index.html /usr/share/caddy/index.html
 ENV XDG_CONFIG_HOME /config
 ENV XDG_DATA_HOME /data
-
-EXPOSE 80
 EXPOSE 443
 EXPOSE 443/udp
-EXPOSE 2019
 
 WORKDIR /srv
 CMD ["/caddy", "run", "--config", "/etc/caddy/Caddyfile", "--adapter", "caddyfile"]
