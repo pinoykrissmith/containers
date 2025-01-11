@@ -63,7 +63,7 @@
 	}
 }
 
-vw.{$MY_DOMAIN} vw.ts.{$MY_DOMAIN} {
+vw.{$MY_DOMAIN} {
 	import safe
 	import nolog
 	import cloudflare
@@ -74,7 +74,7 @@ vw.{$MY_DOMAIN} vw.ts.{$MY_DOMAIN} {
 	}
 }
 
-hmdm.{$MY_DOMAIN} hmdm.ts.{$MY_DOMAIN} {
+hmdm.{$MY_DOMAIN} {
 	import safe
 	import nolog
 	import cloudflare
@@ -85,7 +85,7 @@ hmdm.{$MY_DOMAIN} hmdm.ts.{$MY_DOMAIN} {
 	}
 }
 
-eb2ab.{$MY_DOMAIN} eb2ab.ts.{$MY_DOMAIN} {
+eb2ab.{$MY_DOMAIN} {
 	import safe
 	import nolog
 	import cloudflare
@@ -96,7 +96,7 @@ eb2ab.{$MY_DOMAIN} eb2ab.ts.{$MY_DOMAIN} {
 	}
 }
 
-fdroid.{$MY_DOMAIN} fdroid.ts.{$MY_DOMAIN} {
+fdroid.{$MY_DOMAIN} {
 	import safe
 	import nolog
 	import cloudflare
@@ -113,7 +113,7 @@ fdroid.{$MY_DOMAIN} fdroid.ts.{$MY_DOMAIN} {
 	}
 }
 
-nitter.{$MY_DOMAIN} nitter.ts.{$MY_DOMAIN} {
+nitter.{$MY_DOMAIN} {
 	import safe
 	import nolog
 	import cloudflare
@@ -136,7 +136,7 @@ nitter.{$MY_DOMAIN} nitter.ts.{$MY_DOMAIN} {
 	}
 }
 
-sync.{$MY_DOMAIN} sync.ts.{$MY_DOMAIN} {
+sync.{$MY_DOMAIN} {
 	import safe
 	import nolog
 	import cloudflare
@@ -147,7 +147,7 @@ sync.{$MY_DOMAIN} sync.ts.{$MY_DOMAIN} {
 	}
 }
 
-{$MY_DOMAIN} {
+{$MY_DOMAIN} www.{$MY_DOMAIN} {
 	import safe
 	import log
 	import cloudflare
@@ -155,15 +155,6 @@ sync.{$MY_DOMAIN} sync.ts.{$MY_DOMAIN} {
 	route {
 		crowdsec
 		reverse_proxy linkwarden:3000
-	}
-}
-
-www.{$MY_DOMAIN} {
-	import nolog
-	import cloudflare
-	route {
-		crowdsec
-		redir https://{$MY_DOMAIN}{uri} 301
 	}
 }
 
