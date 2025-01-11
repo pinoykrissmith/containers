@@ -4,7 +4,13 @@ app = "uptime-kuma-tailscale-asahi"
   source = "data"
   destination = "/app/data"
 
+[experimental]
+  allowed_public_ports = []
+  auto_rollback = false
+
 [[services]]
+  internal_port = 80
+  protocol = "tcp"
   [[services.ports]]
     handlers = ["tls"]
     port = "443"
@@ -14,15 +20,9 @@ app = "uptime-kuma-tailscale-asahi"
     force_https = true
     allow = ["100.64.0.0/10"]
 
-  [[services.http]]
-    handlers = ["http"]
+  [[services.ports]]
+    handlers = []
     port = "80"
-    force_https = true
-    allow = ["0.0.0.0/0"]
-    [[services.http.rules]]
-      path = "/*"
-      method = ["GET", "POST", "PUT", "DELETE"]
-      action = "deny"
 
 [http_service]
   auto_stop_machines = false
