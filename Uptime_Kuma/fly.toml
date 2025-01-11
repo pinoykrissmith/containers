@@ -9,6 +9,8 @@ app = "uptime-kuma-tailscale-asahi"
   auto_rollback = false
 
 [[services]]
+  internal_port = 80
+  protocol = "tcp"
   [[services.ports]]
     handlers = ["tls"]
     port = "443"
