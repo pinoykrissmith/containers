@@ -5,7 +5,7 @@ RUN go run github.com/caddyserver/xcaddy/cmd/xcaddy@latest build v${VERSION} --o
 	--with github.com/WeidiDeng/caddy-cloudflare-ip@f53b62aa13cb7ad79c8b47aacc3f2f03989b67e5 \
 	--with github.com/caddyserver/transform-encoder@47f376e021efdfdf2d47ca716c8f031b4fdfad92 \
 	--with github.com/tailscale/caddy-tailscale@f21c01b660c896bdd6bacc37178dc00d9af282b4 \
-	--with github.com/hslatman/caddy-crowdsec-bouncer/http@187784279826178d11bb26e7f0b7cd86aae052b9 # For compatibility with Tailscale
+	--with github.com/hslatman/caddy-crowdsec-bouncer/http@4b9340f6e29c1c508bb70e61906f3ff989b0df80
 
 FROM docker.io/curlimages/curl:latest as curl
 RUN curl -sL -o /tmp/Caddyfile https://github.com/caddyserver/dist/raw/509c30cecd3cbc4012f6b1cc88d8f3f000fb06e4/config/Caddyfile \
