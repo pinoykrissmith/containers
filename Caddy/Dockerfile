@@ -1,7 +1,7 @@
 FROM docker.io/library/golang:1 AS builder
 RUN go install github.com/caddyserver/xcaddy/cmd/xcaddy@latest
-ENV XCADDY_SETCAP 0
-RUN xcaddy build v2.8.4 \
+ENV GOTOOLCHAIN=
+RUN xcaddy build v2.8.4 --output /usr/bin/caddy \
     --with github.com/caddy-dns/cloudflare@89f16b99c18ef49c8bb470a82f895bce01cbaece \
     --with github.com/WeidiDeng/caddy-cloudflare-ip@f53b62aa13cb7ad79c8b47aacc3f2f03989b67e5 \
     --with github.com/caddyserver/transform-encoder \
