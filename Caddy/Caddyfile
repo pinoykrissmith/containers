@@ -169,26 +169,20 @@ immich.{$MY_DOMAIN} {
 	}
 }
 
-archive.{$MY_DOMAIN} {
+archive.{$MY_DOMAIN} archiveusercontent.{$MY_DOMAIN} {
 	import safe
 	import log
 	import cloudflare
-	redir /archive/* https://archiveusercontent.{$MY_DOMAIN}{uri} 302
-	encode zstd gzip
-	route {
-		crowdsec
-		reverse_proxy archivebox:8000
+	@notArchive {
+		host archiveusercontent.{$MY_DOMAIN}
+		not path /archive/*
 	}
-}
-
-archiveusercontent.{$MY_DOMAIN} {
-	import safe
-	import log
-	import cloudflare
-	encode zstd gzip
-	redir / https://archive.{$MY_DOMAIN}{uri} 301 {
-		not path /archive
+	@Archive {
+		host archive.{$MY_DOMAIN}
+		path /archive/*
 	}
+	redir @notArchive https://archive.{$MY_DOMAIN} 301
+	redir @Archive https://archiveusercontent.{$MY_DOMAIN}{uri} 302
 	route {
 		crowdsec
 		reverse_proxy archivebox:8000
