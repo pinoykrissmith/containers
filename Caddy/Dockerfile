@@ -1,7 +1,6 @@
 FROM docker.io/library/golang:1 AS builder
-RUN go install github.com/caddyserver/xcaddy/cmd/xcaddy@latest
-ENV GOTOOLCHAIN=
-RUN xcaddy build v2.8.4 --output /usr/bin/caddy \
+ARG VERSION=2.8.4
+RUN go run github.com/caddyserver/xcaddy/cmd/xcaddy@latest build v${VERSION} --output /usr/bin/caddy \
     --with github.com/caddy-dns/cloudflare@89f16b99c18ef49c8bb470a82f895bce01cbaece \
     --with github.com/WeidiDeng/caddy-cloudflare-ip@f53b62aa13cb7ad79c8b47aacc3f2f03989b67e5 \
     --with github.com/caddyserver/transform-encoder \
@@ -21,6 +20,5 @@ ENV XDG_CONFIG_HOME /config
 ENV XDG_DATA_HOME /data
 EXPOSE 443
 EXPOSE 443/udp
-
 WORKDIR /srv
 CMD ["/caddy", "run", "--config", "/etc/caddy/Caddyfile", "--adapter", "caddyfile"]
