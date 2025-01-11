@@ -6,7 +6,7 @@ on:
     branches:
       - main
     paths:
-      - '.github/workflows/build-caddy.yml'
+      - '.github/workflows/build-headwind.yml'
       - 'Headwind/Dockerfile'
   schedule:
     # Build the image weekly
