@@ -195,6 +195,15 @@ sync.{$TAILNET} {
 	reverse_proxy resilio-sync:8888
 }
 
+uptime.{$MY_DOMAIN} {
+	import nolog
+	import cloudflare
+	import lan
+	handle @allowed {
+		reverse_proxy http://uptime-kuma.{$TAILNET}:3001
+	}
+}
+
 {$MY_DOMAIN} www.{$MY_DOMAIN} {
 	import safe
 	import log
