@@ -10,13 +10,12 @@
 		api_url http://crowdsec:8080
 		api_key {env.CROWDSEC_API_KEY}
 		ticker_interval 15s
-	}	{
-		tailscale {
-			auth_key {env.TAILSCALE_AUTH_KEY}
-			ephemeral true
-			state_dir /data/tailscale
-			webui false
-		}
+	}
+	tailscale {
+		auth_key {env.TAILSCALE_AUTH_KEY}
+		ephemeral true
+		state_dir /data/tailscale
+		webui false
 	}
 }
 
