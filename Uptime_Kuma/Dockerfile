@@ -2,12 +2,8 @@ FROM docker.io/louislam/uptime-kuma:1 as malloc
 ARG VERSION=2024101200
 RUN apt-get update && apt-get install -y build-essential git openssh-client gnupg
 WORKDIR /malloc
-RUN git clone https://github.com/GrapheneOS/hardened_malloc.git -b ${VERSION} . \
-	&& curl -sL -o /malloc/signers https://grapheneos.org/allowed_signers
-RUN --network=none \
-   git config gpg.ssh.allowedSignersFile /malloc/signers \
-    && git verify-tag ${VERSION} \
-    && make CONFIG_NATIVE=false VARIANT=default
+RUN git clone https://github.com/GrapheneOS/hardened_malloc.git -b ${VERSION} .
+RUN --network=none make CONFIG_NATIVE=false VARIANT=default
 
 FROM docker.io/louislam/uptime-kuma:1
 COPY --from=malloc /malloc/out/libhardened_malloc.so /usr/local/lib/libhardened_malloc.so
