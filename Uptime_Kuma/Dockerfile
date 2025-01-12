@@ -5,7 +5,7 @@ RUN apt-get update && apt-get install -y build-essential git openssh-client gnup
 WORKDIR /malloc
 ADD --keep-git-dir=true https://github.com/GrapheneOS/hardened_malloc.git#${VERSION} .
 RUN --network=none \
-    git config gpg.ssh.allowedSignersFile /tmp/signersgrapheneos_allowed_signers \
+    git config gpg.ssh.allowedSignersFile /tmp/signers \
     && git verify-tag $(git describe --tags) \
     && make CONFIG_NATIVE=false VARIANT=default
 
