@@ -1,10 +1,10 @@
 app = "uptime-kuma-tailscale-asahi"
 
-[mounts]
+[[mounts]]
   source = "data"
   destination = "/app/data"
 
-[mounts]
+[[mounts]]
   source = "tailscale"
   destination = "/var/lib/tailscale"
 
