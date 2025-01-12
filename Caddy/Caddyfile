@@ -8,13 +8,13 @@
 	}
 	crowdsec {
 		api_url http://crowdsec:8080
-		api_key {env.CROWDSEC_API_KEY}
+		api_key "{env.CROWDSEC_API_KEY}"
 		ticker_interval 15s
 	}
 	tailscale {
-		auth_key {env.TAILSCALE_AUTH_KEY}
+		auth_key "{env.TS_AUTHKEY}"
 		ephemeral true
-		state_dir /data/tailscale
+		state_dir "/data/tailscale"
 		webui false
 	}
 }
@@ -69,18 +69,6 @@
 	}
 }
 
-(tailscale) {
-	@allowed {
-		remote_ip 100.64.0.0/10
-	}
-	handle {
-		abort
-	}
-	tls {
-		get_certificate tailscale
-	}
-}
-
 vw.{$MY_DOMAIN} {
 	import safe
 	import nolog
@@ -92,14 +80,11 @@ vw.{$MY_DOMAIN} {
 	}
 }
 
-:443 {
-	import safe
+vw.{$TAILNET} {
 	import nolog
-	import tailscale
+	tailscale_auth
 	bind tailscale/vw
-	handle @allowed {
-		reverse_proxy vaultwarden:80
-	}
+	reverse_proxy vaultwarden:80
 }
 
 hmdm.{$MY_DOMAIN} {
@@ -113,14 +98,11 @@ hmdm.{$MY_DOMAIN} {
 	}
 }
 
-:443 {
-	import safe
+hmdm.{$TAILNET} {
 	import nolog
-	import tailscale
+	tailscale_auth
 	bind tailscale/hmdm
-	handle @allowed {
-		reverse_proxy headwind:8080
-	}
+	reverse_proxy headwind:8080
 }
 
 eb2ab.{$MY_DOMAIN} {
@@ -134,14 +116,11 @@ eb2ab.{$MY_DOMAIN} {
 	}
 }
 
-:443 {
-	import safe
+eb2ab.{$TAILNET} {
 	import nolog
-	import tailscale
-	bind tailscale/hmdm
-	handle @allowed {
-		reverse_proxy ebook2audiobookpiper:7860
-	}
+	tailscale_auth
+	bind tailscale/eb2ab
+	reverse_proxy ebook2audiobookpiper:7860
 }
 
 fdroid.{$MY_DOMAIN} {
@@ -161,20 +140,11 @@ fdroid.{$MY_DOMAIN} {
 	}
 }
 
-:443 {
-	import safe
+fdroid.{$TAILNET} {
 	import nolog
-	import tailscale
+	tailscale_auth
 	bind tailscale/fdroid
-	handle @allowed {
-		reverse_proxy /repo/* fdroid:8080 {
-			header_up Location {http.request.scheme}://{http.request.host}/repo{http.request.uri}
-		}
-		@notRepo {
-			not path /repo*
-		}
-		redir @notRepo /repo/ 301
-	}
+	reverse_proxy fdroid:8080
 }
 
 nitter.{$MY_DOMAIN} {
@@ -200,14 +170,11 @@ nitter.{$MY_DOMAIN} {
 	}
 }
 
-:443 {
-	import safe
+nitter.{$TAILNET} {
 	import nolog
-	import tailscale
+	tailscale_auth
 	bind tailscale/nitter
-	handle @allowed {
-		reverse_proxy nitter-gluetun:8090
-	}
+	reverse_proxy nitter-gluetun:8090
 }
 
 sync.{$MY_DOMAIN} {
@@ -221,14 +188,11 @@ sync.{$MY_DOMAIN} {
 	}
 }
 
-:443 {
-	import safe
+sync.{$TAILNET} {
 	import nolog
-	import tailscale
-	bind tailscale/resilio
-	handle @allowed {
-		reverse_proxy resilio-sync:8090
-	}
+	tailscale_auth
+	bind tailscale/sync
+	reverse_proxy resilio-sync:8888
 }
 
 {$MY_DOMAIN} www.{$MY_DOMAIN} {
