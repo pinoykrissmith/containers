@@ -5,4 +5,4 @@ RUN curl -fsSL "https://pkgs.tailscale.com/stable/debian/$(grep VERSION_CODENAME
 	&& apt-get purge -y cloudflared && rm -f /etc/apt/sources.list.d/cloudflared.list \
 	&& apt-get update && apt-get -y upgrade && apt-get install -y ca-certificates iptables tailscale && rm -rf /var/cache/apt/*
 RUN sed -i '$i tailscaled --state=/var/lib/tailscale/tailscaled.state --socket=/var/run/tailscale/tailscaled.sock &' /app/extra/entrypoint.sh \
-	&& sed -i '$i tailscale up --auth-key=${TAILSCALE_AUTHKEY} --hostname=uptime-kuma' /app/extra/entrypoint.sh
+	&& sed -i '$i tailscale up --auth-key="${TAILSCALE_AUTHKEY}?ephemeral=true&preauthorized=true" --advertise-tags=tag:untrusted --hostname=uptime-kuma' /app/extra/entrypoint.sh
