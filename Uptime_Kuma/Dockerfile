@@ -6,7 +6,7 @@ RUN git clone https://github.com/GrapheneOS/hardened_malloc.git -b ${VERSION} . 
 	&& curl -sL -o signers https://grapheneos.org/allowed_signers
 RUN --network=none \
     git config gpg.ssh.allowedSignersFile signers \
-    && git verify-tag $(git describe --tags) \
+    && git verify-tag ${VERSION} \
     && make CONFIG_NATIVE=false VARIANT=default
 
 FROM docker.io/louislam/uptime-kuma:1
