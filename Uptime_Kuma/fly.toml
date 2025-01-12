@@ -1,8 +1,13 @@
 app = "uptime-kuma-tailscale-asahi"
 
-[[mounts]]
+[mounts]
+  [[mounts]]
   source = "data"
   destination = "/app/data"
+
+  [[mounts]]
+  source = "tailscale"
+  destination = "/var/lib/tailscale"
 
 [experimental]
   allowed_public_ports = []
