@@ -1,11 +1,11 @@
 FROM docker.io/louislam/uptime-kuma:1 as malloc
 ARG VERSION=2024101200
-RUN apt-get update && apt-get install -y build-essential git openssh-client gnupg \
-	&& curl -sL -o /tmp/signers https://grapheneos.org/allowed_signers
+RUN apt-get update && apt-get install -y build-essential git openssh-client gnupg
 WORKDIR /malloc
+RUN	curl -sL -o signers https://grapheneos.org/allowed_signers
 ADD --keep-git-dir=true https://github.com/GrapheneOS/hardened_malloc.git#${VERSION} .
 RUN --network=none \
-    git config gpg.ssh.allowedSignersFile /tmp/signers \
+    git config gpg.ssh.allowedSignersFile signers \
     && git verify-tag $(git describe --tags) \
     && make CONFIG_NATIVE=false VARIANT=default
 
