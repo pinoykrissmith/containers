@@ -22,6 +22,7 @@ services:
       MY_DOMAIN: "${MY_DOMAIN}"
       TORRENTS_PASS: "${TORRENTS_PASS}"
       CROWDSEC_API_KEY: "${CROWDSEC_API_KEY}"
+      TAILSCALE_AUTH_KEY: "${TAILSCALE_AUTH_KEY}"
       CADDY_ADMIN: "off"
     env_file:
       - .env
