@@ -5,7 +5,7 @@ WORKDIR /malloc
 RUN git clone https://github.com/GrapheneOS/hardened_malloc.git -b ${VERSION} . \
 	&& curl -sL -o /malloc/signers https://grapheneos.org/allowed_signers
 RUN --network=none \
-    && git config gpg.ssh.allowedSignersFile /malloc/signers \
+   git config gpg.ssh.allowedSignersFile /malloc/signers \
     && git verify-tag ${VERSION} \
     && make CONFIG_NATIVE=false VARIANT=default
 
