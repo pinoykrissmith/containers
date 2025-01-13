@@ -9,6 +9,15 @@ primary_region = "ewr"
   allowed_public_ports = []
   auto_rollback = false
 
+[checks]
+  [checks.uptime_kuma_check]
+    grace_period = "30s"
+    interval = "15s"
+    port = 3001
+    timeout = "10s"
+    type = "tcp"
+
+
 [[services]]
   [[services.ports]]
     handlers = ["tls"]
