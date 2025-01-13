@@ -5,6 +5,9 @@ primary_region = "ewr"
   source = "data"
   destination = "/app/data"
 
+[build]
+  dockerfile = "Dockerfile"
+
 [experimental]
   allowed_public_ports = []
   auto_rollback = false
@@ -32,3 +35,4 @@ primary_region = "ewr"
 [[vm]]
   size = "shared-cpu-1x"
   memory = "256mb"
+  cpu_kind = "shared"
