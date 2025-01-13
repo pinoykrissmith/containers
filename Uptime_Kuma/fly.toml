@@ -5,9 +5,6 @@ primary_region = "ewr"
   source = "data"
   destination = "/app/data"
 
-[build]
-  dockerfile = "Dockerfile"
-
 [experimental]
   allowed_public_ports = []
   auto_rollback = false
