@@ -13,4 +13,4 @@ AutoName: Tailscale
 RepoType: git
 Repo: https://github.com/tailscale/tailscale-android.git
 
-AllowedAPKSigningKeys: b39e7b77ec853483646b21b4a3e3ca540ba094ef8daa18e87e0be1fa4638d321
+AllowedAPKSigningKeys: 5cdb295551bfe1a087fed6acda07141c6c929fa7c29bd273a7092813acc434bf
