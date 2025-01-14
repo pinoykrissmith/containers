@@ -186,5 +186,13 @@
       "fdroid": "net.typeblog.shelter",
       "fingerprint": "1A7E446C491C80BC2F83844A26387887990F97F2F379AE7B109679FEAE3DBC8C"
     }
+  },
+  {
+    "name": "Cromite",
+    "baseUrl": "https://www.cromite.org/fdroid/repo/{ver}",
+    "version": {
+      "fdroid": "org.cromite.cromite",
+      "fingerprint": "49F37E74DEE483DCA2B991334FB5A0200787430D0B5F9A783DD5F13695E9517B"
+    }
   }
 ]

@@ -1,0 +1,11 @@
+Categories:
+  - Internet
+License: GPL-3.0
+WebSite: https://github.com/uazo/cromite
+SourceCode: https://github.com/uazo/cromite
+
+AutoName: Cromite
+RepoType: git
+Repo: https://github.com/uazo/cromite.git
+
+AllowedAPKSigningKeys: 633fa41d8211d6d0916a819b89668c6de92e64232da67f9d16fd81c3b7e923ff
