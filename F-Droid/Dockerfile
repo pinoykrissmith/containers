@@ -28,7 +28,7 @@ RUN printf "worker_processes  auto;\npid        /tmp/nginx.pid;\nevents {\n    w
 	&& chown nginx:nginx /etc/nginx/nginx.conf
 RUN printf '#!/bin/sh\n/usr/local/bin/fdroid update -v' > /docker-entrypoint.d/99-fdroid-update.sh \
 	&& chmod +x /docker-entrypoint.d/99-fdroid-update.sh
-RUN printf '#!/bin/bash\nfor apk in *.apk; do\n    if [[ -f "repo/$apk" ]]; then\n        json=$(androguard apkid "$apk")\n        package_name=$(echo "$json" | grep -oP \'(?<=")[^"]*(?="\)\' | head -n 2 | awk \'NR > 1\')\n        if [[ ! -f "metadata/$package_name.yml" ]]; then\n            rm "$apk"\n        fi\n    fi\ndone\n' > /usr/local/bin/cleanup \
+RUN printf '#!/bin/bash\nfor apk in *.apk; do\n    if [[ -f "repo/$apk" ]]; then\n        json=$(androguard apkid "$apk")\n        package_name=$(echo "$json" | grep -oP \'(?<=")[^"]*(?="\)\' | head -n 2 | awk \'NR > 1\')\n        if [[ ! -f "metadata/$package_name.yml" ]]; then\n            rm "repo/$apk"\n        fi\n    fi\ndone\n' > /usr/local/bin/cleanup \
 	&& chmod +x /usr/local/bin/cleanup
 USER nginx
 WORKDIR /fdroid
