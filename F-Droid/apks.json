@@ -25,10 +25,10 @@
   },
   {
     "name": "DAVx5",
-    "baseUrl": "https://f-droid.org/repo/{ver}",
+    "baseUrl": "https://github.com/bitfireAT/davx5-ose/releases/download/v{ver}/davx5-ose-{ver}-release.apk",
     "version": {
-      "fdroid": "at.bitfire.davdroid",
-      "fingerprint": "43238D512C1E5EB2D6569F4A3AFBF5523418B82E0A3ED1552770ABB9A9C9CCAB"
+      "url": "https://api.github.com/repos/bitfireAT/davx5-ose/releases/latest",
+      "regex": "\"tag_name\":\\s*\"v([^\\\"]+)\""
     }
   },
   {
@@ -133,10 +133,10 @@
   },
   {
     "name": "Cromite",
-    "baseUrl": "https://www.cromite.org/fdroid/repo/{ver}",
+    "baseUrl": "https://github.com/uazo/cromite/releases/download/{ver}/arm64_ChromePublic.apk",
     "version": {
-      "fdroid": "org.cromite.cromite",
-      "fingerprint": "49F37E74DEE483DCA2B991334FB5A0200787430D0B5F9A783DD5F13695E9517B"
+      "url": "https://api.github.com/repos/uazo/cromite/releases/latest",
+      "json": "tag_name"
     }
   }
 ]
