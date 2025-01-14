@@ -5,4 +5,5 @@ After=fdroid.service
 [Service]
 Type=oneshot
 ExecStart=/usr/bin/podman exec --user 101:101 --workdir=/ fdroid python3 /download.py
+ExecStartPost=/usr/bin/podman exec --user 101:101 --workdir=/fdroid fdroid cleanup
 ExecStartPost=/usr/bin/podman exec --user 101:101 --workdir=/fdroid fdroid fdroid update
