@@ -48,14 +48,6 @@
     }
   },
   {
-    "name": "OrganicMaps",
-    "baseUrl": "https://f-droid.org/repo/{ver}",
-    "version": {
-      "fdroid": "app.organicmaps",
-      "fingerprint": "43238D512C1E5EB2D6569F4A3AFBF5523418B82E0A3ED1552770ABB9A9C9CCAB"
-    }
-  },
-  {
     "name": "Signal",
     "baseUrl": "https://updates.signal.org/android/Signal-Android-website-prod-universal-release-{ver}.apk",
     "version": {
@@ -137,6 +129,14 @@
     "version": {
       "url": "https://api.github.com/repos/uazo/cromite/releases/latest",
       "json": "tag_name"
+    }
+  },
+  {
+    "name": "Tailscale",
+    "baseUrl": "https://pkgs.tailscale.com/stable/tailscale-android-universal-{ver}.apk",
+    "version": {
+      "url": "https://api.github.com/repos/tailscale/tailscale-android/releases/latest",
+      "json": "name"
     }
   }
 ]
