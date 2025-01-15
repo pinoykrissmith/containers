@@ -9,6 +9,7 @@ RUN go run github.com/caddyserver/xcaddy/cmd/xcaddy@latest build v${VERSION} --o
 	--with github.com/hslatman/caddy-crowdsec-bouncer/http@28ef1be0db6542a5efd451009c72ec419b815faa
 
 FROM gcr.io/distroless/static-debian12:nonroot
+ARG VERSION
 COPY --from=builder /usr/bin/caddy /caddy
 COPY --from=docker.io/library/caddy:${VERSION} /etc/caddy/Caddyfile /etc/caddy/Caddyfile
 COPY --from=docker.io/library/caddy:${VERSION} /usr/share/caddy/index.html /usr/share/caddy/index.html
@@ -16,5 +17,4 @@ ENV XDG_CONFIG_HOME /config
 ENV XDG_DATA_HOME /data
 EXPOSE 443
 EXPOSE 443/udp
-WORKDIR /srv
 CMD ["/caddy", "run", "--config", "/etc/caddy/Caddyfile", "--adapter", "caddyfile"]
