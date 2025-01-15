@@ -7,7 +7,7 @@ on:
       - main
     paths:
       - '.github/workflows/build-traccar.yml'
-      - 'Tracacr/Dockerfile'
+      - 'Traccar/Dockerfile'
   schedule:
     # Build the image weekly
     - cron: '15 0 * * 5'
