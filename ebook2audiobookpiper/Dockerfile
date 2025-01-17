@@ -1,4 +1,4 @@
-FROM docker.io/library/python:3.10-slim
+FROM docker.io/library/python:3.9-slim
 ARG UID=3009
 RUN apt-get update \
 	&& apt-get upgrade -y \
@@ -6,7 +6,7 @@ RUN apt-get update \
 	&& rm -rf /var/cache/apt/*
 
 RUN pip install --no-cache-dir --upgrade pip \
-	&& pip install --no-cache-dir piper-tts pydub nltk beautifulsoup4 ebooklib tqdm spacy gradio blis==1.1.0 \
+	&& pip install --no-cache-dir piper-tts pydub nltk beautifulsoup4 ebooklib tqdm spacy gradio \
 	&& python -m spacy download en_core_web_sm
 
 COPY nltk.zip /tmp
