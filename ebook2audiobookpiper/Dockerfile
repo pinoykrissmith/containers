@@ -6,7 +6,7 @@ RUN apt-get update \
     && rm -rf /var/cache/apt/*
 
 RUN pip install --no-cache-dir --upgrade pip \
-	&& pip install --no-cache-dir piper-tts pydub nltk beautifulsoup4 ebooklib tqdm spacy gradio blis=1.1.0 \
+	&& pip install --no-cache-dir piper-tts pydub nltk beautifulsoup4 ebooklib tqdm spacy gradio blis==1.1.0 \
     && python -m spacy download en_core_web_sm
 
 COPY nltk.zip /tmp
