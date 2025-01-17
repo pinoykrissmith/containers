@@ -1,12 +1,13 @@
 FROM docker.io/library/python:3.10-slim
 ARG UID=3009
+
 RUN apt-get update \
 	&& apt-get upgrade -y \
 	&& apt-get install -y calibre ffmpeg git unzip \
 	&& rm -rf /var/cache/apt/*
 
 RUN pip install --no-cache-dir --upgrade pip \
-	&& pip install --no-cache-dir piper-tts==1.2.0 pydub==0.25.1 nltk==3.9.1 beautifulsoup4==4.12.3 ebooklib==0.18 tqdm==4.67.1 spacy==3.8.3 gradio==5.11.0 \
+	&& curl -sSL https://github.com/DrewThomasson/ebook2audiobookpiper-tts/raw/8284918b7ae5d563f0c4d5b42abd0f6402190156/requirements.txt | pip install - \
 	&& python -m spacy download en_core_web_sm
 
 COPY nltk.zip /tmp
