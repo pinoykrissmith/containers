@@ -9,10 +9,10 @@ RUN pip install --no-cache-dir --upgrade pip \
 	&& pip install --no-cache-dir piper-tts pydub nltk beautifulsoup4 ebooklib tqdm spacy gradio \
 	&& python -m spacy download en_core_web_sm
 
-COPY nltk.zip /tmp
-RUN unzip -q "/tmp/nltk.zip" -d "/tmp" \
-	&& rm -rf "/usr/local/lib/python3.10/site-packages/nltk" \
-	&& mv "/tmp/nltk" "/usr/local/lib/python3.10/site-packages/nltk"
+#COPY nltk.zip /tmp
+#RUN unzip -q "/tmp/nltk.zip" -d "/tmp" \
+#	&& rm -rf "/usr/local/lib/python3.10/site-packages/nltk" \
+#	&& mv "/tmp/nltk" "/usr/local/lib/python3.10/site-packages/nltk"
 
 RUN mkdir /app \
 	&& chown --recursive ${UID}:${UID} /app \
