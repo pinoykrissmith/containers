@@ -1,4 +1,4 @@
-FROM docker.io/library/python:3.9-slim
+FROM docker.io/library/python:3.10-slim
 ARG UID=3009
 RUN apt-get update \
 	&& apt-get upgrade -y \
@@ -6,13 +6,13 @@ RUN apt-get update \
 	&& rm -rf /var/cache/apt/*
 
 RUN pip install --no-cache-dir --upgrade pip \
-	&& pip install --no-cache-dir piper-tts pydub nltk beautifulsoup4 ebooklib tqdm spacy gradio \
+	&& pip install --no-cache-dir piper-tts==1.2.0 pydub==0.25.1 nltk==3.9.1 beautifulsoup4==4.12.3 ebooklib==0.18 tqdm==4.67.1 spacy==2.8.3 gradio==5.11.0 \
 	&& python -m spacy download en_core_web_sm
 
-#COPY nltk.zip /tmp
-#RUN unzip -q "/tmp/nltk.zip" -d "/tmp" \
-#	&& rm -rf "/usr/local/lib/python3.10/site-packages/nltk" \
-#	&& mv "/tmp/nltk" "/usr/local/lib/python3.10/site-packages/nltk"
+COPY nltk.zip /tmp
+RUN unzip -q "/tmp/nltk.zip" -d "/tmp" \
+	&& rm -rf "/usr/local/lib/python3.10/site-packages/nltk" \
+	&& mv "/tmp/nltk" "/usr/local/lib/python3.10/site-packages/nltk"
 
 RUN mkdir /app \
 	&& chown --recursive ${UID}:${UID} /app \
