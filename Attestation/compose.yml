@@ -3,7 +3,7 @@ services:
     image: ghcr.io/pinoykrissmith/containers:attestation-backend
     container_name: attestation-backend
     volumes:
-      - /elysium/attestation-data:/data
+      - /elysium/attestation-data:/data:Z
     user: "65532:65532"
     env_file:
       - .env
