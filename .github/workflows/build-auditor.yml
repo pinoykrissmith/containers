@@ -10,11 +10,15 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Decode Keystore
+        run: |
+          LATEST=$(git ls-remote --tags https://github.com/GrapheneOS/Auditor.git | awk '{print $2}' | grep -v '\^{}' | sort -V | tail -n 1 | sed 's|refs/tags/||')
+
       - name: Checking out branch
         uses: actions/checkout@v3
         with:
           repository: GrapheneOS/Auditor
-          ref: refs/tags/$(git ls-remote --tags https://github.com/GrapheneOS/Auditor.git | awk '{print $2}' | grep -v '\^{}' | sort -V | tail -n 1 | sed 's|refs/tags/||')
+          ref: refs/tags/$LATEST
 
       - name: Setup Java
         uses: actions/setup-java@v3
