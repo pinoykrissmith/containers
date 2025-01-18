@@ -204,6 +204,17 @@ uptime.{$MY_DOMAIN} {
 	}
 }
 
+attestation.{$MY_DOMAIN} {
+	import safe
+	import nolog
+	import cloudflare
+	import lan
+	encode zstd gzip
+	handle @allowed {
+		reverse_proxy attestation:8080
+	}
+}
+
 {$MY_DOMAIN} www.{$MY_DOMAIN} {
 	import safe
 	import log

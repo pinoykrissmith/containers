@@ -1,4 +1,4 @@
-name: Build F-Droid
+name: Build Attestation Backend
 
 on:
   workflow_dispatch:
@@ -6,8 +6,8 @@ on:
     branches:
       - main
     paths:
-      - '.github/workflows/build-fdroid.yml'
-      - 'F-Droid/Dockerfile'
+      - '.github/workflows/build-attestation.yml'
+      - 'Attestation/attestation-backend.dockerfile'
   schedule:
     # Build the image weekly
     - cron: '15 0 * * 5'
@@ -15,7 +15,7 @@ on:
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: pinoykrissmith/containers
-  TAG: fdroid
+  TAG: attestation-backend
 
 jobs:
   build:
@@ -57,7 +57,7 @@ jobs:
         id: build-and-push
         uses: docker/build-push-action@v6
         with:
-          context: ./F-Droid
+          context: ./Attestation/attestation-backend.dockerfile
           platforms: linux/amd64,linux/arm64
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}

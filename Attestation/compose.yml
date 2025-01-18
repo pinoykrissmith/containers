@@ -1,0 +1,40 @@
+services:
+  attestation-backend:
+    image: ghcr.io/pinoykrissmith/containers:attestation-backend
+    container_name: attestation-backend
+    volumes:
+      - /elysium/attestation-data:/data
+    user: "65532:65532"
+    env_file:
+      - .env
+    networks:
+      caddy_net:
+    cap_drop:
+      - "ALL"
+    labels:
+      com.centurylinklabs.watchtower.enable: "true"
+      io.containers.autoupdate: "registry"
+    security_opt:
+      - "no-new-privileges=true"
+    read_only: true
+
+  attestation:
+    image: ghcr.io/pinoykrissmith/containers:attestation
+    container_name: attestation-proxy
+    env_file:
+      - .env
+    networks:
+      caddy_net:
+    user: "101:101"
+    read_only: true
+    cap_drop:
+      - "ALL"
+    labels:
+      com.centurylinklabs.watchtower.enable: "true"
+      io.containers.autoupdate: "registry"
+    security_opt:
+      - "no-new-privileges=true"
+
+networks:
+  caddy_net:
+    external: true
