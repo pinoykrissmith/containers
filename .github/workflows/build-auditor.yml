@@ -5,7 +5,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checking out latest Auditor tag
+      - name: Checking out branch
       uses: actions/checkout@v3
       with:
           repository: GrapheneOS/Auditor
