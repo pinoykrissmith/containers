@@ -1,0 +1,43 @@
+name: Build Custom Auditor
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - '.github/workflows/build-auditor.yml'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Find latest tag
+        uses: oprypin/find-latest-tag@v1
+        with:
+          repository: GrapheneOS/Auditor
+          releases-only: true
+        id: auditor
+
+      - name: Checkout Auditor repository
+        uses: actions/checkout@v4
+        with:
+          repository: GrapheneOS/Auditor
+          ref: ${{ steps.auditor.outputs.tag }}
+
+      - name: Replace attestation.app with own server
+        env:
+          DOMAIN: ${{ secrets.DOMAIN }}
+        run: |
+          sed -i "s/attestation\.app/$DOMAIN/g" app/src/main/java/app/attestation/auditor/RemoteVerifyJob.java
+          sed -i 's/applicationId = "app\.attestation\.auditor"/applicationId = "app.selfhosted.auditor"/g' app/build.gradle.kts
+
+      - name: Build with Gradle
+        run: ./gradlew assembleRelease --stacktrace
+
+      - name: Upload Release Build to Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+           name: release-artifacts
+           path: app/build/outputs/apk/release/*.apk
