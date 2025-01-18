@@ -204,7 +204,7 @@ uptime.{$MY_DOMAIN} {
 	}
 }
 
-attestation.{$MY_DOMAIN} {
+auditor.{$MY_DOMAIN} {
 	import safe
 	import nolog
 	import cloudflare
