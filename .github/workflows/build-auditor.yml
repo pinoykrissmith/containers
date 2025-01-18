@@ -1,7 +1,4 @@
-  workflow_dispatch:
-    inputs:
-      name:
-        default: "Build custom Auditor"
+name: Build Custom Auditor
 
 jobs:
   build:
