@@ -1,0 +1,12 @@
+Categories:
+  - Default
+License: MIT
+WebSite: https://attestation.app
+SourceCode: https://github.com/GrapheneOS/Auditor
+IssueTracker: https://github.com/GrapheneOS/Auditor/issues
+Changelog: https://github.com/GrapheneOS/Auditor/releases
+
+Name: Auditor
+
+RepoType: git
+Repo: https://github.com/GrapheneOS/Auditor.git

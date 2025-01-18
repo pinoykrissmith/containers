@@ -10,7 +10,9 @@ RUN git clone --depth=1 https://github.com/GrapheneOS/sqlite4java.git . \
 WORKDIR /app
 RUN git clone --depth=1 https://github.com/GrapheneOS/AttestationServer.git . \
 	&& sed -i 's/::1/0.0.0.0/g' src/main/java/app/attestation/server/AttestationServer.java \
+	&& sed -i 's/app\.attestation\.auditor/app\.selfhosted\.auditor/g' src/main/java/app/attestation/server/AttestationProtocol.java \
 	&& sed -i 's/"attestation.app"/System.getenv("DOMAIN") != null ? System.getenv("DOMAIN") : "attestation.app"/g' src/main/java/app/attestation/server/AttestationServer.java \
+	&& sed -i 's/"990E04F0864B19F14F84E0E432F7A393F297AB105A22C1E1B10B442A4A62C42C"/System.getenv("CERTIFICATE") != null ? System.getenv("CERTIFICATE") : "990E04F0864B19F14F84E0E432F7A393F297AB105A22C1E1B10B442A4A62C42C"/g' src/main/java/app/attestation/server/AttestationProtocol.java \
 	&& ./gradlew build && cp /tmp/sqlite4java/out/linux-$(uname -m)/*.so libs/sqlite4java-prebuilt
 
 FROM gcr.io/distroless/java21-debian12:nonroot

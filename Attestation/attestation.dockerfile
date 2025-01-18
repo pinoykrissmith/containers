@@ -18,7 +18,9 @@ ENV SKIP_REMOTE_PUBLISHING="1"
 WORKDIR /app
 RUN git clone --depth=1 https://github.com/GrapheneOS/AttestationServer . \
 	&& sed -i 's/::1/0.0.0.0/g' src/main/java/app/attestation/server/AttestationServer.java \
+	&& sed -i 's/app\.attestation\.auditor/app\.selfhosted\.auditor/g' src/main/java/app/attestation/server/AttestationProtocol.java \
 	&& sed -i 's/"attestation.app"/System.getenv("DOMAIN") != null ? System.getenv("DOMAIN") : "attestation.app"/g' src/main/java/app/attestation/server/AttestationServer.java \
+	&& sed -i 's/"990E04F0864B19F14F84E0E432F7A393F297AB105A22C1E1B10B442A4A62C42C"/System.getenv("CERTIFICATE") != null ? System.getenv("CERTIFICATE") : "990E04F0864B19F14F84E0E432F7A393F297AB105A22C1E1B10B442A4A62C42C"/g' src/main/java/app/attestation/server/AttestationProtocol.java \
 	&& npm i && python3 -m venv /opt/venv && pip3 install -r requirements.txt && ./process-static
 
 FROM ghcr.io/nginxinc/nginx-unprivileged:stable-alpine
