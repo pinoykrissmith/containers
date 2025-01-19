@@ -47,11 +47,8 @@ COPY --from=0 --chown=nginx:nginx /app/nginx-tmp/snippets /etc/nginx/snippets
 COPY --from=0 --chown=nginx:nginx /app/static-tmp /srv/attestation.app_a
 COPY --chown=nginx:nginx ./nginx.conf /etc/nginx/nginx.conf
 COPY --from=ghcr.io/nginxinc/nginx-unprivileged:stable-alpine-slim /etc/nginx/conf.d/default.conf /etc/nginx/conf.d/default.conf
-COPY --from=ghcr.io/nginxinc/nginx-unprivileged:stable-alpine-slim /etc/nginx/conf.d/default.conf /etc/nginx/conf.d/default.conf
-COPY --from=ghcr.io/nginxinc/nginx-unprivileged:stable-alpine-slim /docker-entrypoint.d/10-listen-on-ipv6-by-default.sh /docker-entrypoint.d
-COPY --from=ghcr.io/nginxinc/nginx-unprivileged:stable-alpine-slim /docker-entrypoint.d/15-local-resolvers.envsh /docker-entrypoint.d
-COPY --from=ghcr.io/nginxinc/nginx-unprivileged:stable-alpine-slim /docker-entrypoint.d/20-envsubst-on-templates.sh /docker-entrypoint.d
-COPY --from=ghcr.io/nginxinc/nginx-unprivileged:stable-alpine-slim /docker-entrypoint.d/30-tune-worker-processes.sh /docker-entrypoint.d
+COPY --from=ghcr.io/nginxinc/nginx-unprivileged:stable-alpine-slim /docker-entrypoint.d /docker-entrypoint.d
+COPY --from=ghcr.io/nginxinc/nginx-unprivileged:stable-alpine-slim /docker-entrypoint.sh /docker-entrypoint.sh
 
 EXPOSE 8080
 STOPSIGNAL SIGQUIT
