@@ -130,10 +130,8 @@ fdroid.{$MY_DOMAIN} {
 		reverse_proxy /repo/* fdroid:8080 {
 			header_up Location {http.request.scheme}://{http.request.host}/repo{http.request.uri}
 		}
-		@notRepo {
-			not path /repo*
-		}
-		redir @notRepo /repo/ 301
+		rewrite /repo /repo/
+		redir / /repo
 	}
 }
 
