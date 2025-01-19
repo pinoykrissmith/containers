@@ -17,12 +17,12 @@ services:
     security_opt:
       - "no-new-privileges=true"
     read_only: true
+    env_file:
+      - .env
 
   attestation:
     image: ghcr.io/pinoykrissmith/containers:attestation
     container_name: attestation
-    env_file:
-      - .env
     networks:
       caddy_net:
     user: "101:101"
