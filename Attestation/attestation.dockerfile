@@ -56,4 +56,5 @@ COPY --from=ghcr.io/nginxinc/nginx-unprivileged:mainline-alpine-slim /docker-ent
 EXPOSE 8080
 STOPSIGNAL SIGQUIT
 USER $UID
+ENTRYPOINT ["/docker-entrypoint.sh"]
 CMD ["nginx", "-g", "daemon off;"]
