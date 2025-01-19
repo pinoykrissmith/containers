@@ -32,7 +32,7 @@ RUN addgroup -g $GID -S nginx || true \
 	&& apk add --no-cache nginx nginx-mod-http-brotli brotli \
 	&& rm -rf /var/cache/apk/*
 
-RUN chown -R $UID:0 /var/cache/nginx
+RUN chown -R $UID:0 /var/cache/nginx \
 	&& chmod -R g+w /var/cache/nginx \
 	&& chown -R $UID:0 /etc/nginx \
 	&& chmod -R g+w /etc/nginx
