@@ -32,8 +32,7 @@ RUN addgroup -g $GID -S nginx || true \
 	&& apk add --no-cache nginx nginx-mod-http-brotli brotli \
 	&& rm -rf /var/cache/apk/*
 
-RUN sed -i 's,listen       80;,listen       8080;,' /etc/nginx/conf.d/default.conf \
-	&& chown -R $UID:0 /var/cache/nginx \
+RUN chown -R $UID:0 /var/cache/nginx
 	&& chmod -R g+w /var/cache/nginx \
 	&& chown -R $UID:0 /etc/nginx \
 	&& chmod -R g+w /etc/nginx
@@ -47,11 +46,12 @@ COPY --from=0 --chown=nginx:nginx /app/nginx-tmp/root_attestation.app.conf /etc/
 COPY --from=0 --chown=nginx:nginx /app/nginx-tmp/snippets /etc/nginx/snippets
 COPY --from=0 --chown=nginx:nginx /app/static-tmp /srv/attestation.app_a
 COPY --chown=nginx:nginx ./nginx.conf /etc/nginx/nginx.conf
-COPY --from=ghcr.io/nginxinc/nginx-unprivileged:mainline-alpine-slim /docker-entrypoint.sh /
-COPY --from=ghcr.io/nginxinc/nginx-unprivileged:mainline-alpine-slim /docker-entrypoint.d/10-listen-on-ipv6-by-default.sh /docker-entrypoint.d
-COPY --from=ghcr.io/nginxinc/nginx-unprivileged:mainline-alpine-slim /docker-entrypoint.d/15-local-resolvers.envsh /docker-entrypoint.d
-COPY --from=ghcr.io/nginxinc/nginx-unprivileged:mainline-alpine-slim /docker-entrypoint.d/20-envsubst-on-templates.sh /docker-entrypoint.d
-COPY --from=ghcr.io/nginxinc/nginx-unprivileged:mainline-alpine-slim /docker-entrypoint.d/30-tune-worker-processes.sh /docker-entrypoint.d
+COPY --from=ghcr.io/nginxinc/nginx-unprivileged:stable-alpine-slim /etc/nginx/conf.d/default.conf /etc/nginx/conf.d/default.conf
+COPY --from=ghcr.io/nginxinc/nginx-unprivileged:stable-alpine-slim /etc/nginx/conf.d/default.conf /etc/nginx/conf.d/default.conf
+COPY --from=ghcr.io/nginxinc/nginx-unprivileged:stable-alpine-slim /docker-entrypoint.d/10-listen-on-ipv6-by-default.sh /docker-entrypoint.d
+COPY --from=ghcr.io/nginxinc/nginx-unprivileged:stable-alpine-slim /docker-entrypoint.d/15-local-resolvers.envsh /docker-entrypoint.d
+COPY --from=ghcr.io/nginxinc/nginx-unprivileged:stable-alpine-slim /docker-entrypoint.d/20-envsubst-on-templates.sh /docker-entrypoint.d
+COPY --from=ghcr.io/nginxinc/nginx-unprivileged:stable-alpine-slim /docker-entrypoint.d/30-tune-worker-processes.sh /docker-entrypoint.d
 
 EXPOSE 8080
 STOPSIGNAL SIGQUIT
