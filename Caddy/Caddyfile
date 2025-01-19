@@ -259,6 +259,9 @@ auditor.{$MY_DOMAIN} {
 		path /auditor/*
 		path /api/*
 		path /about
+		path /challenge*
+		path /submit*
+		path /verify*
 	}
 	route {
 		crowdsec
