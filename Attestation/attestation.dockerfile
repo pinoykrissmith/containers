@@ -40,6 +40,8 @@ RUN mkdir /var/cache/nginx \
 
 RUN ln -sf /dev/stdout /var/log/nginx/access.log \
 	&& ln -sf /dev/stderr /var/log/nginx/error.log \
+	&& ln -s /usr/lib/nginx/modules/ngx_http_brotli_filter_module.so /etc/nginx/modules/ngx_http_brotli_filter_module.so \
+	&& /usr/lib/nginx/modules/ngx_http_brotli_static_module.so /etc/nginx/modules/ngx_http_brotli_static_module.so \
 	&& mkdir /docker-entrypoint.d
 
 COPY --from=0 --chown=nginx:nginx /app/nginx-tmp/mime.types /etc/nginx/
