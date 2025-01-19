@@ -131,7 +131,7 @@ fdroid.{$MY_DOMAIN} {
 			header_up Location {http.request.scheme}://{http.request.host}/repo{http.request.uri}
 		}
 		rewrite /repo /repo/
-		redir / /repo
+		redir / /repo/
 	}
 }
 
