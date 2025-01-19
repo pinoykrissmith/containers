@@ -261,8 +261,8 @@ auditor.{$MY_DOMAIN} {
 		path /about
 	}
 	route {
-			crowdsec
-			reverse_proxy @allowed attestation:8080
+		crowdsec
+		reverse_proxy @allowed attestation:8080
 	}
 	redir / /about 301
 }
