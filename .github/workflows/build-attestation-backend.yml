@@ -6,7 +6,7 @@ on:
     branches:
       - main
     paths:
-      - '.github/workflows/build-attestation.yml'
+      - '.github/workflows/build-attestation-backend.yml'
       - 'Attestation/attestation-backend.dockerfile'
   schedule:
     # Build the image weekly
