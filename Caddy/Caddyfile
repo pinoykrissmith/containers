@@ -127,12 +127,9 @@ fdroid.{$MY_DOMAIN} {
 	import lan
 	encode zstd gzip
 	route @lan {
-		reverse_proxy /repo/* fdroid:8080 {
-			header_up Location {http.request.scheme}://{http.request.host}/repo{http.request.uri}
-		}
-		rewrite /repo /repo/
-		redir / /repo/
+		reverse_proxy /repo* fdroid:8080
 	}
+	redir / /repo
 }
 
 fdroid.{$TAILNET} {
