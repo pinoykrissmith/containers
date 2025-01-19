@@ -8,6 +8,7 @@ on:
     paths:
       - '.github/workflows/build-attestation.yml'
       - 'Attestation/attestation.dockerfile'
+      - 'Attestation/nginx.conf'
   schedule:
     # Build the image weekly
     - cron: '15 0 * * 5'
