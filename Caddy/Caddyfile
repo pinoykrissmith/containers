@@ -255,15 +255,26 @@ auditor.{$MY_DOMAIN} {
 	import safe
 	import log
 	import cloudflare
+	@allowed {
+		path /auditor/*
+		path /api/*
+		path /about
+	}
 	route {
-		@Auditor {
-			not path /auditor/*
-			not path /api/*
-		}
-		route {
 			crowdsec
-			respond @Auditor "Access Denied" 403
-			reverse_proxy attestation:8080
+			reverse_proxy @allowed attestation:8080
+	}
+	redir / /about 301
+}
+
+auditor.admin.{$MY_DOMAIN} {
+	import safe
+	import nolog
+	import cloudflare
+	import lan
+	route @lan {
+		reverse_proxy attestation:8080 {
+			header_up Origin "https://auditor.{$MY_DOMAIN}"
 		}
 	}
 }
