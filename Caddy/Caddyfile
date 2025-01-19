@@ -209,7 +209,6 @@ auditor.{$MY_DOMAIN} {
 	import nolog
 	import cloudflare
 	import lan
-	encode zstd gzip
 	handle @allowed {
 		reverse_proxy attestation:8080
 	}
