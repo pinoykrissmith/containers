@@ -129,7 +129,7 @@ fdroid.{$MY_DOMAIN} {
 	route @lan {
 		reverse_proxy /repo* fdroid:8080
 	}
-	redir / /repo
+	redir / /repo 301
 }
 
 fdroid.{$TAILNET} {
