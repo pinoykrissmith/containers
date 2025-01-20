@@ -7,7 +7,7 @@ on:
       - main
     paths:
       - '.github/workflows/build-attestation.yml'
-      - 'Attestation/attestation.dockerfile'
+      - 'Attestation/Dockerfile'
       - 'Attestation/nginx.conf'
   schedule:
     # Build the image weekly
@@ -24,7 +24,7 @@ jobs:
     permissions:
       contents: read
       packages: write
-    timeout-minutes: 30
+    timeout-minutes: 40
     runs-on: ubuntu-24.04
 
     steps:
@@ -59,7 +59,6 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           context: ./Attestation
-          file: ./Attestation/attestation.dockerfile
           platforms: linux/amd64,linux/arm64
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
