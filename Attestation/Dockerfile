@@ -35,7 +35,7 @@ RUN git clone --depth=1 https://github.com/GrapheneOS/AttestationServer.git . \
 	&& ./gradlew build && cp /tmp/sqlite4java/out/linux-$(uname -m)/*.so libs/sqlite4java-prebuilt
 
 RUN $JAVA_HOME/bin/jlink \
-         --add-modules java.base,java.desktop,java.logging,java.security.sasl,java.xml,jdk.httpserver,jdk.unsupported \
+         --add-modules java.base,java.compiler,java.desktop,java.logging,java.naming,java.security.sasl,java.sql,java.xml,jdk.httpserver,jdk.unsupported \
          --strip-debug \
          --no-man-pages \
          --no-header-files \
