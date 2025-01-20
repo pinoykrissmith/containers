@@ -35,12 +35,12 @@ RUN git clone --depth=1 https://github.com/GrapheneOS/AttestationServer.git . \
 	&& ./gradlew build && cp /tmp/sqlite4java/out/linux-$(uname -m)/*.so libs/sqlite4java-prebuilt
 
 RUN $JAVA_HOME/bin/jlink \
-         --add-modules java.base,java.compiler,java.desktop,java.logging,java.naming,java.security.sasl,java.sql,java.xml,jdk.httpserver,jdk.unsupported \
-         --strip-debug \
-         --no-man-pages \
-         --no-header-files \
-         --compress=zip-6 \
-         --output /javaruntime
+	--add-modules java.base,java.compiler,java.desktop,java.logging,java.naming,java.security.sasl,java.sql,java.xml,jdk.httpserver,jdk.unsupported,jdk.crypto.ec,jdk.crypto.cryptoki,jdk.security.auth \
+	--strip-debug \
+	--no-man-pages \
+	--no-header-files \
+	--compress=zip-6 \
+	--output /javaruntime
 
 FROM docker.io/library/alpine:latest
 ARG UID=200003
