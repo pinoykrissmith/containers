@@ -19,9 +19,7 @@ RUN git clone --depth=1 https://github.com/GrapheneOS/AttestationServer . \
 	&& npm i && python3 -m venv /opt/venv && pip3 install --no-cache-dir -r requirements.txt && ./process-static
 
 FROM docker.io/library/eclipse-temurin:21-alpine as backend
-
 RUN apk -U --no-cache upgrade && apk add --no-cache alpine-sdk swig git
-
 WORKDIR /tmp/sqlite4java
 RUN git clone --depth=1 https://github.com/GrapheneOS/sqlite4java.git . \
 	&& sed -i "s/amd64/$(uname -m)/g" Makefile && sed -i 's/-fcf-protection//g' Makefile \
@@ -36,9 +34,19 @@ RUN git clone --depth=1 https://github.com/GrapheneOS/AttestationServer.git . \
 	&& sed -i 's/"990E04F0864B19F14F84E0E432F7A393F297AB105A22C1E1B10B442A4A62C42C"/System.getenv("CERTIFICATE") != null ? System.getenv("CERTIFICATE") : "990E04F0864B19F14F84E0E432F7A393F297AB105A22C1E1B10B442A4A62C42C"/g' src/main/java/app/attestation/server/AttestationProtocol.java \
 	&& ./gradlew build && cp /tmp/sqlite4java/out/linux-$(uname -m)/*.so libs/sqlite4java-prebuilt
 
-FROM docker.io/library/eclipse-temurin:21-alpine
+RUN $JAVA_HOME/bin/jlink \
+         --add-modules java.base \
+         --strip-debug \
+         --no-man-pages \
+         --no-header-files \
+         --compress=2 \
+         --output /javaruntime
+
+FROM docker.io/library/alpine:latest
 ARG UID=200003
 ARG GID=200003
+ENV JAVA_HOME=/opt/java/openjdk
+ENV PATH "${JAVA_HOME}/bin:${PATH}"
 
 RUN addgroup -g $GID -S nginx || true \
 	&& adduser -S -D -H -u $UID -h /var/cache/nginx -s /sbin/nologin -G nginx -g nginx nginx || true \
@@ -72,6 +80,7 @@ COPY --from=ghcr.io/nginxinc/nginx-unprivileged:stable-alpine-slim /docker-entry
 WORKDIR /data
 COPY --chown=nginx:nginx --from=backend /app/build/libs/ /app
 COPY --chown=nginx:nginx --from=backend /app/libs/sqlite4java-prebuilt/ /usr/lib
+COPY --from=backend /javaruntime $JAVA_HOME
 RUN printf '#!/bin/sh\n/opt/java/openjdk/bin/java -jar /app/attestation-server.jar &' > /docker-entrypoint.d/99-attestation.sh \
 	&& chmod +x /docker-entrypoint.d/99-attestation.sh
 
