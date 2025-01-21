@@ -5,11 +5,11 @@ RUN apt-get update \
 	&& cp -L /usr/lib/$(uname -m)-linux-gnu/libpcre.so.3 /libpcre.so.3
 
 WORKDIR /src/nitter
-RUN git clone --depth 1 https://github.com/sekai-soft/nitter.git .
-RUN nimble install -y --depsOnly
-RUN nimble build -d:danger -d:lto -d:strip \
-    && nimble scss \
-    && nimble md
+RUN git clone --depth 1 https://github.com/sekai-soft/nitter.git . \
+	&& nimble install -y --depsOnly \
+	&& nimble build -d:danger -d:lto -d:strip \
+	&& nimble scss \
+	&& nimble md
 
 FROM gcr.io/distroless/cc-debian12:nonroot
 WORKDIR /app
@@ -18,5 +18,5 @@ COPY --from=nim /libpcre.so.3 /usr/lib/libpcre.so.3
 COPY --chown=nonroot:nonroot --from=nim /src/nitter/nitter ./
 COPY --chown=nonroot:nonroot --from=nim /src/nitter/public ./public
 COPY --chown=nonroot:nonroot ./nitter.conf.example ./nitter.conf
-EXPOSE 8081
+EXPOSE 8080
 CMD ["/app/nitter"]

@@ -109,7 +109,7 @@ eb2ab.{$MY_DOMAIN} {
 	import lan
 	encode zstd gzip
 	route @lan {
-		reverse_proxy ebook2audiobookpiper:7860
+		reverse_proxy ebook2audiobookpiper:8080
 	}
 }
 
@@ -117,7 +117,7 @@ eb2ab.{$TAILNET} {
 	import nolog
 	tailscale_auth
 	bind tailscale/eb2ab
-	reverse_proxy ebook2audiobookpiper:7860
+	reverse_proxy ebook2audiobookpiper:8080
 }
 
 fdroid.{$MY_DOMAIN} {
@@ -154,7 +154,7 @@ nitter.{$MY_DOMAIN} {
 		header Content-Security-Policy "default-src 'none'; script-src 'self' 'unsafe-inline'; img-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; object-src 'none'; media-src 'self' blob:; worker-src 'self' blob:; base-uri 'self'; form-action 'self'; frame-ancestors 'self'; connect-src 'self' https://*.twimg.com; manifest-src 'self'"
 	}
 	route @lan {
-		reverse_proxy nitter-gluetun:8090
+		reverse_proxy nitter-gluetun:8080
 	}
 }
 
@@ -162,7 +162,7 @@ nitter.{$TAILNET} {
 	import nolog
 	tailscale_auth
 	bind tailscale/nitter
-	reverse_proxy nitter-gluetun:8090
+	reverse_proxy nitter-gluetun:8080
 }
 
 sync.{$MY_DOMAIN} {
