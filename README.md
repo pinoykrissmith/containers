@@ -8,6 +8,7 @@
 ![Build custom Nitter image, scan & push](https://github.com/pinoykrissmith/containers/actions/workflows/build-nitter.yml/badge.svg)
 ![Build custom F-Droid image, scan & push](https://github.com/pinoykrissmith/containers/actions/workflows/build-fdroid.yml/badge.svg)
 ![Build custom Attestation image, scan & push](https://github.com/pinoykrissmith/containers/actions/workflows/build-attestation.yml/badge.svg)
+![Build custom Archiveteam image, scan & push](https://github.com/pinoykrissmith/containers/actions/workflows/build-archiveteam.yml/badge.svg)
 ![Deploy custom Uptime-Kuma image](https://github.com/pinoykrissmith/containers/actions/workflows/deploy-uptime-kuma.yml/badge.svg)
 
 ### Licensing
