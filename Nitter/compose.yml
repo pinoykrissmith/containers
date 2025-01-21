@@ -7,9 +7,9 @@ services:
         com.centurylinklabs.watchtower.enable: "true"
         io.containers.autoupdate: "registry"
       volumes:
-        - ./twitter-credentials.json:/nitter-data/twitter-credentials.json:Z,ro
+        - ./twitter-credentials.json:/data/twitter-credentials.json:Z,ro
         - ./nitter.conf:/app/nitter.conf:Z,ro
-        - /elysium/nitter-data:/nitter-data:Z
+        - /elysium/nitter-data:/data:Z
       depends_on:
         nitter-redis:
           condition: service_healthy
