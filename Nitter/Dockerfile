@@ -1,6 +1,6 @@
 ARG UID=200013
 FROM docker.io/library/alpine:3.18 as nim
-RUN apk --no-cache add libsass-dev pcre gcc git libc-dev bash "nim=1.6.14-r0" "nimble=0.13.1-r2"
+RUN apk --no-cache add libsass-dev pcre gcc git libc-dev "nim=1.6.14-r0" "nimble=0.13.1-r2"
 
 WORKDIR /src/nitter
 RUN git clone --depth 1 https://github.com/sekai-soft/nitter.git . \
@@ -14,7 +14,7 @@ ARG UID
 ENV NITTER_ACCOUNTS_FILE=/data/guest_accounts.json
 ENV TWITTER_CREDENTIALS_FILE=/data/twitter-credentials.json
 WORKDIR /data
-RUN apk --no-cache add pcre ca-certificates python3 py3-pip
+RUN apk --no-cache add pcre ca-certificates python3 py3-pip bash
 RUN addgroup -g ${UID} nitter \
 	&& adduser -g ${UID} --ingroup nitter --disabled-password --system nitter
 COPY --from=nim /src/nitter/scripts/requirements.txt ./
