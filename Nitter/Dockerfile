@@ -1,30 +1,22 @@
-ARG UID=3004
-FROM docker.io/library/alpine:3.18 as nim
-
-RUN apk --no-cache add libsass-dev pcre gcc git libc-dev "nim=1.6.14-r0" "nimble=0.13.1-r2"
+FROM docker.io/library/debian:bookworm as nim
+RUN apt-get update \
+	&& apt-get upgrade -y \
+	&& apt-get install -y libsass-dev libpcre3 build-essential git nim \
+	&& cp -L /usr/lib/$(uname -m)-linux-gnu/libpcre.so.3 /libpcre.so.3
 
 WORKDIR /src/nitter
-
 RUN git clone --depth 1 https://github.com/sekai-soft/nitter.git .
 RUN nimble install -y --depsOnly
-
-COPY . .
 RUN nimble build -d:danger -d:lto -d:strip \
     && nimble scss \
     && nimble md
 
-FROM docker.io/library/alpine:latest
-ARG UID
+FROM gcr.io/distroless/cc-debian12:nonroot
 WORKDIR /app
-RUN apk --no-cache add pcre ca-certificates bash python3 py3-pip
-RUN addgroup -g ${UID} nitter \
-    && adduser -g ${UID} --ingroup nitter --disabled-password --system nitter
-COPY --from=nim /src/nitter/scripts/requirements.txt ./
-RUN pip install --no-cache-dir -r ./requirements.txt --break-system-packages
-
-USER nitter
-COPY --chown=${UID}:${UID} --from=nim /src/nitter/nitter ./
-COPY --chown=${UID}:${UID} --from=nim /src/nitter/public ./public
-COPY --chown=${UID}:${UID} --from=nim /src/nitter/scripts/auth.py ./
+ENV NITTER_ACCOUNTS_FILE=/nitter-data/guest_accounts.json
+COPY --from=nim /libpcre.so.3 /usr/lib/libpcre.so.3
+COPY --chown=nonroot:nonroot --from=nim /src/nitter/nitter ./
+COPY --chown=nonroot:nonroot --from=nim /src/nitter/public ./public
+COPY --chown=nonroot:nonroot ./nitter.conf.example ./nitter.conf
 EXPOSE 8081
-CMD ["/bin/bash", "-c", "python /app/auth.py /nitter-data/guest_accounts.json && /app/nitter"]
+CMD ["/app/nitter"]

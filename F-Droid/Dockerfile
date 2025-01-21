@@ -1,6 +1,6 @@
 FROM ghcr.io/nginxinc/nginx-unprivileged:stable-bookworm
 USER root
-ARG VERSION=2.3.4
+ARG VERSION=2.3.5
 ENV LANG=C.UTF-8 \
     DEBIAN_FRONTEND=noninteractive
 RUN echo Etc/UTC > /etc/timezone \
