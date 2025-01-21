@@ -1,6 +1,6 @@
 services:
   archiveteam-warrior:
-    image: atdr.meo.ws/archiveteam/warrior-dockerfile
+    image: ghcr.io/pinoykrissmith/containers:archiveteam
     container_name: tinytown-grab
     restart: unless-stopped
     tty: true
@@ -14,7 +14,10 @@ services:
     cap_drop:
       - ALL
     user: "1000:1000"
+    read_only: true
     security_opt:
       - "no-new-privileges=true"
     volumes:
       - /elysium/tinytown-grab-data:/home/warrior/projects:Z
+    tmpfs:
+      - /home/warrior/data:mode=777,noexec,nosuid,nodev
