@@ -1,6 +1,6 @@
 ARG UID=200013
 FROM docker.io/library/alpine:3.18 as nim
-RUN apk --no-cache add libsass-dev pcre gcc git libc-dev "nim=1.6.14-r0" "nimble=0.13.1-r2"
+RUN apk --no-cache add libsass-dev pcre gcc git libc-dev bash "nim=1.6.14-r0" "nimble=0.13.1-r2"
 
 WORKDIR /src/nitter
 RUN git clone --depth 1 https://github.com/sekai-soft/nitter.git . \
@@ -25,4 +25,4 @@ COPY --chown=${UID}:${UID} --from=nim /src/nitter/public /app/public
 COPY --chown=${UID}:${UID} --from=nim /src/nitter/scripts/auth.py /app/auth.py
 COPY --chown=${UID}:${UID} ./nitter.conf.example /app/nitter.conf
 EXPOSE 8080
-CMD ["/bin/sh", "-c", "python /app/auth.py /nitter-data/guest_accounts.json && /app/nitter"]
+CMD ["/bin/bash", "-c", "python /app/auth.py /nitter-data/guest_accounts.json && /app/nitter"]
