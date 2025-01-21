@@ -64,6 +64,7 @@ EXPOSE 31000
 COPY Config/docker-entrypoint.sh /
 COPY --chown=${UID}:${UID} Config/tomcat_conf/server.xml /usr/local/tomcat/conf/server.xml 
 ADD --chown=${UID}:${UID} Config/templates /opt/hmdm/templates/
+ADD --chown=${UID}:${UID} Config/update-web-app-docker.sh /opt/hmdm/update-web-app-docker.sh
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
 USER hmdm
