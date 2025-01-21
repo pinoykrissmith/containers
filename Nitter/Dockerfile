@@ -13,7 +13,7 @@ FROM docker.io/library/alpine:latest
 ARG UID
 ENV NITTER_ACCOUNTS_FILE=/data/guest_accounts.json
 ENV TWITTER_CREDENTIALS_FILE=/data/twitter-credentials.json
-WORKDIR /data
+WORKDIR /app
 RUN apk --no-cache add pcre ca-certificates python3 py3-pip bash
 RUN addgroup -g ${UID} nitter \
 	&& adduser -g ${UID} --ingroup nitter --disabled-password --system nitter
