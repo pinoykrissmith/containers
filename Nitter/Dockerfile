@@ -1,5 +1,5 @@
 ARG UID=200013
-FROM docker.io/library/alpine:3.18 as nim
+FROM docker.io/library/alpine:3.18
 RUN apk --no-cache add libsass-dev pcre gcc git libc-dev "nim=1.6.14-r0" "nimble=0.13.1-r2"
 
 WORKDIR /src/nitter
@@ -20,9 +20,9 @@ RUN addgroup -g ${UID} nitter \
 COPY --from=nim /src/nitter/scripts/requirements.txt ./
 RUN pip install --no-cache-dir -r ./requirements.txt --break-system-packages
 USER nitter
-COPY --chown=${UID}:${UID} --from=nim /src/nitter/nitter /app/nitter
-COPY --chown=${UID}:${UID} --from=nim /src/nitter/public /app/public
-COPY --chown=${UID}:${UID} --from=nim /src/nitter/scripts/auth.py /app/auth.py
+COPY --chown=${UID}:${UID} --from=0 /src/nitter/nitter /app/nitter
+COPY --chown=${UID}:${UID} --from=0 /src/nitter/public /app/public
+COPY --chown=${UID}:${UID} --from=0 /src/nitter/scripts/auth.py /app/auth.py
 COPY --chown=${UID}:${UID} ./nitter.conf.example /app/nitter.conf
 EXPOSE 8080
 CMD ["/app/nitter"]
