@@ -25,4 +25,4 @@ COPY --chown=${UID}:${UID} --from=nim /src/nitter/public /app/public
 COPY --chown=${UID}:${UID} --from=nim /src/nitter/scripts/auth.py /app/auth.py
 COPY --chown=${UID}:${UID} ./nitter.conf.example /app/nitter.conf
 EXPOSE 8080
-CMD ["/bin/bash", "-c", "python /app/auth.py /nitter-data/guest_accounts.json && /app/nitter"]
+CMD ["/bin/bash", "-c", "python /app/auth.py /data/guest_accounts.json && /app/nitter"]
