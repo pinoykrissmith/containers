@@ -24,6 +24,6 @@ COPY --chown=${UID}:${UID} --chmod=750 docker-entrypoint.sh /
 USER piper
 WORKDIR /app
 
-EXPOSE 7860
+EXPOSE 8080
 CMD ["python", "/app/gradio_gui.py"]
 ENTRYPOINT ["/docker-entrypoint.sh"]
