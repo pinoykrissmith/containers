@@ -1,4 +1,4 @@
-FROM docker.io/library/python:3.10-slim
+FROM docker.io/library/python:3.10-bookworm
 ARG UID=200011
 RUN apt-get update \
 	&& apt-get upgrade -y \
@@ -7,7 +7,6 @@ RUN apt-get update \
 
 RUN pip install --no-cache-dir --upgrade pip \
 	&& curl -sSL https://github.com/DrewThomasson/ebook2audiobookpiper-tts/raw/8284918b7ae5d563f0c4d5b42abd0f6402190156/requirements.txt | grep -Ev 'nvidia|triton' | pip install --no-cache-dir -r /dev/stdin \
-	&& apt-get purge curl -y \
 	&& python -m spacy download en_core_web_sm
 
 COPY nltk.zip /tmp
@@ -24,5 +23,6 @@ USER piper
 WORKDIR /app
 RUN git clone --depth 1 https://github.com/DrewThomasson/ebook2audiobookpiper-tts.git . \
 	&& sed -i 's/demo\.launch(share=True)/demo.launch(server_name="0.0.0.0", server_port=8080)/' gradio_gui.py
+
 ENTRYPOINT ["/usr/bin/tini", "--"]
 CMD ["/usr/local/bin/python", "/app/gradio_gui.py"]
