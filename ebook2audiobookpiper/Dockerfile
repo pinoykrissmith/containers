@@ -18,7 +18,7 @@ RUN unzip -q "/tmp/nltk.zip" -d "/tmp" \
 RUN mkdir /app \
 	&& chown --recursive ${UID}:${UID} /app \
 	&& addgroup --gid ${UID} piper \
-	&& adduser --ingroup piper --uid ${UID} --disabled-password --system piper
+	&& adduser --ingroup piper --uid ${UID} --disabled-password --system --home /app piper
 
 USER piper
 WORKDIR /app
@@ -27,4 +27,4 @@ RUN git clone --depth 1 https://github.com/DrewThomasson/ebook2audiobookpiper-tt
 
 EXPOSE 8080
 ENTRYPOINT ["/usr/bin/tini", "--"]
-CMD ["/usr/bin/python", "/app/gradio_gui.py"]
+CMD ["/usr/local/bin/python", "/app/gradio_gui.py"]

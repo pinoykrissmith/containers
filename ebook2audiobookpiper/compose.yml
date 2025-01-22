@@ -4,7 +4,7 @@ services:
     container_name: ebook2audiobookpiper
     user: "3009:3009"
     volumes:
-      - /elysium/ebook2audiobookpiper-data:/app:Z
+      - data:/app:Z
     tmpfs:
       - /nonexistent/nltk_data:noexec,nosuid,nodev
       - /app/Working_files:mode=777,noexec,nosuid,nodev
@@ -26,3 +26,6 @@ networks:
   caddy_net:
     name: caddy_net
     external: true
+
+volumes:
+  data:
