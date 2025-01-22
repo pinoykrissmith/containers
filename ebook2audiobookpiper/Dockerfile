@@ -20,7 +20,7 @@ RUN mkdir /app \
 	&& addgroup --gid ${UID} piper \
 	&& adduser --ingroup piper --uid ${UID} --disabled-password --system piper
 
-COPY docker-entrypoint.sh /
+COPY --chown=${UID}:${UID} --chmod=750 docker-entrypoint.sh /
 USER piper
 WORKDIR /app
 
