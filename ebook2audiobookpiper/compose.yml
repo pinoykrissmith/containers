@@ -2,9 +2,9 @@ services:
   ebook2audiobookpiper:  
     image: ghcr.io/pinoykrissmith/containers:ebook2audiobookpiper
     container_name: ebook2audiobookpiper
-    user: "3009:3009"
+    user: "200011:200011"
     volumes:
-      - data:/app:Z
+      - /elysium/ebook2audiobookpiper-data:/app:Z
     tmpfs:
       - /nonexistent/nltk_data:noexec,nosuid,nodev
       - /app/Working_files:mode=777,noexec,nosuid,nodev
@@ -26,6 +26,3 @@ networks:
   caddy_net:
     name: caddy_net
     external: true
-
-volumes:
-  data:
