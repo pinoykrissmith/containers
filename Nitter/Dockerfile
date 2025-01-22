@@ -14,7 +14,7 @@ ARG UID
 ENV NITTER_ACCOUNTS_FILE=/data/guest_accounts.json
 ENV TWITTER_CREDENTIALS_FILE=/data/twitter-credentials.json
 WORKDIR /app
-RUN apk --no-cache add pcre ca-certificates python3 py3-pip bash
+RUN apk --no-cache add pcre ca-certificates python3 py3-pip
 RUN addgroup -g ${UID} nitter \
 	&& adduser -g ${UID} --ingroup nitter --disabled-password --system nitter
 COPY --from=nim /src/nitter/scripts/requirements.txt ./
@@ -25,4 +25,4 @@ COPY --chown=${UID}:${UID} --from=nim /src/nitter/public /app/public
 COPY --chown=${UID}:${UID} --from=nim /src/nitter/scripts/auth.py /app/auth.py
 COPY --chown=${UID}:${UID} ./nitter.conf.example /app/nitter.conf
 EXPOSE 8080
-CMD ["/bin/bash", "-c", "python /app/auth.py /data/guest_accounts.json && /app/nitter"]
+CMD ["/app/nitter"]
