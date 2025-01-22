@@ -1,9 +1,9 @@
 FROM docker.io/library/python:3.10-slim
-ARG UID=3009
+ARG UID=200011
 
 RUN apt-get update \
 	&& apt-get upgrade -y \
-	&& apt-get install -y calibre ffmpeg git unzip curl \
+	&& apt-get install -y calibre ffmpeg git unzip curl tini \
 	&& rm -rf /var/cache/apt/*
 
 RUN pip install --no-cache-dir --upgrade pip \
@@ -20,10 +20,13 @@ RUN mkdir /app \
 	&& addgroup --gid ${UID} piper \
 	&& adduser --ingroup piper --uid ${UID} --disabled-password --system piper
 
-COPY --chown=${UID}:${UID} --chmod=750 docker-entrypoint.sh /
 USER piper
 WORKDIR /app
 
+RUN git clone --depth 1 https://github.com/DrewThomasson/ebook2audiobookpiper-tts.git . \
+	&& sed -i 's/demo\.launch(share=True)/demo.launch(server_name="0.0.0.0", server_port=8080)/' gradio_gui.py
+
 EXPOSE 8080
-CMD ["python", "/app/gradio_gui.py"]
-ENTRYPOINT ["/docker-entrypoint.sh"]
+
+ENTRYPOINT ["/usr/bin/tini", "--"]
+CMD ["/usr/bin/python", "/app/gradio_gui.py"]
