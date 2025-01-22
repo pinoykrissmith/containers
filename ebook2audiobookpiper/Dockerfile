@@ -22,11 +22,9 @@ RUN mkdir /app \
 
 USER piper
 WORKDIR /app
-
 RUN git clone --depth 1 https://github.com/DrewThomasson/ebook2audiobookpiper-tts.git . \
 	&& sed -i 's/demo\.launch(share=True)/demo.launch(server_name="0.0.0.0", server_port=8080)/' gradio_gui.py
 
 EXPOSE 8080
-
 ENTRYPOINT ["/usr/bin/tini", "--"]
 CMD ["/usr/bin/python", "/app/gradio_gui.py"]
