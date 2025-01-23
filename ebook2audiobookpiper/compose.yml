@@ -6,7 +6,6 @@ services:
     volumes:
       - /elysium/ebook2audiobookpiper-data:/app:Z
     tmpfs:
-      - /nonexistent/nltk_data:noexec,nosuid,nodev
       - /app/Working_files:mode=777,noexec,nosuid,nodev
       - /app/Chapter_wav_files:mode=777,noexec,nosuid,nodev
       - /tmp:mode=777,noexec,nosuid,nodev
