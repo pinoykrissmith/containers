@@ -15,7 +15,7 @@ RUN git clone --depth 1 https://github.com/DrewThomasson/ebook2audiobookpiper-tt
 
 COPY nltk.zip /tmp
 RUN pip install --no-cache-dir --upgrade pip \
-	&& pip install --no-cache-dir piper-tts pydub nltk beautifulsoup4 ebooklib tqdm spacio gradio \
+	&& pip install --no-cache-dir piper-tts pydub nltk beautifulsoup4 ebooklib tqdm spacy gradio \
 	&& python -m spacy download en_core_web_sm \
 	&& unzip -q "/tmp/nltk.zip" -d "/tmp" \
     && rm -rf "/usr/local/lib/python3.10/site-packages/nltk" \
