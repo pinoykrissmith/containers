@@ -1,9 +1,11 @@
 services:
     nitter:
-      build:
-        context: .
+      image: ghcr.io/pinoykrissmith/containers:nitter
       container_name: nitter
       user: "200013:200013"
+      labels:
+        com.centurylinklabs.watchtower.enable: "true"
+        io.containers.autoupdate: "registry"
       volumes:
         - ./twitter-credentials.json:/data/twitter-credentials.json:Z,ro
         - ./nitter.conf:/app/nitter.conf:Z,ro
@@ -81,7 +83,6 @@ services:
         - DNS_KEEP_NAMESERVER=true
       volumes:
         - ./passwd:/etc/passwd:Z
-        - ./custom.conf:/gluetun/custom.conf:Z
       tmpfs:
         - /gluetun:noexec,nosuid,nodev
         - /tmp:noexec,nosuid,nodev
