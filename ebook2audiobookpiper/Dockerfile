@@ -1,8 +1,6 @@
 FROM docker.io/library/python:3.10-slim
 ARG UID=200011
-ENV PIP_BREAK_SYSTEM_PACKAGES=1 \
-	LANG=C.UTF-8 \
-	DEBIAN_FRONTEND=noninteractive
+ENV DEBIAN_FRONTEND=noninteractive
 
 RUN printf 'APT::Install-Recommends "0";\nAPT::Install-Suggests "0";\nAPT::Acquire::Retries "20";\nAPT::Get::Assume-Yes "true";\nDpkg::Use-Pty "0";\nquiet "1";' > /etc/apt/apt.conf.d/99github \
 	&& apt-get update && apt-get upgrade && apt-get dist-upgrade \
