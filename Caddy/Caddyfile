@@ -109,7 +109,7 @@ eb2ab.{$MY_DOMAIN} {
 	import lan
 	encode zstd gzip
 	route @lan {
-		reverse_proxy ebook2audiobookpiper:8081
+		reverse_proxy ebook2audiobookpiper:7861
 	}
 }
 
@@ -117,7 +117,7 @@ eb2ab.{$TAILNET} {
 	import nolog
 	tailscale_auth
 	bind tailscale/eb2ab
-	reverse_proxy ebook2audiobookpiper:8081
+	reverse_proxy ebook2audiobookpiper:7861
 }
 
 fdroid.{$MY_DOMAIN} {
