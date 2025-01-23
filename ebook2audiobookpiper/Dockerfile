@@ -1,6 +1,5 @@
 FROM docker.io/library/debian:bookworm
 ARG UID=200011
-
 RUN apt-get update \
 	&& apt-get upgrade -y \
 	&& apt-get install -y calibre ffmpeg git unzip curl python3-pip \
@@ -20,4 +19,4 @@ RUN git clone --depth 1 https://github.com/DrewThomasson/ebook2audiobookpiper-tt
 	&& sed -i 's/demo\.launch(share=True)/demo.launch(server_name="0.0.0.0", server_port=8080)/' gradio_gui.py
 
 EXPOSE 8080
-CMD ["/app/gradio_gui.py"]
+CMD ["/usr/bin/python3 /app/gradio_gui.py"]
