@@ -1,8 +1,8 @@
-FROM docker.io/library/fedora:41
+FROM docker.io/opensuse/tumbleweed:latest
 ARG UID=200011
-RUN dnf upgrade --refresh -y --setopt=installonly_limit=0 \
-	&& dnf install --skip-broken -y --setopt=installonly_limit=0 calibre ffmpeg git unzip python3.10 \
-	&& dnf clean all
+RUN zypper -n update \
+	&& zypper -n install calibre ffmpeg git unzip python310 \
+	&& rm -rf /var/cache/zypp/*
 
 WORKDIR /app
 RUN git clone --depth 1 https://github.com/DrewThomasson/ebook2audiobookpiper-tts.git . \
@@ -16,8 +16,8 @@ RUN python3.10 -m ensurepip --upgrade \
 	&& pip3.10 install --no-cache-dir piper-tts pydub nltk beautifulsoup4 ebooklib tqdm spacy gradio \
 	&& python3.10 -m spacy download en_core_web_sm \
 	&& unzip -q "/tmp/nltk.zip" -d "/tmp" \
-    && rm -rf "/usr/local/lib/python3.10/site-packages/nltk" \
-    && mv "/tmp/nltk" "/usr/local/lib/python3.10/site-packages/nltk"
+	&& rm -rf "/usr/local/lib/python3.10/site-packages/nltk" \
+	&& mv "/tmp/nltk" "/usr/local/lib/python3.10/site-packages/nltk"
 
 USER piper
 EXPOSE 8080
