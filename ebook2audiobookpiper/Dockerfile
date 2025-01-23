@@ -4,11 +4,8 @@ ENV LANG=C.UTF-8 \
 	DEBIAN_FRONTEND=noninteractive
 RUN printf 'APT::Install-Recommends "0";\nAPT::Install-Suggests "0";\nAPT::Acquire::Retries "20";\nAPT::Get::Assume-Yes "true";\nDpkg::Use-Pty "0";\nquiet "1";' > /etc/apt/apt.conf.d/99github \
 	&& apt-get update && apt-get upgrade && apt-get dist-upgrade \
-	&& apt-get install calibre ffmpeg git curl \
+	&& apt-get install calibre ffmpeg git curl build-essential \
 	&& rm -rf /var/cache/apt/*
-
-RUN curl -sSL https://github.com/DrewThomasson/ebook2audiobookpiper-tts/raw/8284918b7ae5d563f0c4d5b42abd0f6402190156/requirements.txt | grep -Ev 'nvidia|triton' | pip install --no-cache-dir -r /dev/stdin \
-	&& python -m spacy download en_core_web_sm
 
 WORKDIR /app
 RUN git clone --depth 1 https://github.com/DrewThomasson/ebook2audiobookpiper-tts.git . \
@@ -16,6 +13,11 @@ RUN git clone --depth 1 https://github.com/DrewThomasson/ebook2audiobookpiper-tt
 	&& addgroup --gid ${UID} piper \
 	&& adduser --ingroup piper --uid ${UID} --disabled-password --system --home /app piper \
 	&& chown --recursive piper:piper /app
+
+RUN pip install --no-cache-dir --upgrade pip \
+	&& curl -sSL https://github.com/DrewThomasson/ebook2audiobookpiper-tts/raw/8284918b7ae5d563f0c4d5b42abd0f6402190156/requirements.txt | grep -Ev 'nvidia|triton' | pip install --no-cache-dir -r /dev/stdin \
+	&& python -m spacy download en_core_web_sm \
+	&& apt-get remove build-essential curl
 
 USER piper
 EXPOSE 8080
