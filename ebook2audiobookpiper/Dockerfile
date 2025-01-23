@@ -1,5 +1,6 @@
 FROM docker.io/library/python:3.10-bookworm
 ARG UID=200011
+
 RUN apt-get update \
 	&& apt-get upgrade -y \
 	&& apt-get install -y calibre ffmpeg git unzip curl tini \
@@ -22,7 +23,8 @@ RUN mkdir /app \
 USER piper
 WORKDIR /app
 RUN git clone --depth 1 https://github.com/DrewThomasson/ebook2audiobookpiper-tts.git . \
-	&& sed -i 's/demo\.launch(share=True)/demo.launch(server_name="0.0.0.0", server_port=8080)/' gradio_gui.py
+	&& sed -i 's/demo\.launch(share=True)/demo.launch(server_name="0.0.0.0", server_port=8081)/' gradio_gui.py
 
+EXPOSE 8081
 ENTRYPOINT ["/usr/bin/tini", "--"]
 CMD ["/usr/local/bin/python", "/app/gradio_gui.py"]
