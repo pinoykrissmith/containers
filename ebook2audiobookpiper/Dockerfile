@@ -13,9 +13,9 @@ RUN curl -sSL https://github.com/DrewThomasson/ebook2audiobookpiper-tts/raw/8284
 WORKDIR /app
 RUN git clone --depth 1 https://github.com/DrewThomasson/ebook2audiobookpiper-tts.git . \
 	&& sed -i 's/demo\.launch(share=True)/demo.launch(server_name="0.0.0.0", server_port=8080)/' gradio_gui.py \
-	&& chown --recursive ${UID}:${UID} /app \
 	&& addgroup --gid ${UID} piper \
-	&& adduser --ingroup piper --uid ${UID} --disabled-password --system --home /app piper
+	&& adduser --ingroup piper --uid ${UID} --disabled-password --system --home /app piper \
+	&& chown --recursive piper:piper /app
 
 USER piper
 EXPOSE 8080
