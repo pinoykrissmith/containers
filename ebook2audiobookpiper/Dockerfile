@@ -1,12 +1,14 @@
 FROM docker.io/library/debian:bookworm
 ARG UID=200011
+ENV PIP_BREAK_SYSTEM_PACKAGES=1
+
 RUN apt-get update \
 	&& apt-get upgrade -y \
 	&& apt-get install -y calibre ffmpeg git unzip curl python3-pip \
 	&& rm -rf /var/cache/apt/*
 
-RUN curl -sSL https://github.com/DrewThomasson/ebook2audiobookpiper-tts/raw/8284918b7ae5d563f0c4d5b42abd0f6402190156/requirements.txt | grep -Ev 'nvidia|triton' | pip3 install --break-system-packages --no-cache-dir -r /dev/stdin \
-	&& python3 -m spacy download en_core_web_sm
+RUN curl -sSL https://github.com/DrewThomasson/ebook2audiobookpiper-tts/raw/8284918b7ae5d563f0c4d5b42abd0f6402190156/requirements.txt | grep -Ev 'nvidia|triton' | pip3 install --no-cache-dir -r /dev/stdin \
+	&& python3 --break-system-packages -m spacy download en_core_web_sm
 
 RUN mkdir /app \
 	&& chown --recursive ${UID}:${UID} /app \
