@@ -10,7 +10,7 @@ on:
       - 'ebook2audiobookpiper/Dockerfile'
   schedule:
     # Build the image weekly
-    - cron: '12 0 * * 5'
+    - cron: '14 0 * * 5'
 
 env:
   REGISTRY: ghcr.io
