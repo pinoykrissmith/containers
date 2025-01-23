@@ -14,10 +14,14 @@ RUN git clone --depth 1 https://github.com/DrewThomasson/ebook2audiobookpiper-tt
 	&& adduser --ingroup piper --uid ${UID} --disabled-password --system --home /app piper \
 	&& chown --recursive piper:piper /app
 
+COPY nltk.zip /tmp
 RUN pip install --no-cache-dir --upgrade pip \
 	&& curl -sSL https://github.com/DrewThomasson/ebook2audiobookpiper-tts/raw/8284918b7ae5d563f0c4d5b42abd0f6402190156/requirements.txt | grep -Ev 'nvidia|triton' | pip install --no-cache-dir -r /dev/stdin \
 	&& python -m spacy download en_core_web_sm \
-	&& apt-get remove build-essential curl
+	&& unzip -q "/tmp/nltk.zip" -d "/tmp" \
+    && rm -rf "/usr/local/lib/python3.10/site-packages/nltk" \
+    && mv "/tmp/nltk" "/usr/local/lib/python3.10/site-packages/nltk" \
+    && apt-get remove build-essential curl
 
 USER piper
 EXPOSE 8080
