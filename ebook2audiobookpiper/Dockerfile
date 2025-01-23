@@ -1,4 +1,4 @@
-FROM docker.io/library/python:3.10-slim-bookworm
+FROM docker.io/library/debian:bookworm
 ARG UID=200011
 
 RUN apt-get update \
