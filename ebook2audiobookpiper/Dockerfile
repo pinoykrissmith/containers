@@ -1,10 +1,16 @@
 FROM docker.io/library/debian:bookworm
 ARG UID=200011
 ENV PIP_BREAK_SYSTEM_PACKAGES=1
+RUN echo 'APT::Install-Recommends "0";' \
+		'APT::Install-Suggests "0";' \
+		'APT::Acquire::Retries "20";' \
+		'APT::Get::Assume-Yes "true";' \
+		'Dpkg::Use-Pty "0";' \
+		'quiet "1";' \
+		>> /etc/apt/apt.conf.d/99github
 
-RUN apt-get update \
-	&& apt-get upgrade -y \
-	&& apt-get install -y calibre ffmpeg git unzip curl python3-pip \
+RUN apt-get update && apt-get upgrade \
+	&& apt-get install calibre ffmpeg git unzip curl python3-pip \
 	&& rm -rf /var/cache/apt/*
 
 RUN curl -sSL https://github.com/DrewThomasson/ebook2audiobookpiper-tts/raw/8284918b7ae5d563f0c4d5b42abd0f6402190156/requirements.txt | grep -Ev 'nvidia|triton' | pip3 install --no-cache-dir -r /dev/stdin \
@@ -21,4 +27,4 @@ RUN git clone --depth 1 https://github.com/DrewThomasson/ebook2audiobookpiper-tt
 	&& sed -i 's/demo\.launch(share=True)/demo.launch(server_name="0.0.0.0", server_port=8080)/' gradio_gui.py
 
 EXPOSE 8080
-CMD ["/usr/bin/python3 /app/gradio_gui.py"]
+CMD ["/usr/bin/python3", "/app/gradio_gui.py"]
