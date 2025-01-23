@@ -21,9 +21,9 @@ RUN unzip -q "/tmp/nltk.zip" -d "/tmp" \
 WORKDIR /app
 RUN git clone --depth=1 https://github.com/DrewThomasson/ebook2audiobookpiper-tts.git . \
 	&& sed -i 's/demo\.launch(share=True)/demo.launch(server_name="0.0.0.0", server_port=8080)/' gradio_gui.py \
-	&& chown --recursive ${UID}:${UID} /app \
 	&& addgroup --gid ${UID} piper \
-	&& adduser --ingroup piper --uid ${UID} --disabled-password --system piper
+	&& adduser --ingroup piper --uid ${UID} --disabled-password --system piper --home /app \
+	&& chown --recursive piper:piper /app
 
 USER piper
 EXPOSE 8080
