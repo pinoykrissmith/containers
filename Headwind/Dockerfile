@@ -1,13 +1,11 @@
 FROM tomcat:9-jdk11-temurin-jammy
 ARG UID=3006
+ENV LANG=C.UTF-8 \
+	DEBIAN_FRONTEND=noninteractive
 
-RUN apt-get update \
-    && apt-get upgrade -y
-RUN apt-get install -y \
-	aapt \
-	wget \
-	sed \
-        postgresql-client \
+RUN printf 'APT::Install-Recommends "0";\nAPT::Install-Suggests "0";\nAPT::Acquire::Retries "20";\nAPT::Get::Assume-Yes "true";\nDpkg::Use-Pty "0";\nquiet "1";' > /etc/apt/apt.conf.d/99github \
+	&& apt-get update && apt-get upgrade && apt-get dist-upgrade \
+	&& apt-get install aapt wget sed postgresql-client \
 	&& rm -rf /var/cache/apt/*
 RUN mkdir -p /usr/local/tomcat/conf/Catalina/localhost
 RUN mkdir -p /usr/local/tomcat/ssl

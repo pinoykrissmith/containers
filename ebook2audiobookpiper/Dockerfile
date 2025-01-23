@@ -1,15 +1,11 @@
 FROM docker.io/library/debian:bookworm
 ARG UID=200011
-ENV PIP_BREAK_SYSTEM_PACKAGES=1
-RUN echo 'APT::Install-Recommends "0";' \
-		'APT::Install-Suggests "0";' \
-		'APT::Acquire::Retries "20";' \
-		'APT::Get::Assume-Yes "true";' \
-		'Dpkg::Use-Pty "0";' \
-		'quiet "1";' \
-		>> /etc/apt/apt.conf.d/99github
+ENV PIP_BREAK_SYSTEM_PACKAGES=1 \
+	LANG=C.UTF-8 \
+	DEBIAN_FRONTEND=noninteractive
 
-RUN apt-get update && apt-get upgrade \
+RUN printf 'APT::Install-Recommends "0";\nAPT::Install-Suggests "0";\nAPT::Acquire::Retries "20";\nAPT::Get::Assume-Yes "true";\nDpkg::Use-Pty "0";\nquiet "1";' > /etc/apt/apt.conf.d/99github \
+	&& apt-get update && apt-get upgrade && apt-get dist-upgrade \
 	&& apt-get install calibre ffmpeg git unzip curl python3-pip \
 	&& rm -rf /var/cache/apt/*
 
