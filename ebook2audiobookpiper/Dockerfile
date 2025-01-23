@@ -1,26 +1,24 @@
-FROM docker.io/library/python:3.10-slim
+FROM docker.io/library/fedora:41
 ARG UID=200011
-ENV LANG=C.UTF-8 \
-	DEBIAN_FRONTEND=noninteractive
-RUN printf 'APT::Install-Recommends "0";\nAPT::Install-Suggests "0";\nAPT::Acquire::Retries "20";\nAPT::Get::Assume-Yes "true";\nDpkg::Use-Pty "0";\nquiet "1";' > /etc/apt/apt.conf.d/99github \
-	&& apt-get update && apt-get upgrade && apt-get dist-upgrade \
-	&& apt-get install calibre ffmpeg git curl unzip \
-	&& rm -rf /var/cache/apt/* && rm -rf /var/lib/apt/lists/*
+RUN dnf upgrade --refresh -y --setopt=installonly_limit=0 \
+	&& dnf install --skip-broken -y --setopt=installonly_limit=0 calibre ffmpeg git unzip python3.10 \
+	&& dnf clean all
 
 WORKDIR /app
 RUN git clone --depth 1 https://github.com/DrewThomasson/ebook2audiobookpiper-tts.git . \
 	&& sed -i 's/demo\.launch(share=True)/demo.launch(server_name="0.0.0.0", server_port=8080)/' gradio_gui.py \
-	&& addgroup --gid ${UID} piper && adduser --ingroup piper --uid ${UID} --disabled-password --system --home /app piper \
+	&& useradd -u ${UID} -r -d /app -s /sbin/nologin piper \
 	&& chown --recursive piper:piper /app
 
 COPY nltk.zip /tmp
-RUN pip install --no-cache-dir --upgrade pip \
-	&& pip install --no-cache-dir piper-tts pydub nltk beautifulsoup4 ebooklib tqdm spacy gradio \
-	&& python -m spacy download en_core_web_sm \
+RUN python3.10 -m ensurepip --upgrade \
+	&& pip3.10 install --upgrade pip \
+	&& pip3.10 install --no-cache-dir piper-tts pydub nltk beautifulsoup4 ebooklib tqdm spacy gradio \
+	&& python3.10 -m spacy download en_core_web_sm \
 	&& unzip -q "/tmp/nltk.zip" -d "/tmp" \
     && rm -rf "/usr/local/lib/python3.10/site-packages/nltk" \
     && mv "/tmp/nltk" "/usr/local/lib/python3.10/site-packages/nltk"
 
 USER piper
 EXPOSE 8080
-CMD ["python", "gradio_gui.py"]
+CMD ["python3.10", "gradio_gui.py"]
