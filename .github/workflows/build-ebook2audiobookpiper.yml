@@ -24,6 +24,7 @@ jobs:
       contents: read
       packages: write
     timeout-minutes: 80
+    retry: 2
     runs-on: ubuntu-24.04
 
     steps:
