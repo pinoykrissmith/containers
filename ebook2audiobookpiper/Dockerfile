@@ -8,7 +8,7 @@ RUN apt-get update \
 	&& rm -rf /var/cache/apt/*
 
 RUN curl -sSL https://github.com/DrewThomasson/ebook2audiobookpiper-tts/raw/8284918b7ae5d563f0c4d5b42abd0f6402190156/requirements.txt | grep -Ev 'nvidia|triton' | pip3 install --no-cache-dir -r /dev/stdin \
-	&& python3 --break-system-packages -m spacy download en_core_web_sm
+	&& python3 -m spacy download en_core_web_sm
 
 RUN mkdir /app \
 	&& chown --recursive ${UID}:${UID} /app \
