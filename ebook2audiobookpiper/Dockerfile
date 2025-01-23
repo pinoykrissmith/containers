@@ -3,11 +3,10 @@ ARG UID=200011
 
 RUN apt-get update \
 	&& apt-get upgrade -y \
-	&& apt-get install -y calibre ffmpeg git unzip curl \
+	&& apt-get install -y calibre ffmpeg git unzip curl python3-pip \
 	&& rm -rf /var/cache/apt/*
 
-RUN pip install --no-cache-dir --upgrade pip \
-	&& curl -sSL https://github.com/DrewThomasson/ebook2audiobookpiper-tts/raw/8284918b7ae5d563f0c4d5b42abd0f6402190156/requirements.txt | grep -Ev 'nvidia|triton' | pip install --no-cache-dir -r /dev/stdin \
+RUN curl -sSL https://github.com/DrewThomasson/ebook2audiobookpiper-tts/raw/8284918b7ae5d563f0c4d5b42abd0f6402190156/requirements.txt | grep -Ev 'nvidia|triton' | pip install --no-cache-dir -r /dev/stdin \
 	&& python -m spacy download en_core_web_sm
 
 COPY nltk.zip /tmp
