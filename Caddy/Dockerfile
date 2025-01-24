@@ -17,4 +17,4 @@ ENV XDG_CONFIG_HOME /config
 ENV XDG_DATA_HOME /data
 EXPOSE 443
 EXPOSE 443/udp
-ENTRYPOINT ["/caddy", "run", "--config", "/etc/caddy/Caddyfile", "--adapter", "caddyfile"]
+CMD ["/caddy", "run", "--config", "/etc/caddy/Caddyfile", "--adapter", "caddyfile"]
