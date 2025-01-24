@@ -9,18 +9,12 @@ RUN go run github.com/caddyserver/xcaddy/cmd/xcaddy@latest build v${VERSION} --o
 	--with github.com/tailscale/caddy-tailscale@f21c01b660c896bdd6bacc37178dc00d9af282b4 \
 	--with github.com/hslatman/caddy-crowdsec-bouncer/http@28ef1be0db6542a5efd451009c72ec419b815faa
 
-FROM docker.io/library/debian:bookworm as tini
-RUN apt-get update && apt-get install -y tini
-
 FROM gcr.io/distroless/static-debian12:nonroot
 COPY --from=builder /usr/bin/caddy /caddy
-COPY --from=tini /usr/bin/tini /usr/bin/tini
-COPY --from=tini /usr/bin/tini-static /usr/bin/tini-static
 COPY --from=caddy /etc/caddy/Caddyfile /etc/caddy/Caddyfile
 COPY --from=caddy /usr/share/caddy/index.html /usr/share/caddy/index.html
 ENV XDG_CONFIG_HOME /config
 ENV XDG_DATA_HOME /data
 EXPOSE 443
 EXPOSE 443/udp
-ENTRYPOINT ["/usr/bin/tini", "--"]
-CMD ["/caddy", "run", "--config", "/etc/caddy/Caddyfile", "--adapter", "caddyfile"]
+ENTRYPOINT ["/caddy", "run", "--config", "/etc/caddy/Caddyfile", "--adapter", "caddyfile"]
