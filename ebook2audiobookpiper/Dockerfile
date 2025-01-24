@@ -1,7 +1,7 @@
 FROM docker.io/opensuse/tumbleweed:latest
 ARG UID=200011
 RUN zypper -n update \
-	&& zypper -n install calibre ffmpeg git unzip python310 \
+	&& zypper -n install calibre ffmpeg git unzip python310 tini \
 	&& rm -rf /var/cache/zypp/*
 
 WORKDIR /app
@@ -21,4 +21,5 @@ RUN python3.10 -m ensurepip --upgrade \
 
 USER piper
 EXPOSE 8080
+ENTRYPOINT ["/sbin/tini", "--"]
 CMD ["python3.10", "gradio_gui.py"]
