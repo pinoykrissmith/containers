@@ -1,3 +1,0 @@
-[submodule "headwind-config"]
-	path = Headwind/Config
-	url = https://github.com/h-mdm/hmdm-docker.git

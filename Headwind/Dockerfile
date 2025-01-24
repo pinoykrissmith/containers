@@ -59,10 +59,8 @@ EXPOSE 8080
 EXPOSE 8443
 EXPOSE 31000
 
-COPY Config/docker-entrypoint.sh /
-COPY --chown=${UID}:${UID} Config/tomcat_conf/server.xml /usr/local/tomcat/conf/server.xml 
-ADD --chown=${UID}:${UID} Config/templates /opt/hmdm/templates/
-ADD --chown=${UID}:${UID} Config/update-web-app-docker.sh /opt/hmdm/update-web-app-docker.sh
+COPY --from=docker.io/headwindmdm/hmdm:latest /docker-entrypoint.sh /docker-entrypoint.sh
+COPY --from=docker.io/headwindmdm/hmdm:latest --chown=${UID}:${UID} /opt/hmdm/ /opt/hmdm/
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
 USER hmdm
