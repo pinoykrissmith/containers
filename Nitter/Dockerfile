@@ -1,14 +1,3 @@
-ARG UID=200013
-FROM docker.io/library/alpine:3.18
-RUN apk --no-cache add libsass-dev pcre gcc git libc-dev "nim=1.6.14-r0" "nimble=0.13.1-r2"
-
-WORKDIR /src/nitter
-RUN git clone --depth 1 https://github.com/sekai-soft/nitter.git . \
-	&& nimble install -y --depsOnly \
-	&& nimble build -d:danger -d:lto -d:strip \
-	&& nimble scss \
-	&& nimble md
-
 FROM docker.io/library/alpine:latest
 ARG UID
 ENV NITTER_ACCOUNTS_FILE=/data/guest_accounts.json
@@ -17,12 +6,12 @@ WORKDIR /app
 RUN apk --no-cache add pcre ca-certificates python3 py3-pip tini
 RUN addgroup -g ${UID} nitter \
 	&& adduser -g ${UID} --ingroup nitter --disabled-password --system nitter
-COPY --from=0 /src/nitter/scripts/requirements.txt ./
-RUN pip install --no-cache-dir -r ./requirements.txt --break-system-packages
+COPY --from=ghcr.io/sekai-soft/nitter-self-contained:latest /src/nitter/scripts/requirements.txt /tmp/requirements.txt
+RUN pip install --no-cache-dir -r /tmp/requirements.txt --break-system-packages
 USER nitter
-COPY --chown=${UID}:${UID} --from=0 /src/nitter/nitter /app/nitter
-COPY --chown=${UID}:${UID} --from=0 /src/nitter/public /app/public
-COPY --chown=${UID}:${UID} --from=0 /src/nitter/scripts/auth.py /app/auth.py
+COPY --chown=${UID}:${UID} --from=ghcr.io/sekai-soft/nitter-self-contained:latest /src/nitter/nitter /app/nitter
+COPY --chown=${UID}:${UID} --from=ghcr.io/sekai-soft/nitter-self-contained:latest /src/nitter/public /app/public
+COPY --chown=${UID}:${UID} --from=ghcr.io/sekai-soft/nitter-self-contained:latest /src/nitter/scripts/auth.py /app/auth.py
 COPY --chown=${UID}:${UID} ./nitter.conf.example /app/nitter.conf
 EXPOSE 8080
 ENTRYPOINT ["/sbin/tini", "--"]
