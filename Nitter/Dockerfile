@@ -6,7 +6,7 @@ WORKDIR /app
 RUN apk --no-cache add pcre ca-certificates python3 py3-pip tini
 RUN addgroup -g ${UID} nitter \
 	&& adduser -g ${UID} --ingroup nitter --disabled-password --system nitter
-COPY --from=ghcr.io/sekai-soft/nitter-self-contained:latest /src/nitter/scripts/requirements.txt /tmp/requirements.txt
+COPY --from=ghcr.io/sekai-soft/nitter-self-contained:latest /src/scripts/requirements.txt /tmp/requirements.txt
 RUN pip install --no-cache-dir -r /tmp/requirements.txt --break-system-packages
 USER nitter
 COPY --chown=${UID}:${UID} --from=ghcr.io/sekai-soft/nitter-self-contained:latest /src/nitter /app/nitter
