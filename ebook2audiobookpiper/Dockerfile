@@ -19,8 +19,8 @@ RUN python3.10 -m ensurepip --upgrade && pip3.10 install --no-cache-dir --upgrad
 
 USER piper
 ENV PYTHONUNBUFFERED=1 \
-	GRADIO_SHARE=False \
-	GRADIO_ANALYTICS_ENABLED=False \
+	GRADIO_SHARE="False" \
+	GRADIO_ANALYTICS_ENABLED="False" \
 	GRADIO_SERVER_NAME=0.0.0.0 \
 	GRADIO_SERVER_PORT=8080
 EXPOSE 8080
