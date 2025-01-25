@@ -9,7 +9,7 @@ RUN addgroup -g ${UID} nitter \
 COPY --from=ghcr.io/sekai-soft/nitter-self-contained:latest /src/nitter/scripts/requirements.txt /tmp/requirements.txt
 RUN pip install --no-cache-dir -r /tmp/requirements.txt --break-system-packages
 USER nitter
-COPY --chown=${UID}:${UID} --from=ghcr.io/sekai-soft/nitter-self-contained:latest /src/nitter/nitter /app/nitter
+COPY --chown=${UID}:${UID} --from=ghcr.io/sekai-soft/nitter-self-contained:latest /src/nitter /app/nitter
 COPY --chown=${UID}:${UID} --from=ghcr.io/sekai-soft/nitter-self-contained:latest /src/public /app/public
 COPY --chown=${UID}:${UID} --from=ghcr.io/sekai-soft/nitter-self-contained:latest /src/scripts/auth.py /app/auth.py
 COPY --chown=${UID}:${UID} ./nitter.conf.example /app/nitter.conf
