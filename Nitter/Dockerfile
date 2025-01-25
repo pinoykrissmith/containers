@@ -1,5 +1,5 @@
 FROM docker.io/library/alpine:latest
-ARG UID
+ARG UID=200013
 ENV NITTER_ACCOUNTS_FILE=/data/guest_accounts.json
 ENV TWITTER_CREDENTIALS_FILE=/data/twitter-credentials.json
 WORKDIR /app
