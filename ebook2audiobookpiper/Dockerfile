@@ -5,8 +5,8 @@ RUN zypper -n update \
 	&& rm -rf /var/cache/zypp/*
 
 WORKDIR /app
-RUN git clone --depth 1 https://github.com/DrewThomasson/ebook2audiobookpiper-tts.git . \
-	&& useradd -u ${UID} -r -d /app -s /sbin/nologin piper \
+ADD https://github.com/DrewThomasson/ebook2audiobookpiper-tts.git#main .
+RUN useradd -u ${UID} -r -d /app -s /sbin/nologin piper \
 	&& chown --recursive piper:piper /app
 
 COPY nltk.zip /tmp

@@ -19,7 +19,7 @@ RUN dnf upgrade --refresh -y --setopt=installonly_limit=0 \
 	&& rm -rf /var/cache/dnf/*
 
 USER builder
-RUN git clone https://github.com/openzfs/zfs.git --depth 1 --branch zfs-${VERSION} /tmp/zfs
+ADD --chown=builder:builder https://github.com/openzfs/zfs.git#zfs-$VERSION /tmp/zfs
 COPY --chown=${UID}:${UID} signers /tmp/signers
 
 RUN --network=none cd /tmp/zfs \
