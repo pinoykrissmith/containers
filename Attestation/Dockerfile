@@ -1,11 +1,11 @@
 FROM docker.io/library/eclipse-temurin:21-alpine
-WORKDIR /tmp/sqlite4java
 ENV GITHUB_ACTIONS="true"
 ENV PATH="/opt/venv/bin:$PATH"
 ENV SKIP_REMOTE_PUBLISHING="1"
 RUN apk -U --no-cache upgrade && apk add --no-cache alpine-sdk swig git zopfli parallel yajl yajl-tools nginx \
 	libxml2 moreutils unzip py3-virtualenv brotli python3 py3-pip nginx-mod-http-brotli nodejs npm bash libxml2-utils
 
+WORKDIR /tmp/sqlite4java
 ADD https://github.com/GrapheneOS/sqlite4java.git#main .
 RUN sed -i "s/amd64/$(uname -m)/g" Makefile && sed -i 's/-fcf-protection//g' Makefile \
 	&& sed -i 's|^JAVA_HOME := .*|JAVA_HOME := /opt/java/openjdk|' Makefile && make
@@ -16,7 +16,7 @@ RUN sed -i 's/::1/0.0.0.0/g' src/main/java/app/attestation/server/AttestationSer
 	&& sed -i 's/8080/8000/g' src/main/java/app/attestation/server/AttestationServer.java \
 	&& sed -i 's/app\.attestation\.auditor/app\.selfhosted\.auditor/g' src/main/java/app/attestation/server/AttestationProtocol.java \
 	&& sed -i 's/"attestation.app"/System.getenv("DOMAIN") != null ? System.getenv("DOMAIN") : "attestation.app"/g' src/main/java/app/attestation/server/AttestationServer.java \
-	&& sed -i 's/"990E04F0864B19F14F84E0E432F7A393F297AB105A22C1E1B10B442A4A62C42C"/System.getenv("CERTIFICATE") != null ? System.getenv("CERTIFICATE") : "990E04F0864B19F14F84E0E432F7A393F297AB105A22C1E1B10B442A4A62C42C"/g' src/main/java/app/attestation/server/AttestationProtocol.java \
+	&& sed -i 's/"990E04F0864B19F14F84E0E432F7A393F297AB105A22C1E1B10B442A4A62C42C"/System.getenv("CERTIFICATE") != null ? System.getenv("CERTIFICATE") : "990E04F0864B19F14F84E0E432F7A393F297AB105A22C1E1B10B442A4A62C42C"/g' src/main/java/app/attestation/server/AttestationProtocol.java
 RUN ./gradlew build && cp /tmp/sqlite4java/out/linux-$(uname -m)/*.so libs/sqlite4java-prebuilt
 RUN npm i && python3 -m venv /opt/venv && pip3 install --no-cache-dir -r requirements.txt && ./process-static
 
