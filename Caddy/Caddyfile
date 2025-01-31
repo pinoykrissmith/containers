@@ -1,5 +1,6 @@
 {
 	admin off
+	auto_https disable_redirects
 	servers {
 		trusted_proxies cloudflare {
 			interval 12h
@@ -73,7 +74,7 @@ vw.{$MY_DOMAIN} {
 	import lan
 	encode zstd gzip
 	route @lan {
-		reverse_proxy vaultwarden:80
+		reverse_proxy vaultwarden:8080
 	}
 }
 
@@ -81,7 +82,7 @@ vw.{$TAILNET} {
 	import nolog
 	tailscale_auth
 	bind tailscale/vw
-	reverse_proxy vaultwarden:80
+	reverse_proxy vaultwarden:8080
 }
 
 hmdm.{$MY_DOMAIN} {
@@ -233,9 +234,6 @@ auditor.{$MY_DOMAIN} {
 		path /auditor/*
 		path /api/*
 		path /about
-		path /challenge*
-		path /submit*
-		path /verify*
 	}
 	route {
 		crowdsec

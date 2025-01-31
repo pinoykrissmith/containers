@@ -18,11 +18,11 @@ RUN python3.10 -m ensurepip --upgrade && pip3.10 install --no-cache-dir --upgrad
 	&& mv "/tmp/nltk" "/usr/local/lib/python3.10/site-packages/nltk"
 
 USER piper
-ENV PYTHONUNBUFFERED=1 \
-	GRADIO_SHARE="False" \
-	GRADIO_ANALYTICS_ENABLED="False" \
-	GRADIO_SERVER_NAME=0.0.0.0 \
-	GRADIO_SERVER_PORT=8080
+ENV PYTHONUNBUFFERED=1
+ENV GRADIO_SHARE="False"
+ENV GRADIO_ANALYTICS_ENABLED="False"
+ENV GRADIO_SERVER_NAME=0.0.0.0
+ENV GRADIO_SERVER_PORT=8080
 EXPOSE 8080
 ENTRYPOINT ["/sbin/tini", "--"]
 CMD ["python3.10", "gradio_gui.py"]

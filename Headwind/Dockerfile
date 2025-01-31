@@ -1,4 +1,4 @@
-FROM tomcat:9-jdk11-temurin-jammy
+FROM docker.io/library/tomcat:9-jdk11-temurin-jammy
 ARG UID=3006
 ENV LANG=C.UTF-8 \
 	DEBIAN_FRONTEND=noninteractive

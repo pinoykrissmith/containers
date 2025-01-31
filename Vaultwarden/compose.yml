@@ -13,7 +13,6 @@ services:
       DOMAIN: ${DOMAIN}
       SIGNUPS_ALLOWED: false
       LD_PRELOAD: ""
-      ROCKET_PORT: 80
       DATABASE_URL: "postgresql://vw:${POSTGRES_PASSWORD}@vw-postgres:5432/postgres"
       ADMIN_TOKEN: ${ADMIN_TOKEN}
     env_file:
@@ -26,8 +25,6 @@ services:
       - "no-new-privileges=true"
     cap_drop:
       - "ALL"
-    cap_add:
-      - NET_BIND_SERVICE
 
   postgres:
     container_name: vw-postgres
