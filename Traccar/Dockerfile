@@ -1,7 +1,7 @@
 FROM docker.io/library/debian:bookworm
 RUN apt-get update && apt-get install -y tini
 
-FROM gcr.io/distroless/java21-debian12:nonroot
+FROM gcr.io/distroless/java17-debian12:nonroot
 WORKDIR /home/nonroot/traccar
 COPY --chown=nonroot:nonroot --from=docker.io/traccar/traccar:debian /opt/traccar /home/nonroot/traccar
 COPY --from=1 /usr/bin/tini /usr/bin/tini
