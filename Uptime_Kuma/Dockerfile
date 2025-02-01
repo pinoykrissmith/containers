@@ -1,8 +1,18 @@
-FROM docker.io/louislam/uptime-kuma:1
+FROM docker.io/louislam/uptime-kuma:beta-slim
 
+ENV JAVA_HOME=/opt/java/openjdk
+ENV PATH="${JAVA_HOME}/bin:${PATH}"
+ENV GIN_MODE=release
+ENV MODE=normal
+ENV AUTO_RECEIVE_SCHEDULE="0 22 * * *"
+COPY --from=docker.io/bbernhard/signal-cli-rest-api:latest /opt/ /opt/
+COPY --from=docker.io/bbernhard/signal-cli-rest-api:latest /usr/bin/signal-cli-rest-api /usr/bin/signal-cli-rest-api
+COPY --from=docker.io/library/eclipse-temurin:21-jre $JAVA_HOME $JAVA_HOME
+COPY ./supervisord.conf /etc/supervisord.conf
 RUN curl -fsSL "https://pkgs.tailscale.com/stable/debian/$(grep VERSION_CODENAME /etc/os-release | cut -d= -f2).noarmor.gpg" | tee /usr/share/keyrings/tailscale-archive-keyring.gpg \
 	&& curl -fsSL "https://pkgs.tailscale.com/stable/debian/$(grep VERSION_CODENAME /etc/os-release | cut -d= -f2).tailscale-keyring.list" | tee /etc/apt/sources.list.d/tailscale.list \
 	&& apt-get purge -y cloudflared && rm -f /etc/apt/sources.list.d/cloudflared.list \
-	&& apt-get update && apt-get -y upgrade && apt-get install -y ca-certificates iptables tailscale && rm -rf /var/cache/apt/*
-RUN sed -i '$i tailscaled --state=/app/data/tailscaled.state --socket=/var/run/tailscale/tailscaled.sock &' /app/extra/entrypoint.sh \
-	&& sed -i '$i tailscale up --auth-key="${TAILSCALE_AUTHKEY}" --hostname=uptime-kuma' /app/extra/entrypoint.sh
+	&& apt-get update && apt-get -y upgrade && apt-get install -y ca-certificates iptables tailscale supervisor && rm -rf /var/cache/apt/*
+RUN ln -s /opt/signal-cli-*/bin/signal-cli /usr/bin/signal-cli \
+	&& ln -s /opt/signal-cli-*/bin/signal-cli-native /usr/bin/signal-cli-native
+CMD ["/usr/bin/supervisord"]
