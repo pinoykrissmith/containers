@@ -1,16 +1,8 @@
-FROM docker.io/library/eclipse-temurin:17-noble
-RUN $JAVA_HOME/bin/jlink \
-	--add-modules java.base,java.compiler,java.datatransfer,java.desktop,java.instrument,java.logging,java.management,java.naming,java.net.http,java.scripting,java.security.jgss,java.security.sasl,java.sql,java.transaction.xa,java.xml,jdk.attach,jdk.jdi,jdk.net,jdk.sctp,jdk.unsupported \
-	--strip-debug --no-man-pages --no-header-files --compress=2 --output /javaruntime
-
 FROM docker.io/library/debian:bookworm
 RUN apt-get update && apt-get install -y tini
 
-FROM gcr.io/distroless/java-base-debian12:nonroot
+FROM gcr.io/distroless/java21-debian12:nonroot
 WORKDIR /home/nonroot/traccar
-ENV JAVA_HOME=/opt/java/openjdk
-ENV PATH "${JAVA_HOME}/bin:${PATH}"
-COPY --from=0 /javaruntime $JAVA_HOME
 COPY --chown=nonroot:nonroot --from=docker.io/traccar/traccar:debian /opt/traccar /home/nonroot/traccar
 COPY --from=1 /usr/bin/tini /usr/bin/tini
 COPY --from=1 /usr/bin/tini-static /usr/bin/tini-static
