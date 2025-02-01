@@ -1,5 +1,4 @@
 FROM docker.io/louislam/uptime-kuma:beta-slim
-
 ENV JAVA_HOME=/opt/java/openjdk
 ENV PATH="${JAVA_HOME}/bin:${PATH}"
 ENV GIN_MODE=release
@@ -7,6 +6,7 @@ ENV MODE=normal
 ENV AUTO_RECEIVE_SCHEDULE="0 22 * * *"
 COPY --from=docker.io/bbernhard/signal-cli-rest-api:latest /opt/ /opt/
 COPY --from=docker.io/bbernhard/signal-cli-rest-api:latest /usr/bin/signal-cli-rest-api /usr/bin/signal-cli-rest-api
+COPY --from=docker.io/bbernhard/signal-cli-rest-api:latest /usr/bin/jsonrpc2-helper /usr/bin/jsonrpc2-helper
 COPY --from=docker.io/library/eclipse-temurin:21-jre $JAVA_HOME $JAVA_HOME
 COPY ./supervisord.conf /etc/supervisord.conf
 RUN curl -fsSL "https://pkgs.tailscale.com/stable/debian/$(grep VERSION_CODENAME /etc/os-release | cut -d= -f2).noarmor.gpg" | tee /usr/share/keyrings/tailscale-archive-keyring.gpg \
