@@ -6,8 +6,7 @@ RUN dnf upgrade --refresh -y --setopt=installonly_limit=0 \
 	python3-devel python3-setuptools python3-cffi libffi-devel git ncompress libcurl-devel \
 	dnf-plugins-core dkms python3-packaging -y --setopt=installonly_limit=0 \
 	&& dnf copr enable @asahi/kernel -y \
-	&& dnf install kernel-16k-devel -y --setopt=installonly_limit=0 \
-	&& rm -rf /var/cache/dnf/*
+	&& dnf install kernel-16k-devel -y --setopt=installonly_limit=0
 
 WORKDIR /tmp/zfs
 ADD https://github.com/openzfs/zfs.git#zfs-$VERSION .
@@ -21,4 +20,5 @@ RUN --network=none gpg --import /tmp/signers \
 	&& zip rpms.zip *.rpm -x '*src*.rpm'
 
 FROM scratch
+USER 3005
 COPY --from=0 /tmp/zfs/rpms.zip /install/rpms.zip
