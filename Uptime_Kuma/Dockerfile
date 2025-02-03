@@ -7,7 +7,7 @@ RUN go install .
 FROM docker.io/library/python:${PYTHON}-slim
 WORKDIR /root/.local/bin
 RUN pip install --upgrade pip && pip install --user apprise==1.7.1
-RUN sed -i 's|/usr/local/bin/python3.11|/usr/bin/python|g' *
+RUN sed -i 's|/usr/local/bin/python3.11|/usr/bin/python3|g' *
 
 FROM docker.io/louislam/uptime-kuma:beta-slim
 ARG PYTHON
