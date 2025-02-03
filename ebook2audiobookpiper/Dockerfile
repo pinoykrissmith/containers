@@ -1,7 +1,12 @@
 FROM docker.io/opensuse/tumbleweed:latest
 ARG UID=200011
-RUN zypper -n update \
-	&& zypper -n install calibre ffmpeg git unzip python310 tini \
+ENV PYTHONUNBUFFERED=1
+ENV GRADIO_SHARE="False"
+ENV GRADIO_ANALYTICS_ENABLED="False"
+ENV GRADIO_SERVER_NAME=0.0.0.0
+ENV GRADIO_SERVER_PORT=8080
+RUN zypper -n update --no-recommends \
+	&& zypper -n install --no-recommends calibre ffmpeg git unzip python310 tini \
 	&& rm -rf /var/cache/zypp/*
 
 WORKDIR /app
@@ -18,11 +23,6 @@ RUN python3.10 -m ensurepip --upgrade && pip3.10 install --no-cache-dir --upgrad
 	&& mv "/tmp/nltk" "/usr/local/lib/python3.10/site-packages/nltk"
 
 USER piper
-ENV PYTHONUNBUFFERED=1
-ENV GRADIO_SHARE="False"
-ENV GRADIO_ANALYTICS_ENABLED="False"
-ENV GRADIO_SERVER_NAME=0.0.0.0
-ENV GRADIO_SERVER_PORT=8080
 EXPOSE 8080
 ENTRYPOINT ["/sbin/tini", "--"]
 CMD ["python3.10", "gradio_gui.py"]
