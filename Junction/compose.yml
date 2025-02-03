@@ -1,0 +1,23 @@
+services:
+  junction:
+    image: ghcr.io/pinoykrissmith/containers:junction
+    container_name: junction
+    restart: unless-stopped
+    tty: true
+    read_only: true
+    user: "65532:65532"
+    volumes:
+      - ./config.yaml:/app/config/config.yaml:Z,ro
+    security_opt:
+      - "no-new-privileges=true"
+    cap_drop:
+      - "ALL"
+    networks:
+      - caddy_net
+    ports:
+      - "8025:8025"
+
+networks:
+  caddy_net:
+    name: caddy_net
+    external: true

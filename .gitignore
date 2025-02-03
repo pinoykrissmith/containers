@@ -12,3 +12,4 @@ Headwind/.env
 F-Droid/.env
 F-Droid/keystore.p12
 Attestation/.env
+Junction/config.yaml
