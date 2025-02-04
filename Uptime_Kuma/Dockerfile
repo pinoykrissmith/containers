@@ -2,7 +2,7 @@ FROM docker.io/louislam/uptime-kuma:beta-slim
 ENV JAVA_HOME=/opt/java/openjdk
 ENV PATH="${JAVA_HOME}/bin:${PATH}"
 ENV GIN_MODE=release
-ENV MODE=normal
+ENV MODE=native
 ENV AUTO_RECEIVE_SCHEDULE="0 22 * * *"
 COPY --from=docker.io/bbernhard/signal-cli-rest-api:latest /opt/ /opt/
 COPY --from=docker.io/bbernhard/signal-cli-rest-api:latest /usr/bin/signal-cli-rest-api /usr/bin/signal-cli-rest-api
@@ -15,4 +15,4 @@ RUN curl -fsSL "https://pkgs.tailscale.com/stable/debian/$(grep VERSION_CODENAME
 	&& apt-get update && apt-get -y upgrade && apt-get install -y ca-certificates iptables tailscale supervisor && rm -rf /var/cache/apt/*
 RUN ln -s /opt/signal-cli-*/bin/signal-cli /usr/bin/signal-cli \
 	&& ln -s /opt/signal-cli-*/bin/signal-cli-native /usr/bin/signal-cli-native
-CMD ["/usr/bin/supervisord"]
+CMD ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
