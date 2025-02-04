@@ -1,7 +1,5 @@
 FROM docker.io/louislam/uptime-kuma:beta-slim
 
-ENV JAVA_HOME=/opt/java/openjdk
-ENV PATH="${JAVA_HOME}/bin:${PATH}"
 ENV GIN_MODE=release
 ENV MODE=native
 ENV AUTO_RECEIVE_SCHEDULE="0 22 * * *"
