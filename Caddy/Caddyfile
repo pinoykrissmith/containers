@@ -68,7 +68,6 @@
 }
 
 vw.{$MY_DOMAIN} {
-	import safe
 	import nolog
 	import cloudflare
 	import lan
