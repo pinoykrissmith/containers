@@ -4,7 +4,6 @@ ENV DEBIAN_FRONTEND=noninteractive
 ENV INSTALL_LANGUAGE=en
 ENV SHARED_SECRET=changeme-C3z9vi54
 ENV HMDM_VARIANT=os
-ENV DOWNLOAD_CREDENTIALS=
 ENV HMDM_URL=https://h-mdm.com/files/hmdm-5.30.3-$HMDM_VARIANT.war
 ENV CLIENT_VERSION=6.14
 ENV SQL_HOST=localhost
@@ -20,6 +19,7 @@ RUN printf 'APT::Install-Recommends "0";\nAPT::Install-Suggests "0";\nAPT::Acqui
 	&& apt-get update && apt-get upgrade && apt-get dist-upgrade \
 	&& apt-get install aapt wget sed postgresql-client \
 	&& rm -rf /var/cache/apt/*
+	
 RUN mkdir -p /usr/local/tomcat/conf/Catalina/localhost \
 	&& mkdir -p /usr/local/tomcat/ssl
 
