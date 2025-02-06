@@ -24,9 +24,9 @@ RUN mkdir -p /usr/local/tomcat/conf/Catalina/localhost \
 	&& mkdir -p /usr/local/tomcat/ssl
 
 RUN chown --recursive ${UID}:${UID} /usr/local/tomcat/ \
-    && chown --recursive ${UID}:${UID} /opt/ \
-    && addgroup --gid ${UID} hmdm \
-    && adduser --ingroup hmdm --uid ${UID} --disabled-password --system hmdm
+	&& chown --recursive ${UID}:${UID} /opt/ \
+	&& addgroup --gid ${UID} hmdm \
+	&& adduser --ingroup hmdm --uid ${UID} --disabled-password --system hmdm
 
 COPY --from=docker.io/headwindmdm/hmdm:latest /docker-entrypoint.sh /docker-entrypoint.sh
 COPY --from=docker.io/headwindmdm/hmdm:latest --chown=${UID}:${UID} /opt/hmdm/ /opt/hmdm/
