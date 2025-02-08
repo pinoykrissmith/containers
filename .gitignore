@@ -1,14 +1,5 @@
-ArchiveBox/.env
-Caddy/.env
-Linkwarden/.env
-Nitter/.env
+*/.env
 Nitter/nitter.conf
 Nitter/twitter-credentials.json
-Immich/.env
-Traccar/.env
 Traccar/traccar.xml
-Vaultwarden/.env
-Headwind/.env
-F-Droid/.env
 F-Droid/keystore.p12
-Attestation/.env
