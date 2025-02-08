@@ -192,6 +192,17 @@ uptime.{$MY_DOMAIN} {
 	}
 }
 
+logs.{$MY_DOMAIN} {
+	import safe
+	import nolog
+	import cloudflare
+	import lan
+	encode zstd gzip
+	route @lan {
+		reverse_proxy host.containers.internal:8000
+	}
+}
+
 {$MY_DOMAIN} www.{$MY_DOMAIN} {
 	import safe
 	import log
