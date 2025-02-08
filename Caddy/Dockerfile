@@ -1,5 +1,5 @@
-ARG VERSION=2.8.4
-FROM docker.io/library/golang:1.22
+ARG VERSION=2.9.1
+FROM docker.io/library/golang:1.23
 ARG VERSION
 ENV GO111MODULE=on
 ENV CGO_ENABLED=0
@@ -7,7 +7,7 @@ RUN go run github.com/caddyserver/xcaddy/cmd/xcaddy@latest build v${VERSION} --o
 	--with github.com/caddy-dns/cloudflare@89f16b99c18ef49c8bb470a82f895bce01cbaece \
 	--with github.com/WeidiDeng/caddy-cloudflare-ip@f53b62aa13cb7ad79c8b47aacc3f2f03989b67e5 \
 	--with github.com/caddyserver/transform-encoder@47f376e021efdfdf2d47ca716c8f031b4fdfad92 \
-	--with github.com/tailscale/caddy-tailscale@f21c01b660c896bdd6bacc37178dc00d9af282b4 \
+	--with github.com/tailscale/caddy-tailscale@fd3f49d73216641b9cbe9167bbb05250c0ffc6d6 \
 	--with github.com/hslatman/caddy-crowdsec-bouncer/http@28ef1be0db6542a5efd451009c72ec419b815faa
 
 FROM docker.io/library/caddy:${VERSION}
