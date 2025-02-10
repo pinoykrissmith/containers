@@ -3,7 +3,7 @@ ARG UID=200013
 ENV NITTER_ACCOUNTS_FILE=/data/guest_accounts.json
 ENV TWITTER_CREDENTIALS_FILE=/data/twitter-credentials.json
 WORKDIR /app
-RUN apk --no-cache add pcre ca-certificates tini
+RUN apk --no-cache add pcre ca-certificates tini openssl
 RUN addgroup -g ${UID} nitter \
 	&& adduser -g ${UID} --ingroup nitter --disabled-password --system nitter
 COPY --from=ghcr.io/sekai-soft/nitter-self-contained:latest /src/scripts/requirements.txt /tmp/requirements.txt
