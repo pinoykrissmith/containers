@@ -11,7 +11,7 @@ FROM docker.io/library/python:3-alpine
 ARG UID=200013
 ENV NITTER_SESSIONS_FILE=/data/sessions.jsonl
 WORKDIR /app
-RUN apk --no-cache add pcre ca-certificates tini openssl
+RUN apk --no-cache add pcre ca-certificates openssl
 RUN pip install --no-cache-dir pyotp requests
 RUN addgroup -g ${UID} nitter \
 	&& adduser -g ${UID} --ingroup nitter --disabled-password --system nitter
@@ -22,5 +22,4 @@ COPY --chown=${UID}:${UID} --from=0 /src/public /app/public
 COPY --chown=${UID}:${UID} --from=0 /src/tools/get_session.py /app/get_session.py
 COPY --chown=${UID}:${UID} ./nitter.conf.example /app/nitter.conf
 EXPOSE 8080
-ENTRYPOINT ["/sbin/tini", "--"]
 CMD ["/app/nitter"]

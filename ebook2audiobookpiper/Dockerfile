@@ -6,7 +6,7 @@ ENV GRADIO_ANALYTICS_ENABLED="False"
 ENV GRADIO_SERVER_NAME=0.0.0.0
 ENV GRADIO_SERVER_PORT=8080
 RUN zypper -n update --no-recommends \
-	&& zypper -n install --no-recommends calibre ffmpeg git unzip python310 tini \
+	&& zypper -n install --no-recommends calibre ffmpeg git unzip python310 \
 	&& rm -rf /var/cache/zypp/*
 
 WORKDIR /app
@@ -24,5 +24,4 @@ RUN python3.10 -m ensurepip --upgrade && pip3.10 install --no-cache-dir --upgrad
 
 USER piper
 EXPOSE 8080
-ENTRYPOINT ["/sbin/tini", "--"]
 CMD ["python3.10", "gradio_gui.py"]
