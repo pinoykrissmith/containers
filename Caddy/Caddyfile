@@ -140,11 +140,9 @@ fdroid.{$TAILNET} {
 }
 
 nitter.{$MY_DOMAIN} {
-	import safe
 	import nolog
 	import cloudflare
 	import lan
-	encode zstd gzip
 	header {
 		Strict-Transport-Security "max-age=63072000"
 		Referrer-Policy no-referrer
