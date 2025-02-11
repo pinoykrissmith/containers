@@ -1,6 +1,6 @@
 services:
   caddy:
-    image: ghcr.io/pinoykrissmith/containers:caddy
+    image: ghcr.io/pinoykrissmith/caddy:latest
     container_name: caddy
     restart: unless-stopped
     tty: true

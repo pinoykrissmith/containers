@@ -14,28 +14,94 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: pinoykrissmith/containers
-  TAG: traccar
+  IMAGE_NAME: pinoykrissmith/traccar
+  TAG: latest
+  CONTEXT: Traccar
+  VERSIONED: false
 
 jobs:
   build:
-    name: Build & push new image
+    name: Building new image for ${{ matrix.platforms }}
     permissions:
       contents: read
       packages: write
     timeout-minutes: 10
-    runs-on: ubuntu-24.04
+    runs-on: ${{ matrix.runner }}
+    strategy:
+      matrix:
+        include:
+          - runner: ubuntu-24.04
+            platforms: linux/amd64
+          - runner: ubuntu-24.04-arm
+            platforms: linux/arm64
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # Add support for more platforms with QEMU
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
-
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
+
+      - name: Setting some variables
+        run: |
+          echo "BUILDER_TAG=$(echo ${{ env.IMAGE_NAME }} | cut -d'/' -f2)" >> $GITHUB_ENV
+          echo "ARCH=$(dpkg --print-architecture)" >> $GITHUB_ENV
+
+      - name: Login to registry
+        if: github.event_name != 'pull_request'
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set Docker metadata
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ghcr.io/${{ github.repository_owner }}/builder
+          tags: |
+            ${{ env.BUILDER_TAG }}-${{ env.ARCH }}
+
+      - name: Build and push Docker image
+        id: build-and-push
+        uses: docker/build-push-action@v6
+        with:
+          context: ${{ env.CONTEXT }}
+          platforms: ${{ matrix.platforms }}
+          push: ${{ github.event_name != 'pull_request' }}
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+
+  merge:
+    name: Merging manifests & pushing new image
+    permissions:
+      contents: read
+      packages: write
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    needs: build
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        id: buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Get tag for builder to use
+        run: |
+          echo "BUILDER_TAG=$(echo ${{ env.IMAGE_NAME }} | cut -d'/' -f2)" >> $GITHUB_ENV
+
+      - name: Set date tag for weekly images
+        if: ${{ github.event_name == 'schedule' }}
+        run: |
+          echo "DATE_TAG=$(date +'%Y%m%d%H')" >> $GITHUB_ENV
+
+      - name: Get version string
+        if: ${{ env.VERSIONED == 'true' }}
+        run: |
+          echo "FULL_VERSION=$(grep -oP -m 1 '(?<=VERSION=).*' ${{ env.CONTEXT }}/Dockerfile)" >> $GITHUB_ENV
 
       - name: Login to registry
         if: github.event_name != 'pull_request'
@@ -49,23 +115,23 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          images: |
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
             ${{ env.TAG }}
+            ${{ env.DATE_TAG }}
+            ${{ env.FULL_VERSION }}
 
-      - name: Build and push Docker image
-        id: build-and-push
-        uses: docker/build-push-action@v6
-        with:
-          context: ./Traccar
-          platforms: linux/amd64,linux/arm64
-          push: ${{ github.event_name != 'pull_request' }}
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
+      - name: Create Combined Manifest Tag
+        id: create_combined_manifest
+        run: |
+          for IMAGE in $(jq -r '.tags[]' <<< "$DOCKER_METADATA_OUTPUT_JSON"); do
+            docker buildx imagetools create --tag "$IMAGE" "ghcr.io/${{ github.repository_owner }}/builder:${{ env.BUILDER_TAG }}-amd64" "ghcr.io/${{ github.repository_owner }}/builder:${{ env.BUILDER_TAG }}-arm64"
+          done
 
   trivy:
     name: Scan current image with Trivy
-    needs: build
+    needs: merge
     permissions:
       security-events: write
     timeout-minutes: 10

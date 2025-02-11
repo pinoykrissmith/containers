@@ -1,6 +1,6 @@
 services:
   archiveteam-warrior:
-    image: ghcr.io/pinoykrissmith/containers:archiveteam
+    image: ghcr.io/pinoykrissmith/archiveteam:latest
     container_name: tinytown-grab
     restart: unless-stopped
     tty: true

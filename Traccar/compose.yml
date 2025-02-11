@@ -1,6 +1,6 @@
 services:
   traccar:
-    image: ghcr.io/pinoykrissmith/containers:traccar
+    image: ghcr.io/pinoykrissmith/traccar:latest
     container_name: traccar
     restart: unless-stopped
     tty: true

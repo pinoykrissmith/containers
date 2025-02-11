@@ -1,6 +1,6 @@
 services:
   attestation:
-    image: ghcr.io/pinoykrissmith/containers:attestation
+    image: ghcr.io/pinoykrissmith/attestation:latest
     container_name: attestation
     networks:
       caddy_net:

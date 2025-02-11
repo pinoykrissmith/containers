@@ -1,6 +1,6 @@
 services:
   fdroid:
-    image: ghcr.io/pinoykrissmith/containers:fdroid
+    image: ghcr.io/pinoykrissmith/fdroid:latest
     container_name: fdroid
     restart: always
     environment:

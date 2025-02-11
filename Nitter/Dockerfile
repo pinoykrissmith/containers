@@ -1,17 +1,25 @@
 FROM docker.io/library/python:3-alpine
+WORKDIR /src/
+ADD --keep-git-dir=true https://github.com/zedeus/nitter.git#master .
+RUN apk --no-cache add libsass-dev pcre gcc git libc-dev nim nimble
+RUN nimble install -y --depsOnly \
+	&& nimble build -d:danger -d:lto -d:strip --mm:refc \
+	&& nimble scss \
+	&& nimble md
+
+FROM docker.io/library/python:3-alpine
 ARG UID=200013
-ENV NITTER_ACCOUNTS_FILE=/data/guest_accounts.json
-ENV TWITTER_CREDENTIALS_FILE=/data/twitter-credentials.json
+ENV NITTER_SESSIONS_FILE=/data/sessions.jsonl
 WORKDIR /app
 RUN apk --no-cache add pcre ca-certificates tini openssl
+RUN pip install --no-cache-dir pyotp requests
 RUN addgroup -g ${UID} nitter \
 	&& adduser -g ${UID} --ingroup nitter --disabled-password --system nitter
-COPY --from=ghcr.io/sekai-soft/nitter-self-contained:latest /src/scripts/requirements.txt /tmp/requirements.txt
-RUN pip install --no-cache-dir -r /tmp/requirements.txt && rm -f /tmp/requirements.txt
-USER nitter
-COPY --chown=${UID}:${UID} --from=ghcr.io/sekai-soft/nitter-self-contained:latest /src/nitter /app/nitter
-COPY --chown=${UID}:${UID} --from=ghcr.io/sekai-soft/nitter-self-contained:latest /src/public /app/public
-COPY --chown=${UID}:${UID} --from=ghcr.io/sekai-soft/nitter-self-contained:latest /src/scripts/auth.py /app/auth.py
+
+USER ${UID}
+COPY --chown=${UID}:${UID} --from=0 /src/nitter /app/nitter
+COPY --chown=${UID}:${UID} --from=0 /src/public /app/public
+COPY --chown=${UID}:${UID} --from=0 /src/tools/get_session.py /app/get_session.py
 COPY --chown=${UID}:${UID} ./nitter.conf.example /app/nitter.conf
 EXPOSE 8080
 ENTRYPOINT ["/sbin/tini", "--"]

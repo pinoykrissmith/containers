@@ -1,6 +1,6 @@
 services:
   archiveteam-warrior:
-    image: ghcr.io/pinoykrissmith/containers:archiveteam
+    image: ghcr.io/pinoykrissmith/archiveteam:latest
     container_name: auto
     restart: unless-stopped
     tty: true

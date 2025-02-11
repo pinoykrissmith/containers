@@ -1,6 +1,6 @@
 services:
   ebook2audiobookpiper:  
-    image: ghcr.io/pinoykrissmith/containers:ebook2audiobookpiper
+    image: ghcr.io/pinoykrissmith/ebook2audiobookpiper:latest
     container_name: ebook2audiobookpiper
     user: "200011:200011"
     volumes:

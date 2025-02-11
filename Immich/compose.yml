@@ -81,7 +81,7 @@ services:
 
   database:
     container_name: immich_postgres
-    image: ghcr.io/pinoykrissmith/containers:pgvecto
+    image: ghcr.io/pinoykrissmith/pgvecto:latest
     environment:
       POSTGRES_PASSWORD: ${DB_PASSWORD}
       POSTGRES_USER: ${DB_USERNAME}

@@ -1,22 +1,17 @@
 services:
     nitter:
-      image: ghcr.io/pinoykrissmith/containers:nitter
+      image: ghcr.io/pinoykrissmith/nitter:latest
       container_name: nitter
       user: "200013:200013"
       labels:
         com.centurylinklabs.watchtower.enable: "true"
         io.containers.autoupdate: "registry"
       volumes:
-        - ./twitter-credentials.json:/data/twitter-credentials.json:Z,ro
         - ./nitter.conf:/app/nitter.conf:Z,ro
         - /elysium/nitter-data:/data:Z
       depends_on:
         nitter-redis:
           condition: service_healthy
-      environment:
-        - DISABLE_REDIS=1
-        - REDIS_HOST=nitter-redis
-        - DISABLE_NGINX=1
       restart: unless-stopped
       cap_drop:
         - "ALL"

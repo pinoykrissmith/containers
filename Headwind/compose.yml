@@ -1,6 +1,6 @@
 services:
   headwind:
-    image: ghcr.io/pinoykrissmith/containers:headwind
+    image: ghcr.io/pinoykrissmith/headwind:latest
     container_name: headwind
     networks:
       - caddy_net
