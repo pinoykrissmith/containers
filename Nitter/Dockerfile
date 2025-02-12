@@ -1,4 +1,4 @@
-FROM docker.io/library/python:3-alpine
+FROM docker.io/library/alpine:3.21.2
 WORKDIR /src/
 ADD --keep-git-dir=true https://github.com/zedeus/nitter.git#master .
 RUN apk --no-cache add libsass-dev pcre gcc git libc-dev nim nimble
