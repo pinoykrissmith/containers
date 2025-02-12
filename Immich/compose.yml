@@ -63,7 +63,7 @@ services:
     container_name: immich_redis
     image: ghcr.io/polarix-containers/valkey:7
     healthcheck:
-      test: redis-cli ping || exit 1
+      test: valkey-cli ping || exit 1
     restart: always
     tty: true
     volumes:
