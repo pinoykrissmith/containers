@@ -61,7 +61,7 @@ services:
 
   redis:
     container_name: immich_redis
-    image: ghcr.io/polarix-containers/redis:6
+    image: ghcr.io/polarix-containers/valkey:7
     healthcheck:
       test: redis-cli ping || exit 1
     restart: always
@@ -72,7 +72,7 @@ services:
       - "no-new-privileges=true"
     cap_drop:
       - "ALL"
-    user: "200009:200009"
+    user: "200010:200010"
     read_only: true
     environment:
       LD_PRELOAD: ""

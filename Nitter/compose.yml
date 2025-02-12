@@ -21,20 +21,20 @@ services:
       network_mode: service:nitter-gluetun
 
     nitter-redis:
-      image: ghcr.io/polarix-containers/redis:6
+      image: ghcr.io/polarix-containers/valkey:7
       container_name: nitter-redis
-      command: redis-server --save 60 1 --loglevel warning
+      command: valkey-server --save 60 1 --loglevel warning
       volumes:
         - /elysium/nitter-redis:/data:Z
       restart: unless-stopped
       networks:
         - caddy_net
       healthcheck:
-        test: ["CMD", "redis-cli", "ping"]
+        test: ["CMD", "valkey-cli", "ping"]
         interval: 5s
         timeout: 5s
         retries: 12
-      user: "200009:200009"
+      user: "200010:200010"
       read_only: true
       security_opt:
         - "no-new-privileges=true"
