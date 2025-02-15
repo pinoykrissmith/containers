@@ -31,9 +31,9 @@ jobs:
       matrix:
         include:
           - runner: ubuntu-24.04
-            platforms: linux/amd64
+            arch: amd64
           - runner: ubuntu-22.04-arm
-            platforms: linux/arm64
+            arch: arm64
 
     steps:
       - name: Checkout code
@@ -42,10 +42,9 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      - name: Setting some variables
+      - name: Get tag for builder to use
         run: |
           echo "BUILDER_TAG=$(echo ${{ env.IMAGE_NAME }} | cut -d'/' -f2)" >> $GITHUB_ENV
-          echo "ARCH=$(dpkg --print-architecture)" >> $GITHUB_ENV
 
       - name: Login to registry
         if: github.event_name != 'pull_request'
@@ -61,14 +60,14 @@ jobs:
         with:
           images: ghcr.io/${{ github.repository_owner }}/builder
           tags: |
-            ${{ env.BUILDER_TAG }}-${{ env.ARCH }}
+            ${{ env.BUILDER_TAG }}-${{ matrix.arch }}
 
       - name: Build and push Docker image
         id: build-and-push
         uses: docker/build-push-action@v6
         with:
           context: ${{ env.CONTEXT }}
-          platforms: ${{ matrix.platforms }}
+          platforms: linux/${{ matrix.arch }}
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
