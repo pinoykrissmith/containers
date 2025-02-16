@@ -9,7 +9,7 @@ RUN dnf upgrade --refresh -y --setopt=installonly_limit=0 \
 	&& dnf install kernel-16k-devel -y --setopt=installonly_limit=0
 
 WORKDIR /tmp/zfs
-ADD https://github.com/openzfs/zfs.git#zfs-$VERSION .
+RUN git clone --depth=1 https://github.com/openzfs/zfs.git#zfs-$VERSION .
 COPY signers /tmp/signers
 RUN --network=none gpg --import /tmp/signers \
 	&& git verify-tag $(git describe --tags) \
