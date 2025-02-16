@@ -5,7 +5,7 @@ ENV LANG=C.UTF-8
 ENV DEBIAN_FRONTEND=noninteractive
 RUN printf 'APT::Install-Recommends "0";\nAPT::Install-Suggests "0";\nAPT::Acquire::Retries "20";\nAPT::Get::Assume-Yes "true";\nDpkg::Use-Pty "0";\nquiet "1";' > /etc/apt/apt.conf.d/99github \
 	&& apt-get update && apt-get upgrade && apt-get dist-upgrade \
-	&& apt-get install apksigner git lzip openjdk-17-jdk-headless python3 python3-pip wget \
+	&& apt-get install apksigner git lzip python3 python3-pip wget \
 	&& rm -rf /var/cache/apt/*
 RUN pip install --no-cache-dir --break-system-packages \
 		git+https://github.com/androguard/androguard@16a6bd21946bfe3d75639ffd3d96957971b6553f \
