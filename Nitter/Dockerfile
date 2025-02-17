@@ -13,7 +13,7 @@ ENV NITTER_SESSIONS_FILE=/data/sessions.jsonl
 WORKDIR /app
 RUN apk --no-cache add pcre ca-certificates openssl
 RUN pip install --no-cache-dir pyotp requests
-RUN addgroup -g ${UID} nitter && adduser -u ${UID} --ingroup nitter --disabled-password -s /sbin/nologin -H --system nitter
+RUN addgroup -g ${UID} --system nitter && adduser -u ${UID} --ingroup nitter --disabled-password -s /sbin/nologin -H --system nitter
 
 USER ${UID}
 COPY --chown=${UID}:${UID} --from=0 /src/nitter /app/nitter

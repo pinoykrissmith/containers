@@ -12,7 +12,7 @@ RUN sed -i -e s,countme=1,countme=0, /etc/yum.repos.d/*.repo \
 
 WORKDIR /app
 ADD https://github.com/DrewThomasson/ebook2audiobookpiper-tts.git#main .
-RUN groupadd -g ${UID} piper && useradd -u ${UID} -r -M -g piper -s /usr/sbin/nologin piper \
+RUN groupadd -g ${UID} -r piper && useradd -u ${UID} -r -M -g piper -s /usr/sbin/nologin piper \
 	&& chown --recursive piper:piper /app
 
 COPY nltk.zip /tmp
