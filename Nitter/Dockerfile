@@ -14,7 +14,7 @@ WORKDIR /app
 RUN apk --no-cache add pcre ca-certificates openssl
 RUN pip install --no-cache-dir pyotp requests
 RUN addgroup -g ${UID} nitter \
-	&& adduser -g ${UID} --ingroup nitter --disabled-password --system nitter
+	&& adduser -u ${UID} --ingroup nitter --disabled-password -s /sbin/nologin --system nitter
 
 USER ${UID}
 COPY --chown=${UID}:${UID} --from=0 /src/nitter /app/nitter
