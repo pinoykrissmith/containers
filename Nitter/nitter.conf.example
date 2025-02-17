@@ -39,6 +39,6 @@ theme = "Twitter Dark"
 replaceTwitter = ""
 replaceYouTube = "yewtu.be"
 replaceReddit = "farside.link/libreddit"
-proxyVideos = false
+proxyVideos = true
 hlsPlayback = true
 infiniteScroll = false
