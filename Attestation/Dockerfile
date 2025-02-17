@@ -49,9 +49,9 @@ COPY --chown=nginx:nginx --from=0 /app/nginx-tmp/root_attestation.app.conf /etc/
 COPY --chown=nginx:nginx --from=0 /app/nginx-tmp/snippets /etc/nginx/snippets
 COPY --chown=nginx:nginx --from=0 /app/static-tmp /srv/attestation.app_a
 COPY --chown=nginx:nginx ./nginx.conf /etc/nginx/nginx.conf
-COPY --from=ghcr.io/nginxinc/nginx-unprivileged:stable-alpine-slim /etc/nginx/conf.d/default.conf /etc/nginx/conf.d/default.conf
-COPY --from=ghcr.io/nginxinc/nginx-unprivileged:stable-alpine-slim /docker-entrypoint.d /docker-entrypoint.d
-COPY --from=ghcr.io/nginxinc/nginx-unprivileged:stable-alpine-slim /docker-entrypoint.sh /docker-entrypoint.sh
+COPY --from=docker.io/nginxinc/nginx-unprivileged:stable-alpine-slim /etc/nginx/conf.d/default.conf /etc/nginx/conf.d/default.conf
+COPY --from=docker.io/nginxinc/nginx-unprivileged:stable-alpine-slim /docker-entrypoint.d /docker-entrypoint.d
+COPY --from=docker.io/nginxinc/nginx-unprivileged:stable-alpine-slim /docker-entrypoint.sh /docker-entrypoint.sh
 COPY --chown=nginx:nginx --from=0 /app/build/libs/ /app
 COPY --chown=nginx:nginx --from=0 /app/libs/sqlite4java-prebuilt/ /usr/lib
 COPY --from=0 /javaruntime $JAVA_HOME

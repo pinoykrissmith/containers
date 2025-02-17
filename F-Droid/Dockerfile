@@ -1,4 +1,4 @@
-FROM ghcr.io/nginxinc/nginx-unprivileged:stable-bookworm
+FROM docker.io/nginxinc/nginx-unprivileged:stable-bookworm
 USER root
 ARG VERSION=2.3.5
 ENV LANG=C.UTF-8
