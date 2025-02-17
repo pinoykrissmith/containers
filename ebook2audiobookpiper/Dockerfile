@@ -6,13 +6,13 @@ ENV GRADIO_ANALYTICS_ENABLED="False"
 ENV GRADIO_SERVER_NAME=0.0.0.0
 ENV GRADIO_SERVER_PORT=8080
 RUN sed -i -e s,countme=1,countme=0, /etc/yum.repos.d/*.repo \
-	&& dnf install --skip-broken -y --setopt=install_weak_deps=False calibre ffmpeg unzip git python3.10 which \
-	&& dnf remove sudo -y --setopt protected_packages= \
+	&& dnf install -y --setopt=install_weak_deps=False calibre ffmpeg unzip git python3.10 which \
+	&& dnf remove -y sudo --setopt protected_packages= \
 	&& dnf clean all
 
 WORKDIR /app
 ADD https://github.com/DrewThomasson/ebook2audiobookpiper-tts.git#main .
-RUN useradd -u ${UID} -r -d /app -s /sbin/nologin piper \
+RUN groupadd -g ${UID} piper && useradd -u ${UID} -r -d /app -g piper -s /sbin/nologin piper \
 	&& chown --recursive piper:piper /app
 
 COPY nltk.zip /tmp
