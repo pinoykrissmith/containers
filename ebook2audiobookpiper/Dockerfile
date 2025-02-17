@@ -5,7 +5,7 @@ ENV GRADIO_SHARE="False"
 ENV GRADIO_ANALYTICS_ENABLED="False"
 ENV GRADIO_SERVER_NAME=0.0.0.0
 ENV GRADIO_SERVER_PORT=8080
-RUN dnf upgrade --refresh -y --setopt=install_weak_deps=False \
+RUN sed -i -e s,countme=1,countme=0, /etc/yum.repos.d/*.repo \
 	&& dnf install --skip-broken -y --setopt=install_weak_deps=False calibre ffmpeg unzip git python3.10 which \
 	&& dnf remove sudo -y --setopt protected_packages= \
 	&& dnf clean all
