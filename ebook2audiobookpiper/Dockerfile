@@ -11,9 +11,8 @@ RUN sed -i -e s,countme=1,countme=0, /etc/yum.repos.d/*.repo \
 	&& dnf clean all
 
 WORKDIR /app
-ADD https://github.com/DrewThomasson/ebook2audiobookpiper-tts.git#main .
-RUN groupadd -g ${UID} -r piper && useradd -u ${UID} -r -M -g piper -s /usr/sbin/nologin piper \
-	&& chown --recursive piper:piper /app
+ADD --chown=${UID}:${UID} https://github.com/DrewThomasson/ebook2audiobookpiper-tts.git#main .
+RUN groupadd -g ${UID} -r piper && useradd -u ${UID} -r -M -g piper -s /usr/sbin/nologin piper
 
 COPY nltk.zip /tmp
 RUN python3.10 -m ensurepip --upgrade && pip3.10 install --no-cache-dir --upgrade pip \
@@ -21,7 +20,8 @@ RUN python3.10 -m ensurepip --upgrade && pip3.10 install --no-cache-dir --upgrad
 	&& python3.10 -m spacy download en_core_web_sm \
 	&& unzip -q "/tmp/nltk.zip" -d "/tmp" \
 	&& rm -rf "/usr/local/lib/python3.10/site-packages/nltk" "/tmp/nltk.zip" \
-	&& mv "/tmp/nltk" "/usr/local/lib/python3.10/site-packages/nltk"
+	&& mv "/tmp/nltk" "/usr/local/lib/python3.10/site-packages/nltk" \
+	&& python3.10 -m nltk.downloader punkt && mv /root/nltk_data /usr
 
 USER piper
 EXPOSE 8080
