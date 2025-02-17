@@ -1,4 +1,4 @@
-FROM docker.io/library/fedora:41
+FROM registry.fedoraproject.org/fedora:41
 ARG VERSION=2.3.0
 RUN dnf upgrade --refresh -y --setopt=installonly_limit=0 \
 	&& dnf install --skip-broken gcc make autoconf automake libtool rpm-build libtirpc-devel libblkid-devel \

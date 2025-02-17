@@ -1,4 +1,4 @@
-FROM docker.io/library/fedora:latest
+FROM registry.fedoraproject.org/fedora:latest
 ARG UID=200011
 ENV PYTHONUNBUFFERED=1
 ENV GRADIO_SHARE="False"
