@@ -1,7 +1,7 @@
 FROM docker.io/nginxinc/nginx-unprivileged:stable-bookworm
 USER root
 ARG VERSION=2.3.5
-ARG UID=101
+ARG UID=200008
 WORKDIR /fdroid
 ADD --chmod=644 https://gitlab.com/CalyxOS/calyxos-fdroid-repo/-/raw/99d7f16b53bf55b76bedc15985da1f1da7084c2b/download.py /download.py
 RUN printf 'APT::Install-Recommends "0";\nAPT::Install-Suggests "0";\nAPT::Acquire::Retries "20";\nAPT::Get::Assume-Yes "true";\nDpkg::Use-Pty "0";\nquiet "1";' > /etc/apt/apt.conf.d/99github \
@@ -17,4 +17,6 @@ RUN --network=none printf '#!/bin/sh\njava -jar /usr/lib/android-sdk/build-tools
 	&& printf '#!/bin/sh\n/usr/local/bin/fdroid update -v' > /docker-entrypoint.d/99-fdroid-update.sh && chmod +x /docker-entrypoint.d/99-fdroid-update.sh \
 	&& printf "#!/bin/bash\nfor apk in repo/*.apk; do\n    if [[ -f \"\$apk\" ]]; then\n        json=\$(androguard apkid \"\$apk\")\n        package_name=\$(echo \"\$json\" | sed -n '3p' | tr -d '\",' | xargs)\n        if [[ -n \"\$package_name\" && ! -f \"metadata/\$package_name.yml\" ]]; then\n            rm \"\$apk\"\n        fi\n    fi\ndone\n" > /usr/local/bin/cleanup && chmod +x /usr/local/bin/cleanup \
 	&& printf '\n---\nsdk_path: /usr/lib/android-sdk\nrepo_url: {env: REPO_URL}\nrepo_name: {env: REPO_NAME}\nrepo_keyalias: host.containers.internal\nkeystore: /keystore.p12\nkeystorepass: {env: KEYSTOREPASS}\nkeypass: {env: KEYPASS}\nkeydname: CN=host.containers.internal, OU=F-Droid' > /fdroid/config.yml && chown ${UID}:${UID} /fdroid/config.yml && chmod 0600 /fdroid/config.yml
+RUN --network=none usermod -u ${UID} postgres && groupmod -g ${UID} nginx \
+	&& find / -path /proc -prune -user 101 -exec chown -h nginx {} \; && find / -path /proc -prune -group 101 -exec chgrp -h nginx {} \;
 USER ${UID}

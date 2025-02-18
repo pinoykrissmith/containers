@@ -31,4 +31,4 @@ COPY --from=docker.io/headwindmdm/hmdm:latest /docker-entrypoint.sh /docker-entr
 COPY --from=docker.io/headwindmdm/hmdm:latest --chown=${UID}:${UID} /opt/hmdm/ /opt/hmdm/
 EXPOSE 8080
 ENTRYPOINT ["/docker-entrypoint.sh"]
-USER $UID
+USER ${UID}
