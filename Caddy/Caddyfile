@@ -156,7 +156,7 @@ nitter.{$MY_DOMAIN} {
 	route @lan {
 		reverse_proxy nitter-gluetun:8080 {
 			transport http {
-			compression off
+				compression off
 			}
 		}
 	}
