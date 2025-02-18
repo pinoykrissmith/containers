@@ -13,7 +13,7 @@ services:
       SELECTED_PROJECT: "urlteam2"
     cap_drop:
       - ALL
-    user: "1000:1000"
+    user: "200014:200014"
     read_only: true
     security_opt:
       - "no-new-privileges=true"

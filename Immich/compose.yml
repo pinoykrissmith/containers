@@ -97,7 +97,7 @@ services:
       start_period: 5m
     restart: always
     tty: true
-    user: "26:26"
+    user: "200012:200012"
     cap_drop:
       - "ALL"
     security_opt:

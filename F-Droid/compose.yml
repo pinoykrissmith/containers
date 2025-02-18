@@ -11,7 +11,7 @@ services:
       - ./keystore.p12:/keystore.p12:Z,ro
       - /elysium/fdroid-data:/fdroid/repo:Z
       - /elysium/fdroid-cache:/cache:Z
-    user: "101:101"
+    user: "200008:200008"
     cap_drop:
       - "ALL"
     security_opt:
