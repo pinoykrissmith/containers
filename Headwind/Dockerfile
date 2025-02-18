@@ -19,18 +19,16 @@ RUN printf 'APT::Install-Recommends "0";\nAPT::Install-Suggests "0";\nAPT::Acqui
 	&& apt-get update && apt-get upgrade && apt-get dist-upgrade \
 	&& apt-get install aapt wget sed postgresql-client \
 	&& rm -rf /var/cache/apt/*
-	
-RUN mkdir -p /usr/local/tomcat/conf/Catalina/localhost \
-	&& mkdir -p /usr/local/tomcat/ssl
 
-RUN chown --recursive ${UID}:${UID} /usr/local/tomcat/ \
+RUN --network=none mkdir -p /usr/local/tomcat/conf/Catalina/localhost \
+	&& mkdir -p /usr/local/tomcat/ssl \
+	&& chown --recursive ${UID}:${UID} /usr/local/tomcat/ \
 	&& chown --recursive ${UID}:${UID} /opt/ \
 	&& addgroup --gid ${UID} --system hmdm \
 	&& adduser --ingroup hmdm --uid ${UID} --disabled-password --no-create-home --shell /usr/sbin/nologin --system hmdm
 
 COPY --from=docker.io/headwindmdm/hmdm:latest /docker-entrypoint.sh /docker-entrypoint.sh
 COPY --from=docker.io/headwindmdm/hmdm:latest --chown=${UID}:${UID} /opt/hmdm/ /opt/hmdm/
-
 EXPOSE 8080
 ENTRYPOINT ["/docker-entrypoint.sh"]
-USER hmdm
+USER $UID
