@@ -1,7 +1,7 @@
 services:
   linkwarden:
     container_name: linkwarden
-    image: ghcr.io/linkwarden/linkwarden:latest
+    image: ghcr.io/pinoykrissmith/linkwarden:latest
     environment:
       - DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@lw-postgres:5432/postgres
       - NEXTAUTH_URL=${NEXTAUTH_URL}
@@ -16,8 +16,7 @@ services:
     labels:
       com.centurylinklabs.watchtower.enable: "true"
       io.containers.autoupdate: "registry"
-    tty: true
-    user: "1000:1000"
+    user: "65532:65532"
     read_only: true
     depends_on:
       - postgres
