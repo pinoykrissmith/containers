@@ -1,5 +1,5 @@
 FROM docker.io/library/tomcat:9-jdk11-temurin-jammy
-ARG UID=3006
+ARG UID=200004
 ENV DEBIAN_FRONTEND=noninteractive
 ENV INSTALL_LANGUAGE=en
 ENV SHARED_SECRET=changeme-C3z9vi54

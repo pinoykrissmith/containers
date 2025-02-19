@@ -12,7 +12,7 @@ RUN go run github.com/caddyserver/xcaddy/cmd/xcaddy@latest build v${VERSION} --o
 
 FROM docker.io/library/caddy:${VERSION}
 FROM scratch
-ARG UID=65532
+ARG UID=200017
 ENV XDG_CONFIG_HOME /config
 ENV XDG_DATA_HOME /data
 COPY --from=0 /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/ca-certificates.crt

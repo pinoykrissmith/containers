@@ -5,7 +5,7 @@ services:
     restart: unless-stopped
     tty: true
     read_only: true
-    user: "65532:65532"
+    user: "200017:200017"
     ports:
       - "443:443"
       - "443:443/udp"
