@@ -2,11 +2,6 @@ name: Build Auditor
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - main
-    paths:
-      - '.github/workflows/build-auditor.yml'
 
 jobs:
   build:
