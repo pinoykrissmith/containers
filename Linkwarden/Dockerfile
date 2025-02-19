@@ -1,5 +1,4 @@
 ARG VERSION=2.9.3
-
 FROM docker.io/library/rust:1.80-bookworm
 RUN cargo install --locked monolith
 
@@ -17,4 +16,5 @@ WORKDIR /data
 COPY --from=1 --chown=nonroot:nonroot /data /data
 COPY --from=0 /usr/local/cargo/bin/monolith /usr/local/bin/monolith
 COPY --chown=nonroot:nonroot ./init.js /init.js
+EXPOSE 3000
 CMD ["/init.js"]
