@@ -14,7 +14,7 @@ ADD --chown=${UID}:${UID} https://github.com/DrewThomasson/ebook2audiobookpiper-
 RUN --network=none groupadd -g ${UID} -r piper && useradd -u ${UID} -r -M -g piper -s /usr/sbin/nologin piper
 
 ADD --chmod=755 https://github.com/secureblue/secureblue/raw/681a8c1a8fa77f401be5d117babbda44fdd142ad/files/scripts/removesuid.sh /tmp/
-RUN /tmp/removesuid.sh || true && rm /tmp/removesuid.sh
+RUN --network=none /tmp/removesuid.sh || true && rm /tmp/removesuid.sh
 
 RUN python3.10 -m ensurepip --upgrade && pip3.10 install --no-cache-dir --upgrade pip \
 	&& pip3.10 install --no-cache-dir --prefer-binary spacy==3.7.5 piper-tts pydub nltk beautifulsoup4 ebooklib tqdm gradio \
