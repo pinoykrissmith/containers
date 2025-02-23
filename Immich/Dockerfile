@@ -12,7 +12,7 @@ COPY --from=0 /vectors.deb /tmp/vectors.deb
 RUN apt-get update && apt-get upgrade -y && apt-get dist-upgrade -y \
 	&& apt-get install -y /tmp/vectors.deb && rm -f /tmp/vectors.deb && rm -rf /var/cache/apt/* && rm -f /usr/local/bin/gosu
 RUN --network=none usermod -u ${UID} postgres && groupmod -g ${UID} postgres \
-	&& find / -path /proc -prune -user 999 -exec chown -h postgres {} \; && find / -path /proc -prune -group 999 -exec chgrp -h postgres {} \;
+	&& find / -path /proc -prune -o -user 999 -exec chown postgres {} + && find / -path /proc -prune -o -group 999 -exec chgrp postgres {} +
 ADD --chmod=755 https://github.com/secureblue/secureblue/raw/681a8c1a8fa77f401be5d117babbda44fdd142ad/files/scripts/removesuid.sh /tmp/
 RUN /tmp/removesuid.sh || true && rm /tmp/removesuid.sh
 

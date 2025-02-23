@@ -18,7 +18,7 @@ RUN --network=none printf '#!/bin/sh\njava -jar /usr/lib/android-sdk/build-tools
 	&& printf "#!/bin/bash\nfor apk in repo/*.apk; do\n    if [[ -f \"\$apk\" ]]; then\n        json=\$(androguard apkid \"\$apk\")\n        package_name=\$(echo \"\$json\" | sed -n '3p' | tr -d '\",' | xargs)\n        if [[ -n \"\$package_name\" && ! -f \"metadata/\$package_name.yml\" ]]; then\n            rm \"\$apk\"\n        fi\n    fi\ndone\n" > /usr/local/bin/cleanup && chmod +x /usr/local/bin/cleanup \
 	&& printf '\n---\nsdk_path: /usr/lib/android-sdk\nrepo_url: {env: REPO_URL}\nrepo_name: {env: REPO_NAME}\nrepo_keyalias: host.containers.internal\nkeystore: /keystore.p12\nkeystorepass: {env: KEYSTOREPASS}\nkeypass: {env: KEYPASS}\nkeydname: CN=host.containers.internal, OU=F-Droid' > /fdroid/config.yml && chown ${UID}:${UID} /fdroid/config.yml && chmod 0600 /fdroid/config.yml
 RUN --network=none usermod -u ${UID} nginx && groupmod -g ${UID} nginx \
-	&& find / -path /proc -prune -user 101 -exec chown -h nginx {} \; && find / -path /proc -prune -group 101 -exec chgrp -h nginx {} \;
+	&& find / -path /proc -prune -o -user 101 -exec chown nginx {} + && find / -path /proc -prune -o -group 101 -exec chgrp nginx {} +
 ADD --chmod=755 https://github.com/secureblue/secureblue/raw/681a8c1a8fa77f401be5d117babbda44fdd142ad/files/scripts/removesuid.sh /tmp/
 RUN /tmp/removesuid.sh || true && rm /tmp/removesuid.sh
 USER ${UID}
