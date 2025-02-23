@@ -29,6 +29,8 @@ RUN --network=none mkdir -p /usr/local/tomcat/conf/Catalina/localhost \
 
 COPY --from=docker.io/headwindmdm/hmdm:latest /docker-entrypoint.sh /docker-entrypoint.sh
 COPY --from=docker.io/headwindmdm/hmdm:latest --chown=${UID}:${UID} /opt/hmdm/ /opt/hmdm/
+ADD --chmod=755 https://github.com/secureblue/secureblue/raw/681a8c1a8fa77f401be5d117babbda44fdd142ad/files/scripts/removesuid.sh /tmp/
+RUN /tmp/removesuid.sh || true && rm /tmp/removesuid.sh
 EXPOSE 8080
 ENTRYPOINT ["/docker-entrypoint.sh"]
 USER ${UID}
