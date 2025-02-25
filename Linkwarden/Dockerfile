@@ -1,5 +1,6 @@
-FROM docker.io/library/node:18-bookworm-slim
+FROM docker.io/library/node:22-bookworm-slim
 ARG VERSION=2.9.3
+ENV NEXT_TELEMETRY_DISABLED=1
 WORKDIR /data
 ADD https://github.com/linkwarden/linkwarden.git#v${VERSION} .
 RUN yarn install --network-timeout 10000000 \
@@ -8,10 +9,11 @@ RUN yarn install --network-timeout 10000000 \
 	&& yarn prisma generate \
 	&& yarn build
 
-FROM docker.io/library/rust:1.80-bookworm
-RUN cargo install --locked monolith
+FROM docker.io/library/rust:1-bullseye
+RUN apt-get update && apt-get install -y upx-ucl && cargo install --locked monolith && strip --strip-all /usr/local/cargo/bin/monolith && upx --best --lzma /usr/local/cargo/bin/monolith
 
-FROM gcr.io/distroless/nodejs18-debian12:nonroot
+FROM gcr.io/distroless/nodejs22-debian12:nonroot
+ENV NEXT_TELEMETRY_DISABLED=1
 WORKDIR /data
 COPY --from=0 --chown=nonroot:nonroot /data /data
 COPY --from=1 /usr/local/cargo/bin/monolith /usr/local/bin/monolith

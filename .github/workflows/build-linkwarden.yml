@@ -8,6 +8,7 @@ on:
     paths:
       - '.github/workflows/build-linkwarden.yml'
       - 'Linkwarden/Dockerfile'
+      - 'Linkwarden/init.js'
   schedule:
     # Build the image weekly
     - cron: '15 0 * * 5'
