@@ -14,13 +14,13 @@ RUN apt-get update && apt-get upgrade -y && apt-get dist-upgrade -y \
 
 RUN --network=none mkdir -p /usr/local/tomcat/conf/Catalina/localhost \
 	&& mkdir -p /usr/local/tomcat/ssl \
-	&& chown --recursive ${UID}:${UID} /usr/local/tomcat/work /usr/local/tomcat/logs \
+	&& chown --recursive ${UID}:${UID} /usr/local/tomcat/work /usr/local/tomcat/logs /usr/local/tomcat/webapps /usr/local/tomcat/conf/Catalina/localhost /usr/local/tomcat/temp \
 	&& sed -i "s|securerandom.source=file:/dev/random|securerandom.source=file:/dev/urandom|g" /opt/java/openjdk/conf/security/java.security \
 	&& addgroup --gid ${UID} --system hmdm && adduser --ingroup hmdm --uid ${UID} --disabled-password --no-create-home --shell /usr/sbin/nologin --system hmdm
 
 COPY --from=docker.io/headwindmdm/hmdm:0.1.5 /docker-entrypoint.sh /docker-entrypoint.sh
-COPY --from=docker.io/headwindmdm/hmdm:0.1.5 --chown=${UID}:${UID} /opt/hmdm/ /opt/hmdm/
-COPY --from=docker.io/headwindmdm/hmdm:0.1.5 --chown=${UID}:${UID} /usr/local/tomcat/conf/server.xml /usr/local/tomcat/conf/server.xml
+COPY --from=docker.io/headwindmdm/hmdm:0.1.5 /opt/hmdm/ /opt/hmdm/
+COPY --from=docker.io/headwindmdm/hmdm:0.1.5 /usr/local/tomcat/conf/server.xml /usr/local/tomcat/conf/server.xml
 ADD --chmod=755 https://github.com/secureblue/secureblue/raw/681a8c1a8fa77f401be5d117babbda44fdd142ad/files/scripts/removesuid.sh /tmp/
 RUN --network=none /tmp/removesuid.sh || true && rm /tmp/removesuid.sh
 EXPOSE 8080

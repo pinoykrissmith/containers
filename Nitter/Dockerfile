@@ -16,9 +16,9 @@ RUN pip install --no-cache-dir pyotp requests
 RUN --network=none addgroup -g ${UID} --system nitter && adduser -u ${UID} --ingroup nitter --disabled-password -s /sbin/nologin -H --system nitter
 
 USER ${UID}
-COPY --chown=${UID}:${UID} --from=0 /src/nitter /app/nitter
-COPY --chown=${UID}:${UID} --from=0 /src/public /app/public
-COPY --chown=${UID}:${UID} --from=0 /src/tools/get_session.py /app/get_session.py
-COPY --chown=${UID}:${UID} ./nitter.conf.example /app/nitter.conf
+COPY --from=0 /src/nitter /app/nitter
+COPY --from=0 /src/public /app/public
+COPY --from=0 /src/tools/get_session.py /app/get_session.py
+COPY ./nitter.conf.example /app/nitter.conf
 EXPOSE 8080
 CMD ["/app/nitter"]

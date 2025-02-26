@@ -17,9 +17,9 @@ ENV XDG_CONFIG_HOME /config
 ENV XDG_DATA_HOME /data
 COPY --from=0 /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/ca-certificates.crt
 COPY --from=0 /usr/share/zoneinfo /usr/share/zoneinfo
-COPY --chown=${UID}:${UID} --from=0 /usr/bin/caddy /usr/bin/caddy
-COPY --chown=${UID}:${UID} --from=1 /etc/caddy/Caddyfile /etc/caddy/Caddyfile
-COPY --chown=${UID}:${UID} --from=1 /usr/share/caddy/index.html /usr/share/caddy/index.html
+COPY --from=0 /usr/bin/caddy /usr/bin/caddy
+COPY --from=1 /etc/caddy/Caddyfile /etc/caddy/Caddyfile
+COPY --from=1 /usr/share/caddy/index.html /usr/share/caddy/index.html
 USER ${UID}
 EXPOSE 443
 EXPOSE 443/udp

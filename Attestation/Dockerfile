@@ -42,16 +42,16 @@ RUN --network=none ln -sf /dev/stdout /var/log/nginx/access.log && ln -sf /dev/s
 	&& ln -s /usr/lib/nginx/modules/ngx_http_brotli_static_module.so /etc/nginx/modules/ngx_http_brotli_static_module.so \
 	&& mkdir /docker-entrypoint.d
 
-COPY --chown=${UID}:${UID} --from=0 /app/nginx-tmp/mime.types /etc/nginx/
-COPY --chown=${UID}:${UID} --from=0 /app/nginx-tmp/root_attestation.app.conf /etc/nginx/
-COPY --chown=${UID}:${UID} --from=0 /app/nginx-tmp/snippets /etc/nginx/snippets
-COPY --chown=${UID}:${UID} --from=0 /app/static-tmp /srv/attestation.app_a
-COPY --chown=${UID}:${UID} ./nginx.conf /etc/nginx/nginx.conf
+COPY --from=0 /app/nginx-tmp/mime.types /etc/nginx/
+COPY --from=0 /app/nginx-tmp/root_attestation.app.conf /etc/nginx/
+COPY --from=0 /app/nginx-tmp/snippets /etc/nginx/snippets
+COPY --from=0 /app/static-tmp /srv/attestation.app_a
+COPY --chmod=644 ./nginx.conf /etc/nginx/nginx.conf
 COPY --from=docker.io/nginxinc/nginx-unprivileged:stable-alpine-slim /etc/nginx/conf.d/default.conf /etc/nginx/conf.d/default.conf
 COPY --from=docker.io/nginxinc/nginx-unprivileged:stable-alpine-slim /docker-entrypoint.d /docker-entrypoint.d
 COPY --from=docker.io/nginxinc/nginx-unprivileged:stable-alpine-slim /docker-entrypoint.sh /docker-entrypoint.sh
-COPY --chown=${UID}:${UID} --from=0 /app/build/libs/ /app
-COPY --chown=${UID}:${UID} --from=0 /app/libs/sqlite4java-prebuilt/ /usr/lib
+COPY --from=0 /app/build/libs/ /app
+COPY --from=0 /app/libs/sqlite4java-prebuilt/ /usr/lib
 COPY --from=0 /javaruntime $JAVA_HOME
 RUN --network=none printf '#!/bin/sh\n/opt/java/openjdk/bin/java -jar /app/attestation-server.jar &' > /docker-entrypoint.d/99-attestation.sh \
 	&& chmod +x /docker-entrypoint.d/99-attestation.sh
