@@ -1,5 +1,5 @@
 ARG VERSION=2.9.1
-FROM docker.io/library/golang:1.23
+FROM docker.io/library/golang:1
 ARG VERSION
 ENV GO111MODULE=on
 ENV CGO_ENABLED=0
