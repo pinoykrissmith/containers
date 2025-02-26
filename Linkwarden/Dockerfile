@@ -15,7 +15,7 @@ RUN cargo install --locked monolith && strip --strip-all /usr/local/cargo/bin/mo
 FROM gcr.io/distroless/nodejs22-debian12:nonroot
 ENV NEXT_TELEMETRY_DISABLED=1
 WORKDIR /data
-COPY --from=0 --chown=nonroot:nonroot /data /data
+COPY --from=0 /data /data
 COPY --from=1 /usr/local/cargo/bin/monolith /usr/local/bin/monolith
 COPY --chmod=644 ./init.js /init.js
 EXPOSE 3000
