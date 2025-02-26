@@ -9,8 +9,8 @@ RUN yarn install --network-timeout 10000000 \
 	&& yarn prisma generate \
 	&& yarn build
 
-FROM docker.io/library/rust:1-bullseye
-RUN apt-get update && apt-get install -y upx-ucl && cargo install --locked monolith && strip --strip-all /usr/local/cargo/bin/monolith && upx --best --lzma /usr/local/cargo/bin/monolith
+FROM docker.io/library/rust:1-bookworm
+RUN cargo install --locked monolith && strip --strip-all /usr/local/cargo/bin/monolith
 
 FROM gcr.io/distroless/nodejs22-debian12:nonroot
 ENV NEXT_TELEMETRY_DISABLED=1
