@@ -6,6 +6,7 @@ services:
       - caddy_net
     volumes:
       - /elysium/headwind-data:/usr/local/tomcat/work:Z
+      - /elysium/headwind-data/logs:/usr/local/tomcat/logs:Z
     environment:
       SQL_HOST: hmdm-postgres
       SQL_USER: ${SQL_USER}
@@ -16,8 +17,6 @@ services:
       SHARED_SECRET: ${SHARED_SECRET}
       HMDM_VARIANT: ${HMDM_VARIANT}
       DOWNLOAD_CREDENTIALS: ${DOWNLOAD_CREDENTIALS}
-      HMDM_URL: ${HMDM_URL}
-      CLIENT_VERSION: ${CLIENT_VERSION}
       FORCE_RECONFIGURE: ${FORCE_RECONFIGURE}
     env_file:
       - .env
@@ -26,9 +25,14 @@ services:
     cap_drop:
       - "ALL"
     user: "200004:200004"
+    read_only: true
     labels:
       com.centurylinklabs.watchtower.enable: "true"
       io.containers.autoupdate: "registry"
+    tmpfs:
+      - /usr/local/tomcat/webapps:mode=0777,noexec,nodev,nosuid
+      - /usr/local/tomcat/conf/Catalina/localhost:mode=0777,noexec,nodev,nosuid
+      - /usr/local/tomcat/temp:mode=0777,noexec,nodev,nosuid
 
   hmdm-postgres:
     image: ghcr.io/polarix-containers/postgres:13
