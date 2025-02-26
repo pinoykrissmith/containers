@@ -1,10 +1,10 @@
 ARG VERSION=6.6
 FROM docker.io/traccar/traccar:${VERSION}-debian
 FROM gcr.io/distroless/java-base-debian12:nonroot
+WORKDIR /app
 ENV JAVA_HOME=/opt/java/openjdk
 ENV PATH="${JAVA_HOME}/bin:${PATH}"
 COPY --from=docker.io/library/eclipse-temurin:17-jre $JAVA_HOME $JAVA_HOME
-COPY --from=0 /opt/traccar /home/nonroot/traccar
+COPY --from=0 /opt/traccar /app
 EXPOSE 8082
-WORKDIR /home/nonroot/traccar
 CMD ["java", "-Xms1g", "-Xmx1g", "-Djava.net.preferIPv4Stack=true", "-jar", "tracker-server.jar", "conf/traccar.xml"]

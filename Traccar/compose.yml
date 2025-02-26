@@ -7,8 +7,8 @@ services:
     read_only: true
     user: "65532:65532"
     volumes:
-      - /elysium/traccar-logs:/home/nonroot/traccar/logs:Z
-      - ./traccar.xml:/home/nonroot/traccar/conf/traccar.xml:Z,ro
+      - /elysium/traccar-logs:/app/logs:Z
+      - ./traccar.xml:/app/conf/traccar.xml:Z,ro
     depends_on:
       - traccar_postgresql
     security_opt:
