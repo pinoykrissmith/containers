@@ -1,6 +1,5 @@
 # Build status
 
-![Build custom Archiveteam image, scan & push](https://github.com/pinoykrissmith/containers/actions/workflows/build-archiveteam.yml/badge.svg)
 ![Build custom Attestation image, scan & push](https://github.com/pinoykrissmith/containers/actions/workflows/build-attestation.yml/badge.svg)
 ![Build custom Caddy image, scan & push](https://github.com/pinoykrissmith/containers/actions/workflows/build-caddy.yml/badge.svg)
 ![Build custom ebook2audiobookpiper image, scan & push](https://github.com/pinoykrissmith/containers/actions/workflows/build-ebook2audiobookpiper.yml/badge.svg)
@@ -13,7 +12,7 @@
 ![Deploy custom Uptime-Kuma image](https://github.com/pinoykrissmith/containers/actions/workflows/deploy-uptime-kuma.yml/badge.svg)
 
 # Images
-Archiveteam Warrior [tags](https://github.com/pinoykrissmith/containers/pkgs/container/archiveteam)
+[![Build custom Archiveteam image, scan & push](https://github.com/pinoykrissmith/containers/actions/workflows/build-archiveteam.yml/badge.svg)](https://github.com/pinoykrissmith/containers/pkgs/container/archiveteam)
 ```
 docker pull ghcr.io/pinoykrissmith/archiveteam:latest
 ```
