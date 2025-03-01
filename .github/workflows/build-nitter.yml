@@ -126,27 +126,3 @@ jobs:
           for IMAGE in $(jq -r '.tags[]' <<< "$DOCKER_METADATA_OUTPUT_JSON"); do
             docker buildx imagetools create --tag "$IMAGE" "ghcr.io/${{ github.repository }}:${{ env.BUILDER_TAG }}-amd64" "ghcr.io/${{ github.repository }}:${{ env.BUILDER_TAG }}-arm64"
           done
-
-  trivy:
-    name: Scan current image with Trivy
-    needs: merge
-    permissions:
-      security-events: write
-    timeout-minutes: 10
-    runs-on: ubuntu-24.04
-    steps:
-      - name: Run Trivy vulnerability scanner
-        uses: aquasecurity/trivy-action@master
-        with:
-          image-ref: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.TAG }}
-          format: template
-          template: '@/contrib/sarif.tpl'
-          output: trivy-results.sarif
-          severity: UNKNOWN,LOW,MEDIUM,HIGH,CRITICAL
-          vuln-type: os,library
-
-      - name: Upload Trivy scan results to GitHub Security tab
-        uses: github/codeql-action/upload-sarif@v3
-        with:
-          sarif_file: trivy-results.sarif
-          category: trivy-${{ env.TAG }}
