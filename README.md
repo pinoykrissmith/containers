@@ -1,50 +1,50 @@
 # Images
-[![Build custom Archiveteam image, scan & push](https://github.com/pinoykrissmith/containers/actions/workflows/build-archiveteam.yml/badge.svg)](https://github.com/pinoykrissmith/containers/pkgs/container/archiveteam)
+[![Build custom Archiveteam image, scan & push](https://github.com/pinoykrissmith/containers/actions/workflows/build-archiveteam.yml/badge.svg)](https://github.com/pinoykrissmith/containers/pkgs/container/archiveteam/versions?filters%5Bversion_type%5D=tagged)
 ```
 docker pull ghcr.io/pinoykrissmith/archiveteam:latest
 ```
 
-[![Build custom Attestation image, scan & push](https://github.com/pinoykrissmith/containers/actions/workflows/build-attestation.yml/badge.svg)](https://github.com/pinoykrissmith/containers/pkgs/container/attestation)
+[![Build custom Attestation image, scan & push](https://github.com/pinoykrissmith/containers/actions/workflows/build-attestation.yml/badge.svg)](https://github.com/pinoykrissmith/containers/pkgs/container/attestation/versions?filters%5Bversion_type%5D=tagged)
 ```
 docker pull ghcr.io/pinoykrissmith/attestation:latest
 ```
 
-[![Build custom Caddy image, scan & push](https://github.com/pinoykrissmith/containers/actions/workflows/build-caddy.yml/badge.svg)](https://github.com/pinoykrissmith/containers/pkgs/container/caddy)
+[![Build custom Caddy image, scan & push](https://github.com/pinoykrissmith/containers/actions/workflows/build-caddy.yml/badge.svg)](https://github.com/pinoykrissmith/containers/pkgs/container/caddy/versions?filters%5Bversion_type%5D=tagged)
 ```
 docker pull ghcr.io/pinoykrissmith/caddy:latest
 ```
 
-[![Build custom ebook2audiobookpiper image, scan & push](https://github.com/pinoykrissmith/containers/actions/workflows/build-ebook2audiobookpiper.yml/badge.svg)](https://github.com/pinoykrissmith/containers/pkgs/container/ebook2audiobookpiper)
+[![Build custom ebook2audiobookpiper image, scan & push](https://github.com/pinoykrissmith/containers/actions/workflows/build-ebook2audiobookpiper.yml/badge.svg)](https://github.com/pinoykrissmith/containers/pkgs/container/ebook2audiobookpiper/versions?filters%5Bversion_type%5D=tagged)
 ```
 docker pull ghcr.io/pinoykrissmith/ebook2audiobookpiper:latest
 ```
 
-[![Build custom F-Droid image, scan & push](https://github.com/pinoykrissmith/containers/actions/workflows/build-fdroid.yml/badge.svg)](https://github.com/pinoykrissmith/containers/pkgs/container/fdroid)
+[![Build custom F-Droid image, scan & push](https://github.com/pinoykrissmith/containers/actions/workflows/build-fdroid.yml/badge.svg)](https://github.com/pinoykrissmith/containers/pkgs/container/fdroid/versions?filters%5Bversion_type%5D=tagged)
 ```
 docker pull ghcr.io/pinoykrissmith/fdroid:latest
 ```
 
-[![Build custom Headwind image, scan & push](https://github.com/pinoykrissmith/containers/actions/workflows/build-headwind.yml/badge.svg)](https://github.com/pinoykrissmith/containers/pkgs/container/headwind)
+[![Build custom Headwind image, scan & push](https://github.com/pinoykrissmith/containers/actions/workflows/build-headwind.yml/badge.svg)](https://github.com/pinoykrissmith/containers/pkgs/container/headwind/versions?filters%5Bversion_type%5D=tagged)
 ```
 docker pull ghcr.io/pinoykrissmith/headwind:latest
 ```
 
-[![Build custom Linkwarden image, scan & push](https://github.com/pinoykrissmith/containers/actions/workflows/build-linkwarden.yml/badge.svg)](https://github.com/pinoykrissmith/containers/pkgs/container/linkwarden)
+[![Build custom Linkwarden image, scan & push](https://github.com/pinoykrissmith/containers/actions/workflows/build-linkwarden.yml/badge.svg)](https://github.com/pinoykrissmith/containers/pkgs/container/linkwarden/versions?filters%5Bversion_type%5D=tagged)
 ```
 docker pull ghcr.io/pinoykrissmith/linkwarden:latest
 ```
 
-[![Build custom Nitter image, scan & push](https://github.com/pinoykrissmith/containers/actions/workflows/build-nitter.yml/badge.svg)](https://github.com/pinoykrissmith/containers/pkgs/container/nitter)
+[![Build custom Nitter image, scan & push](https://github.com/pinoykrissmith/containers/actions/workflows/build-nitter.yml/badge.svg)](https://github.com/pinoykrissmith/containers/pkgs/container/nitter/versions?filters%5Bversion_type%5D=tagged)
 ```
 docker pull ghcr.io/pinoykrissmith/nitter:latest
 ```
 
-[![Build custom pgvecto.rs image, scan & push](https://github.com/pinoykrissmith/containers/actions/workflows/build-pgvecto.yml/badge.svg)](https://github.com/pinoykrissmith/containers/pkgs/container/pgvecto)
+[![Build custom pgvecto.rs image, scan & push](https://github.com/pinoykrissmith/containers/actions/workflows/build-pgvecto.yml/badge.svg)](https://github.com/pinoykrissmith/containers/pkgs/container/pgvecto/versions?filters%5Bversion_type%5D=tagged)
 ```
 docker pull ghcr.io/pinoykrissmith/pgvecto:latest
 ```
 
-[![Build custom Traccar image, scan & push](https://github.com/pinoykrissmith/containers/actions/workflows/build-traccar.yml/badge.svg)](https://github.com/pinoykrissmith/containers/pkgs/container/traccar)
+[![Build custom Traccar image, scan & push](https://github.com/pinoykrissmith/containers/actions/workflows/build-traccar.yml/badge.svg)](https://github.com/pinoykrissmith/containers/pkgs/container/traccar/versions?filters%5Bversion_type%5D=tagged)
 ```
 docker pull ghcr.io/pinoykrissmith/traccar:latest
 ```
