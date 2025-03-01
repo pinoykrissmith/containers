@@ -58,7 +58,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ghcr.io/${{ github.repository_owner }}/builder
+          images: ghcr.io/${{ github.repository }}
           tags: |
             ${{ env.BUILDER_TAG }}-${{ matrix.arch }}
 
@@ -125,7 +125,7 @@ jobs:
         id: create_combined_manifest
         run: |
           for IMAGE in $(jq -r '.tags[]' <<< "$DOCKER_METADATA_OUTPUT_JSON"); do
-            docker buildx imagetools create --tag "$IMAGE" "ghcr.io/${{ github.repository_owner }}/builder:${{ env.BUILDER_TAG }}-amd64" "ghcr.io/${{ github.repository_owner }}/builder:${{ env.BUILDER_TAG }}-arm64"
+            docker buildx imagetools create --tag "$IMAGE" "ghcr.io/${{ github.repository }}:${{ env.BUILDER_TAG }}-amd64" "ghcr.io/${{ github.repository }}:${{ env.BUILDER_TAG }}-arm64"
           done
 
   trivy:
