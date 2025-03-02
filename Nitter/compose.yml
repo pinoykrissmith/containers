@@ -23,7 +23,6 @@ services:
     nitter-redis:
       image: ghcr.io/polarix-containers/valkey:7
       container_name: nitter-redis
-      command: valkey-server --save 60 1 --loglevel warning
       volumes:
         - /elysium/nitter-redis:/data:Z
       restart: unless-stopped
