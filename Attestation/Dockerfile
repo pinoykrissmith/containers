@@ -20,8 +20,7 @@ RUN sed -i 's/::1/0.0.0.0/g' src/main/java/app/attestation/server/AttestationSer
 RUN ./gradlew build && cp /tmp/sqlite4java/out/linux-$(uname -m)/*.so libs/sqlite4java-prebuilt
 RUN npm i && python3 -m venv /opt/venv && pip3 install --no-cache-dir -r requirements.txt && ./process-static
 
-RUN $JAVA_HOME/bin/jlink \
-	--add-modules java.base,java.compiler,java.desktop,java.logging,java.naming,java.security.sasl,java.sql,java.xml,jdk.httpserver,jdk.unsupported,jdk.crypto.ec,jdk.crypto.cryptoki,jdk.security.auth \
+RUN $JAVA_HOME/bin/jlink --add-modules java.base,java.compiler,java.desktop,java.logging,java.naming,java.security.sasl,java.sql,java.xml,jdk.httpserver,jdk.unsupported,jdk.crypto.ec,jdk.crypto.cryptoki,jdk.security.auth \
 	--strip-debug --no-man-pages --no-header-files --compress=zip-6 --output /javaruntime
 
 FROM docker.io/library/alpine:latest
@@ -29,18 +28,15 @@ ARG UID=200003
 ENV JAVA_HOME=/opt/java/openjdk
 ENV PATH "${JAVA_HOME}/bin:${PATH}"
 RUN --network=none addgroup -g $UID -S nginx || true && adduser -S -D -H -u $UID -h /var/cache/nginx -s /sbin/nologin -G nginx -g nginx nginx || true
-RUN apk -U --no-cache upgrade \
-	&& apk add --no-cache nginx nginx-mod-http-brotli brotli sqlite tzdata
+RUN apk add --no-cache nginx nginx-mod-http-brotli brotli sqlite tzdata
 
 RUN --network=none mkdir /var/cache/nginx \
 	&& chown -R $UID:0 /var/cache/nginx && chmod -R g+w /var/cache/nginx \
-	&& chown -R $UID:0 /etc/nginx && chmod -R g+w /etc/nginx \
-	&& mkdir /app && chown -R $UID:0 /app && chmod -R g+w /app
+	&& chown -R $UID:0 /etc/nginx && chmod -R g+w /etc/nginx
 
 RUN --network=none ln -sf /dev/stdout /var/log/nginx/access.log && ln -sf /dev/stderr /var/log/nginx/error.log \
 	&& ln -s /usr/lib/nginx/modules/ngx_http_brotli_filter_module.so /etc/nginx/modules/ngx_http_brotli_filter_module.so \
-	&& ln -s /usr/lib/nginx/modules/ngx_http_brotli_static_module.so /etc/nginx/modules/ngx_http_brotli_static_module.so \
-	&& mkdir /docker-entrypoint.d
+	&& ln -s /usr/lib/nginx/modules/ngx_http_brotli_static_module.so /etc/nginx/modules/ngx_http_brotli_static_module.so
 
 COPY --from=0 /app/nginx-tmp/mime.types /etc/nginx/
 COPY --from=0 /app/nginx-tmp/root_attestation.app.conf /etc/nginx/
