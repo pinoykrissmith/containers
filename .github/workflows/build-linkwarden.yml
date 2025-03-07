@@ -43,7 +43,7 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      - name: Set date tag for weekly images
+      - name: Get tag for builder to use
         run: |
           echo "BUILDER_TAG=$(echo ${{ env.IMAGE_NAME }} | cut -d'/' -f2)" >> $GITHUB_ENV
 
