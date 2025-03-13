@@ -1,0 +1,30 @@
+Categories:
+  - Development
+  - System
+License: GPL-3.0-only
+WebSite: https://termux.com
+SourceCode: https://github.com/termux/termux-api
+IssueTracker: https://github.com/termux/termux-api/issues
+Changelog: https://github.com/termux/termux-api/releases
+Donate: https://termux.com/donate.html
+OpenCollective: Termux
+
+AutoName: TermuxAPI
+Description: |-
+  Expose basic Android functionality like sending SMS or accessing GPS data to the
+  https://f-droid.org/packages/com.termux app. This is an add-on which requires that the main Termux app is
+  installed to use.
+
+  * Read and send sms messages from your terminal.
+  * Access device GPS location sensor from scripts.
+  * Pipe the result of commands into the device text-to-speech engine.
+  * Vibrate the device when something interesting happens.
+  * Access the system clipboard from shell scripts.
+  * List contacts from the system contact list.
+
+  Besides installing this app an additional package is required to install inside
+  Termux:
+
+  $ apt install termux-api
+
+AllowedAPKSigningKeys: 228fb2cfe90831c1499ec3ccaf61e96e8e1ce70766b9474672ce427334d41c42

@@ -116,6 +116,14 @@
     }
   },
   {
+    "name": "TermuxAPI",
+    "baseUrl": "https://f-droid.org/repo/{ver}",
+    "version": {
+      "fdroid": "com.termux.api",
+      "fingerprint": "43238D512C1E5EB2D6569F4A3AFBF5523418B82E0A3ED1552770ABB9A9C9CCAB"
+    }
+  },
+  {
     "name": "Shelter",
     "baseUrl": "https://fdroid.typeblog.net/{ver}",
     "version": {
