@@ -52,7 +52,7 @@ docker pull ghcr.io/pinoykrissmith/traccar:latest
 ### Features & usage
 - Rebases many images to their newer iteration if possible. Upgrade the existing if it is not.
 - Ensures that the images are abled to be used unprivileged with Podman. Sets a custom UID in the Dockerfile.
-- Runs secureblue's [removesuid](https://github.com/secureblue/secureblue/raw/681a8c1a8fa77f401be5d117babbda44fdd142ad/files/scripts/removesuid.sh) script when applicable.
+- Removed SUID and SGID bits in images.
 
 ### Licensing
 - Any file that isn't a binary such as the Dockerfile and compose.yml in this repository is licensed under the WTFPL.

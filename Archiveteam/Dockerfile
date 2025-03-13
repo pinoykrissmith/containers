@@ -7,6 +7,6 @@ RUN apt-get update \
 RUN pip install --no-cache-dir --upgrade --upgrade-strategy eager -r /tmp/requirements.txt
 RUN --network=none usermod -u ${UID} warrior && groupmod -g ${UID} warrior \
 	&& find / -path /proc -prune -o -user 1000 -exec chown warrior {} + && find / -path /proc -prune -o -group 1000 -exec chgrp warrior {} +
-ADD --chmod=755 https://github.com/secureblue/secureblue/raw/681a8c1a8fa77f401be5d117babbda44fdd142ad/files/scripts/removesuid.sh /tmp/
-RUN --network=none /tmp/removesuid.sh || true && rm /tmp/removesuid.sh
+RUN --network=none find /usr -type f -perm /4000 -exec chmod u-s {} \; && find /usr -type f -perm /2000 -exec chmod g-s {} \; \
+	&& rm -f /usr/bin/chsh /usr/bin/pkexec /usr/bin/sudo /usr/bin/su
 USER ${UID}

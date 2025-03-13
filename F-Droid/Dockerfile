@@ -19,6 +19,6 @@ RUN --network=none printf '#!/bin/sh\njava -jar /usr/lib/android-sdk/build-tools
 	&& printf '\n---\nsdk_path: /usr/lib/android-sdk\nrepo_url: {env: REPO_URL}\nrepo_name: {env: REPO_NAME}\nrepo_keyalias: host.containers.internal\nkeystore: /keystore.p12\nkeystorepass: {env: KEYSTOREPASS}\nkeypass: {env: KEYPASS}\nkeydname: CN=host.containers.internal, OU=F-Droid' > /fdroid/config.yml && chown ${UID}:${UID} /fdroid/config.yml && chmod 0600 /fdroid/config.yml
 RUN --network=none usermod -u ${UID} nginx && groupmod -g ${UID} nginx \
 	&& find / -path /proc -prune -o -user 101 -exec chown nginx {} + && find / -path /proc -prune -o -group 101 -exec chgrp nginx {} +
-ADD --chmod=755 https://github.com/secureblue/secureblue/raw/681a8c1a8fa77f401be5d117babbda44fdd142ad/files/scripts/removesuid.sh /tmp/
-RUN --network=none /tmp/removesuid.sh || true && rm /tmp/removesuid.sh
+RUN --network=none find /usr -type f -perm /4000 -exec chmod u-s {} \; && find /usr -type f -perm /2000 -exec chmod g-s {} \; \
+	&& rm -f /usr/bin/chsh /usr/bin/pkexec /usr/bin/sudo /usr/bin/su
 USER ${UID}
