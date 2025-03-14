@@ -1,5 +1,5 @@
 FROM registry.fedoraproject.org/fedora:41
-ARG VERSION=2.3.0
+ARG VERSION=2.3.1
 RUN sed -i -e s,countme=1,countme=0, /etc/yum.repos.d/*.repo \
 	&& dnf install --skip-broken gcc make autoconf automake libtool rpm-build libtirpc-devel libblkid-devel \
 	libuuid-devel libudev-devel openssl-devel zlib-devel libaio-devel libattr-devel elfutils-libelf-devel python3 \
