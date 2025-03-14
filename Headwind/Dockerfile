@@ -5,6 +5,7 @@ ENV CLIENT_VERSION=6.16
 ENV PROTOCOL=https
 ENV INSTALL_LANGUAGE=en
 ENV SHARED_SECRET=changeme-C3z9vi54
+ENV SQL_HOST=hmdm-postgres
 ENV SQL_PORT=5432
 ENV SQL_BASE=hmdm
 ENV SQL_USER=hmdm
@@ -23,6 +24,7 @@ COPY --from=docker.io/headwindmdm/hmdm:0.1.5 /opt/hmdm/ /opt/hmdm/
 COPY --from=docker.io/headwindmdm/hmdm:0.1.5 /usr/local/tomcat/conf/server.xml /usr/local/tomcat/conf/server.xml
 RUN --network=none find /usr -type f -perm /4000 -exec chmod u-s {} \; && find /usr -type f -perm /2000 -exec chmod g-s {} \; \
 	&& rm -f /usr/bin/chsh /usr/bin/pkexec /usr/bin/sudo /usr/bin/su
+
 EXPOSE 8080
 ENTRYPOINT ["/docker-entrypoint.sh"]
 USER ${UID}

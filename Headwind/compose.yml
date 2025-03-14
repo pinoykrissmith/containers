@@ -8,7 +8,6 @@ services:
       - /elysium/headwind-data:/usr/local/tomcat/work:Z
       - /elysium/headwind-data/logs:/usr/local/tomcat/logs:Z
     environment:
-      SQL_HOST: hmdm-postgres
       SQL_USER: ${SQL_USER}
       SQL_PASS: ${SQL_PASS}
       BASE_DOMAIN: ${BASE_DOMAIN}
