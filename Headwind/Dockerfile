@@ -1,4 +1,4 @@
-FROM docker.io/library/tomcat:9-jdk11-temurin-jammy
+FROM docker.io/library/tomcat:9-jre11-temurin-jammy
 ARG UID=200004
 ENV HMDM_URL=https://h-mdm.com/files/hmdm-5.32.1-os.war
 ENV CLIENT_VERSION=6.16
