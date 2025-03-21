@@ -14,6 +14,7 @@ RUN cargo install --locked monolith && strip --strip-all /usr/local/cargo/bin/mo
 
 FROM gcr.io/distroless/nodejs22-debian12:nonroot
 ENV NEXT_TELEMETRY_DISABLED=1
+ENV DISABLE_PRESERVATION=true
 WORKDIR /data
 COPY --from=0 /data /data
 COPY --from=1 /usr/local/cargo/bin/monolith /usr/local/bin/monolith

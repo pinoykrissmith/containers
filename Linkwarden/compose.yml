@@ -12,6 +12,9 @@ services:
       - DISABLE_PRESERVATION=true
     env_file:
       - .env
+    volumes:
+      - /elysium/linkwarden-data:/data/data:Z
+      - /elysium/linkwarden-cache:/data/.next/cache:Z
     restart: always
     labels:
       com.centurylinklabs.watchtower.enable: "true"
@@ -27,10 +30,7 @@ services:
     cap_drop:
       - ALL
     tmpfs:
-      - /home/node:noexec,nosuid,nodev
       - /tmp:noexec,nosuid,nodev
-      - /data/data:mode=0770,noexec,nosuid,nodev
-      - /data/.next/cache/images:mode=0770,noexec,nosuid,nodev
 
   postgres:
     container_name: lw-postgres
