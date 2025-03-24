@@ -18,7 +18,7 @@ services:
     security_opt:
       - "no-new-privileges=true"
     volumes:
-      - /elysium/archiveteam-warrior-data:/home/warrior/projects:Z
+      - /elysium/archiveteam-warrior-projects:/home/warrior/projects:Z
       - /elysium/archiveteam-warrior-data:/home/warrior/data/projects:Z
     tmpfs:
       - /home/warrior/data:mode=777,noexec,nosuid,nodev
