@@ -7,7 +7,7 @@ ADD --chmod=644 https://gitlab.com/CalyxOS/calyxos-fdroid-repo/-/raw/99d7f16b53b
 RUN printf 'APT::Install-Recommends "0";\nAPT::Install-Suggests "0";\nAPT::Acquire::Retries "20";\nAPT::Get::Assume-Yes "true";\nDpkg::Use-Pty "0";\nquiet "1";' > /etc/apt/apt.conf.d/99github \
 	&& apt-get update && apt-get upgrade && apt-get dist-upgrade \
 	&& apt-get install apksigner git lzip openjdk-17-jdk-headless python3 python3-pip wget \
-	&& rm -rf /var/cache/apt/*
+	&& rm -rf /var/cache/apt/* /var/lib/apt/lists/*
 RUN pip install --no-cache-dir --break-system-packages \
 		git+https://github.com/androguard/androguard@16a6bd21946bfe3d75639ffd3d96957971b6553f \
 		git+https://gitlab.com/fdroid/fdroidserver@$VERSION \

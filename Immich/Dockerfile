@@ -9,7 +9,7 @@ RUN mkdir /install && dpkg-deb -xv /vectors.deb /install
 FROM docker.io/library/postgres:${POSTGRES}
 ARG UID=200012
 RUN apt-get update && apt-get upgrade -y && apt-get dist-upgrade -y \
-	&& rm -rf /var/cache/apt/* /usr/local/bin/gosu
+	&& rm -rf /var/cache/apt/* /var/lib/apt/lists/* /usr/local/bin/gosu
 COPY --from=0 /install/usr/lib/postgresql/${PG_MAJOR}/lib/vectors.so /usr/lib/postgresql/${PG_MAJOR}/lib/vectors.so
 COPY --from=0 /install/usr/share/postgresql/${PG_MAJOR}/extension /usr/share/postgresql/${PG_MAJOR}/extension
 RUN --network=none usermod -u ${UID} postgres && groupmod -g ${UID} postgres \

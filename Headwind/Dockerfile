@@ -11,7 +11,7 @@ ENV SQL_BASE=hmdm
 ENV SQL_USER=hmdm
 RUN apt-get update && apt-get upgrade -y && apt-get dist-upgrade -y \
 	&& apt-get install aapt wget sed postgresql-client -y \
-	&& rm -rf /var/cache/apt/*
+	&& rm -rf /var/cache/apt/* /var/lib/apt/lists/*
 
 RUN --network=none mkdir -p /usr/local/tomcat/conf/Catalina/localhost \
 	&& mkdir -p /usr/local/tomcat/ssl \
