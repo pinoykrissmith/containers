@@ -21,6 +21,6 @@ RUN python3.10 -m ensurepip --upgrade && pip3.10 install --no-cache-dir --upgrad
 RUN --network=none find /usr -type f -perm /4000 -exec chmod u-s {} \; && find /usr -type f -perm /2000 -exec chmod g-s {} \; \
 	&& rm -f /usr/bin/chsh /usr/bin/pkexec /usr/bin/sudo /usr/bin/su
 
-USER ${UID}
+USER piper
 EXPOSE 8080
 CMD ["python3.10", "gradio_gui.py"]

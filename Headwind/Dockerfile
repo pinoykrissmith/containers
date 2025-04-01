@@ -25,4 +25,4 @@ RUN --network=none find /usr -type f -perm /4000 -exec chmod u-s {} \; && find /
 
 EXPOSE 8080
 ENTRYPOINT ["/docker-entrypoint.sh"]
-USER ${UID}
+USER hmdm

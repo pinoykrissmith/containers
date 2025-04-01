@@ -54,7 +54,7 @@ RUN --network=none printf '#!/bin/sh\n/opt/java/openjdk/bin/java -jar /app/attes
 
 EXPOSE 8080
 STOPSIGNAL SIGQUIT
-USER ${UID}
+USER nginx
 WORKDIR /data
 ENTRYPOINT ["/docker-entrypoint.sh"]
 CMD ["nginx", "-g", "daemon off;"]

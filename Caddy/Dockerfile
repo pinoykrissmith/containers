@@ -12,7 +12,6 @@ RUN go run github.com/caddyserver/xcaddy/cmd/xcaddy@latest build v${VERSION} --o
 
 FROM docker.io/library/caddy:${VERSION}
 FROM scratch
-ARG UID=200017
 ENV XDG_CONFIG_HOME /config
 ENV XDG_DATA_HOME /data
 COPY --from=0 /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/ca-certificates.crt
@@ -20,7 +19,8 @@ COPY --from=0 /usr/share/zoneinfo /usr/share/zoneinfo
 COPY --from=0 /usr/bin/caddy /usr/bin/caddy
 COPY --from=1 /etc/caddy/Caddyfile /etc/caddy/Caddyfile
 COPY --from=1 /usr/share/caddy/index.html /usr/share/caddy/index.html
-USER ${UID}
+
+USER 200017
 EXPOSE 443
 EXPOSE 443/udp
 CMD ["/usr/bin/caddy", "run", "--config", "/etc/caddy/Caddyfile", "--adapter", "caddyfile"]
