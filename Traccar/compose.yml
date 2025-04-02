@@ -16,11 +16,8 @@ services:
     cap_drop:
       - "ALL"
     environment:
-      - CONFIG_USE_ENVIRONMENT_VARIABLES=true
-      - DATABASE_DRIVER=org.postgresql.Driver
-      - DATABASE_URL=jdbc:postgresql://traccar_postgresql/postgres
-      - DATABASE_USER=${POSTGRES_USER}
       - DATABASE_PASSWORD=${POSTGRES_PASSWORD}
+      - DATABASE_URL=${DATABASE_URL}
     env_file:
       - .env
     networks:
@@ -53,7 +50,7 @@ services:
       - /elysium/traccar-postgres:/var/lib/postgresql/data:Z
     environment:
       - LD_PRELOAD=""
-      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_USER=traccar-admin
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
     env_file:
       - .env
