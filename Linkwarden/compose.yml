@@ -18,7 +18,7 @@ services:
     labels:
       com.centurylinklabs.watchtower.enable: "true"
       io.containers.autoupdate: "registry"
-    user: "65532:65532"
+    user: "200015:200015"
     read_only: true
     depends_on:
       - postgres

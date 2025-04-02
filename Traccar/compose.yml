@@ -5,7 +5,7 @@ services:
     restart: unless-stopped
     tty: true
     read_only: true
-    user: "65532:65532"
+    user: "200018:200018"
     volumes:
       - /elysium/traccar-logs:/app/logs:Z
       - ./traccar.xml:/app/conf/traccar.xml:Z,ro
