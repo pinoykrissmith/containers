@@ -15,6 +15,6 @@ ENV DISABLE_PRESERVATION=true
 WORKDIR /data
 COPY --from=0 /data /data
 COPY --chmod=644 ./init.js /init.js
-
+USER 200015
 EXPOSE 3000
 CMD ["/init.js"]

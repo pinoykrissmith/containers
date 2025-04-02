@@ -6,5 +6,7 @@ ENV JAVA_HOME=/opt/java/openjdk
 ENV PATH="${JAVA_HOME}/bin:${PATH}"
 COPY --from=docker.io/library/eclipse-temurin:17-jre $JAVA_HOME $JAVA_HOME
 COPY --from=0 /opt/traccar /app
+
+USER 200018
 EXPOSE 8082
 CMD ["java", "-Xms1g", "-Xmx1g", "-Djava.net.preferIPv4Stack=true", "-jar", "tracker-server.jar", "conf/traccar.xml"]
