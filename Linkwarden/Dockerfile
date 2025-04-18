@@ -1,5 +1,5 @@
 FROM docker.io/library/node:22-bookworm-slim
-ARG VERSION=2.9.3
+ARG VERSION=2.10.0
 ENV NEXT_TELEMETRY_DISABLED=1
 WORKDIR /data
 ADD https://github.com/linkwarden/linkwarden.git#v${VERSION} .
