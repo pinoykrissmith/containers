@@ -13,7 +13,7 @@ RUN apk add --no-cache openjdk17-jre-headless curl \
 	&& rm /tmp/traccar.zip \
 	&& apk del curl
 
-RUN --network=none addgroup -g ${UID} --system traccar && adduser -u ${UID} --ingroup nitter --disabled-password -s /sbin/nologin -H --system traccar
+RUN --network=none addgroup -g ${UID} --system traccar && adduser -u ${UID} --ingroup traccar --disabled-password -s /sbin/nologin -H --system traccar
 
 USER traccar
 EXPOSE 8082
