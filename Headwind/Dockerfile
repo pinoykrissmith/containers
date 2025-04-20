@@ -1,14 +1,14 @@
 FROM docker.io/library/tomcat:9-jre11-temurin-jammy
 ARG UID=200004
-ENV HMDM_URL=https://h-mdm.com/files/hmdm-5.33.1-os.war
-ENV CLIENT_VERSION=6.18
-ENV PROTOCOL=https
-ENV INSTALL_LANGUAGE=en
-ENV SHARED_SECRET=changeme-C3z9vi54
-ENV SQL_HOST=hmdm-postgres
-ENV SQL_PORT=5432
-ENV SQL_BASE=hmdm
-ENV SQL_USER=hmdm
+ENV HMDM_URL=https://h-mdm.com/files/hmdm-5.33.1-os.war \
+	CLIENT_VERSION=6.18 \
+	PROTOCOL=https \
+	INSTALL_LANGUAGE=en \
+	SHARED_SECRET=changeme-C3z9vi54 \
+	SQL_HOST=hmdm-postgres \
+	SQL_PORT=5432 \
+	SQL_BASE=hmdm \
+	SQL_USER=hmdm
 RUN apt-get update && apt-get upgrade -y && apt-get dist-upgrade -y \
 	&& apt-get install aapt wget sed postgresql-client -y \
 	&& rm -rf /var/cache/apt/* /var/lib/apt/lists/*

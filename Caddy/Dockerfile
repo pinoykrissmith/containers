@@ -1,8 +1,8 @@
 ARG VERSION=2.9.1
 FROM docker.io/library/golang:1
 ARG VERSION
-ENV GO111MODULE=on
-ENV CGO_ENABLED=0
+ENV GO111MODULE=on \
+	CGO_ENABLED=0
 RUN go run github.com/caddyserver/xcaddy/cmd/xcaddy@latest build v${VERSION} --output /usr/bin/caddy \
 	--with github.com/caddy-dns/cloudflare@89f16b99c18ef49c8bb470a82f895bce01cbaece \
 	--with github.com/WeidiDeng/caddy-cloudflare-ip@f53b62aa13cb7ad79c8b47aacc3f2f03989b67e5 \
@@ -12,8 +12,8 @@ RUN go run github.com/caddyserver/xcaddy/cmd/xcaddy@latest build v${VERSION} --o
 
 FROM docker.io/library/caddy:${VERSION}
 FROM scratch
-ENV XDG_CONFIG_HOME /config
-ENV XDG_DATA_HOME /data
+ENV XDG_CONFIG_HOME /config \
+	XDG_DATA_HOME /data
 COPY --from=0 /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/ca-certificates.crt
 COPY --from=0 /usr/share/zoneinfo /usr/share/zoneinfo
 COPY --from=0 /usr/bin/caddy /usr/bin/caddy

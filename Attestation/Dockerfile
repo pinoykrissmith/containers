@@ -1,7 +1,7 @@
 FROM docker.io/library/eclipse-temurin:21-alpine
-ENV GITHUB_ACTIONS="true"
-ENV PATH="/opt/venv/bin:$PATH"
-ENV SKIP_REMOTE_PUBLISHING="1"
+ENV GITHUB_ACTIONS="true" \
+	PATH="/opt/venv/bin:$PATH" \
+	SKIP_REMOTE_PUBLISHING="1"
 RUN apk -U --no-cache upgrade && apk add --no-cache alpine-sdk swig git zopfli parallel yajl yajl-tools nginx \
 	libxml2 moreutils unzip py3-virtualenv brotli python3 py3-pip nginx-mod-http-brotli nodejs npm bash libxml2-utils
 
@@ -25,10 +25,10 @@ RUN $JAVA_HOME/bin/jlink --add-modules java.base,java.compiler,java.desktop,java
 
 FROM docker.io/library/alpine:latest
 ARG UID=200003
-ENV JAVA_HOME=/opt/java/openjdk
-ENV PATH "${JAVA_HOME}/bin:${PATH}"
+ENV JAVA_HOME=/opt/java/openjdk \
+	PATH "${JAVA_HOME}/bin:${PATH}"
 RUN --network=none addgroup -g $UID -S nginx || true && adduser -S -D -H -u $UID -h /var/cache/nginx -s /sbin/nologin -G nginx -g nginx nginx || true
-RUN apk add --no-cache nginx nginx-mod-http-brotli brotli sqlite tzdata
+RUN apk add --no-cache nginx nginx-mod-http-brotli brotli java-common java-cacerts sqlite tzdata
 
 RUN --network=none mkdir /var/cache/nginx \
 	&& chown -R $UID:0 /var/cache/nginx && chmod -R g+w /var/cache/nginx \

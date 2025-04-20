@@ -10,8 +10,8 @@ RUN yarn install --network-timeout 10000000 \
 	&& yarn build
 
 FROM gcr.io/distroless/nodejs22-debian12:nonroot
-ENV NEXT_TELEMETRY_DISABLED=1
-ENV DISABLE_PRESERVATION=true
+ENV NEXT_TELEMETRY_DISABLED=1 \
+	DISABLE_PRESERVATION=true
 WORKDIR /data
 COPY --from=0 /data /data
 COPY --chmod=644 ./init.js /init.js

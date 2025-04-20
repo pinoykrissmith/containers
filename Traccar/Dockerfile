@@ -1,10 +1,10 @@
 FROM docker.io/library/alpine:latest
-ARG VERSION=6.6
-ARG UID=200018
-ENV CONFIG_USE_ENVIRONMENT_VARIABLES=true
-ENV DATABASE_DRIVER="org.postgresql.Driver"
-ENV DATABASE_URL="jdbc:postgresql://traccar_postgresql/postgres"
-ENV DATABASE_USER="traccar-admin"
+ARG VERSION=6.6 \
+	UID=200018
+ENV CONFIG_USE_ENVIRONMENT_VARIABLES=true \
+	DATABASE_DRIVER="org.postgresql.Driver" \
+	DATABASE_URL="jdbc:postgresql://traccar_postgresql/postgres" \
+	DATABASE_USER="traccar-admin"
 WORKDIR /app
 
 RUN apk add --no-cache openjdk17-jre-headless curl \
