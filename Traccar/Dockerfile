@@ -1,16 +1,20 @@
+FROM docker.io/library/alpine:latest
 ARG VERSION=6.6
-FROM docker.io/traccar/traccar:${VERSION}-debian
-FROM gcr.io/distroless/java-base-debian12:nonroot
-ENV JAVA_HOME=/opt/java/openjdk
+ARG UID=200018
 ENV CONFIG_USE_ENVIRONMENT_VARIABLES=true
-ENV PATH="${JAVA_HOME}/bin:${PATH}"
 ENV DATABASE_DRIVER="org.postgresql.Driver"
 ENV DATABASE_URL="jdbc:postgresql://traccar_postgresql/postgres"
 ENV DATABASE_USER="traccar-admin"
 WORKDIR /app
-COPY --from=docker.io/library/eclipse-temurin:17-jre $JAVA_HOME $JAVA_HOME
-COPY --from=0 /opt/traccar /app
 
-USER 200018
+RUN apk add --no-cache openjdk17-jre-headless curl \
+	&& curl -Lo /tmp/traccar.zip https://github.com/traccar/traccar/releases/download/v${VERSION}/traccar-other-${VERSION}.zip \
+	&& unzip -qo /tmp/traccar.zip -d /app \
+	&& rm /tmp/traccar.zip \
+	&& apk del curl
+
+RUN --network=none addgroup -g ${UID} --system traccar && adduser -u ${UID} --ingroup nitter --disabled-password -s /sbin/nologin -H --system traccar
+
+USER traccar
 EXPOSE 8082
 CMD ["java", "-Xms1g", "-Xmx1g", "-Djava.net.preferIPv4Stack=true", "-jar", "tracker-server.jar", "conf/traccar.xml"]
