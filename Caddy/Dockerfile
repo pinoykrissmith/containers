@@ -12,8 +12,8 @@ RUN go run github.com/caddyserver/xcaddy/cmd/xcaddy@latest build v${VERSION} --o
 
 FROM docker.io/library/caddy:${VERSION}
 FROM scratch
-ENV XDG_CONFIG_HOME /config \
-	XDG_DATA_HOME /data
+ENV XDG_CONFIG_HOME=/config \
+	XDG_DATA_HOME=/data
 COPY --from=0 /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/ca-certificates.crt
 COPY --from=0 /usr/share/zoneinfo /usr/share/zoneinfo
 COPY --from=0 /usr/bin/caddy /usr/bin/caddy
