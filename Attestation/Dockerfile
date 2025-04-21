@@ -26,7 +26,7 @@ RUN $JAVA_HOME/bin/jlink --add-modules java.base,java.compiler,java.desktop,java
 FROM docker.io/library/alpine:latest
 ARG UID=200003
 ENV JAVA_HOME=/opt/java/openjdk \
-	PATH="${JAVA_HOME}/bin:${PATH}"
+	PATH="/opt/java/openjdk/bin:$PATH"
 RUN --network=none addgroup -g $UID -S nginx || true && adduser -S -D -H -u $UID -h /var/cache/nginx -s /sbin/nologin -G nginx -g nginx nginx || true
 RUN apk add --no-cache nginx nginx-mod-http-brotli brotli java-common java-cacerts sqlite tzdata
 
