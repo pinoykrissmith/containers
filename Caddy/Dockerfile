@@ -1,4 +1,4 @@
-ARG VERSION=2.9.1
+ARG VERSION=2.10.0
 FROM docker.io/library/golang:1
 ARG VERSION
 ENV GO111MODULE=on \
