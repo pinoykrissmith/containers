@@ -4,7 +4,7 @@ ARG VERSION
 ENV GO111MODULE=on \
 	CGO_ENABLED=0
 RUN go run github.com/caddyserver/xcaddy/cmd/xcaddy@latest build v${VERSION} --output /usr/bin/caddy \
-	--with github.com/caddy-dns/cloudflare@89f16b99c18ef49c8bb470a82f895bce01cbaece \
+	--with github.com/caddy-dns/cloudflare@8cbec3f04d5b4a768c52941a5468c4b71436509e \
 	--with github.com/WeidiDeng/caddy-cloudflare-ip@f53b62aa13cb7ad79c8b47aacc3f2f03989b67e5 \
 	--with github.com/caddyserver/transform-encoder@47f376e021efdfdf2d47ca716c8f031b4fdfad92 \
 	--with github.com/tailscale/caddy-tailscale@fd3f49d73216641b9cbe9167bbb05250c0ffc6d6 \
