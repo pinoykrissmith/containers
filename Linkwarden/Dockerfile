@@ -4,10 +4,9 @@ ENV NEXT_TELEMETRY_DISABLED=1
 WORKDIR /data
 ADD https://github.com/linkwarden/linkwarden.git#v${VERSION} .
 RUN yarn install --network-timeout 10000000 \
-	&& npx playwright install --with-deps chromium \
 	&& yarn cache clean \
-	&& yarn prisma generate \
-	&& yarn build
+	&& yarn prisma:generate \
+	&& yarn web:build
 
 FROM gcr.io/distroless/nodejs22-debian12:nonroot
 ENV NEXT_TELEMETRY_DISABLED=1 \
