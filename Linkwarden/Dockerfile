@@ -1,6 +1,6 @@
 ARG VERSION=2.10.2
 
-FROM ghcr.io/linkwarden/linkwarden:{VERSION}
+FROM ghcr.io/linkwarden/linkwarden:${VERSION}
 ARG UID=200015
 ENV NEXT_TELEMETRY_DISABLED=1 \
 	DISABLE_PRESERVATION=true
