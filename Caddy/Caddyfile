@@ -84,22 +84,21 @@ vw.{$TAILNET} {
 	reverse_proxy vaultwarden:8080
 }
 
-hmdm.{$MY_DOMAIN} {
-	import safe
+rss.{$MY_DOMAIN} {
 	import nolog
 	import cloudflare
 	import lan
 	encode zstd gzip
 	route @lan {
-		reverse_proxy headwind:8080
+		reverse_proxy miniflux:8080
 	}
 }
 
-hmdm.{$TAILNET} {
+rss.{$TAILNET} {
 	import nolog
 	tailscale_auth
-	bind tailscale/hmdm
-	reverse_proxy headwind:8080
+	bind tailscale/rss
+	reverse_proxy miniflux:8080
 }
 
 eb2ab.{$MY_DOMAIN} {
