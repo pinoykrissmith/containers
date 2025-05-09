@@ -1,0 +1,61 @@
+services:
+  miniflux:
+    container_name: miniflux
+    image: docker.io/miniflux/miniflux:latest
+    restart: unless-stopped
+    environment:
+      - DATABASE_URL=postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@miniflux-postgres/${POSTGRES_USER}?sslmode=disable
+      - RUN_MIGRATIONS=1
+      - CREATE_ADMIN=1
+      - ADMIN_USERNAME=${ADMIN_USERNAME}
+      - ADMIN_PASSWORD=${ADMIN_PASSWORD}
+    user: "200019:200019"
+    read_only: true
+    security_opt:
+      - "no-new-privileges=true"
+    cap_drop:
+      - ALL
+    labels:
+      com.centurylinklabs.watchtower.enable: "true"
+      io.containers.autoupdate: "registry"
+    env_file:
+      - .env
+    depends_on:
+      - postgres
+    networks:
+      - caddy_net
+
+  postgres:
+    container_name: miniflux-postgres
+    image: ghcr.io/polarix-containers/postgres:17
+    restart: unless-stopped
+    volumes:
+      - /elysium/miniflux-postgres:/var/lib/postgresql/data:Z
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - LD_PRELOAD=
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "miniflux"]
+      interval: 15s
+      timeout: 5s
+    user: "200012:200012"
+    read_only: true
+    tmpfs:
+      - /var/run/postgresql:noexec,nosuid,nodev
+    security_opt:
+      - "no-new-privileges=true"
+    cap_drop:
+      - ALL
+    env_file:
+      - .env
+    labels:
+      com.centurylinklabs.watchtower.enable: "true"
+      io.containers.autoupdate: "registry"
+    networks:
+      - caddy_net
+
+networks:
+  caddy_net:
+    name: caddy_net
+    external: true
