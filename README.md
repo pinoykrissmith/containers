@@ -24,11 +24,6 @@ docker pull ghcr.io/pinoykrissmith/ebook2audiobookpiper:latest
 docker pull ghcr.io/pinoykrissmith/fdroid:latest
 ```
 
-[![Build custom Headwind image, scan & push](https://github.com/pinoykrissmith/containers/actions/workflows/build-headwind.yml/badge.svg)](https://github.com/pinoykrissmith/containers/pkgs/container/headwind/versions?filters%5Bversion_type%5D=tagged)
-```
-docker pull ghcr.io/pinoykrissmith/headwind:latest
-```
-
 [![Build custom Linkwarden image, scan & push](https://github.com/pinoykrissmith/containers/actions/workflows/build-linkwarden.yml/badge.svg)](https://github.com/pinoykrissmith/containers/pkgs/container/linkwarden/versions?filters%5Bversion_type%5D=tagged)
 ```
 docker pull ghcr.io/pinoykrissmith/linkwarden:latest
