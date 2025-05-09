@@ -2,7 +2,7 @@ const { spawn } = require('child_process');
 const commands = [
 	{ bin: '/nodejs/bin/node', args: ['packages/prisma/node_modules/.bin/prisma', 'migrate', 'deploy', '--schema', 'packages/prisma/schema.prisma'] },
 	{ bin: '/nodejs/bin/node', args: ['apps/web/node_modules/.bin/next', 'start'] },
-	{ bin: '/nodejs/bin/node', args: ['apps/worker/node_modules/.bin/tsx', 'apps/worker/worker.ts'] },
+	{ bin: '/nodejs/bin/node', args: ['apps/worker/node_modules/.bin/tsx', 'apps/worker/worker.ts'] }
 ];
 
 const exec = (bin, args) => {
