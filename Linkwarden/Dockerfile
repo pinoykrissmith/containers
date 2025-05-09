@@ -1,19 +1,14 @@
-FROM docker.io/library/node:22-bookworm-slim
 ARG VERSION=2.10.2
-ENV NEXT_TELEMETRY_DISABLED=1
-WORKDIR /data
-ADD https://github.com/linkwarden/linkwarden.git#v${VERSION} .
-RUN yarn install --network-timeout 10000000 \
-	&& yarn cache clean \
-	&& yarn prisma:generate \
-	&& yarn web:build
 
-FROM gcr.io/distroless/nodejs22-debian12:nonroot
+FROM ghcr.io/linkwarden/linkwarden:{VERSION}
+ARG UID=200015
 ENV NEXT_TELEMETRY_DISABLED=1 \
 	DISABLE_PRESERVATION=true
-WORKDIR /data
-COPY --from=0 /data /data
-COPY --chmod=644 ./init.js /init.js
-USER 200015
-EXPOSE 3000
-CMD ["/init.js"]
+RUN apt-get update \
+	&& apt-get upgrade -y && apt-get dist-upgrade -y \
+	&& rm -rf /var/cache/apt/* /var/lib/apt/lists/*
+RUN --network=none usermod -u ${UID} node && groupmod -g ${UID} node \
+	&& find / -path /proc -prune -o -user 1000 -exec chown node {} + && find / -path /proc -prune -o -group 1000 -exec chgrp node {} +
+RUN --network=none find /usr -type f -perm /4000 -exec chmod u-s {} \; && find /usr -type f -perm /2000 -exec chmod g-s {} \; \
+	&& rm -f /usr/bin/chsh /usr/bin/pkexec /usr/bin/sudo /usr/bin/su
+USER node
