@@ -138,13 +138,5 @@
       "url": "https://tailscale.com/changelog/index.xml",
       "regex": "<title>Tailscale v([^<\"]+)</title>"
     }
-  },
-  {
-    "name": "HMDM",
-    "baseUrl": "https://h-mdm.com/files/hmdm-{ver}-os.apk",
-    "version": {
-      "url": "https://api.github.com/repos/h-mdm/hmdm-android/releases/latest",
-      "regex": "\"tag_name\":\\s*\"v([^\\\"]+)\""
-    }
   }
 ]
