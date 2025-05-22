@@ -1,4 +1,4 @@
-name: Build pgvecto.rs
+name: Build VectorChord
 
 on:
   workflow_dispatch:
@@ -6,7 +6,7 @@ on:
     branches:
       - main
     paths:
-      - '.github/workflows/build-pgvecto.yml'
+      - '.github/workflows/build-vectorchord.yml'
       - 'Immich/Dockerfile'
   schedule:
     # Build the image weekly
@@ -14,7 +14,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: pinoykrissmith/pgvecto
+  IMAGE_NAME: pinoykrissmith/vectorchord
   TAG: latest
   CONTEXT: Immich
   VERSIONED: true

@@ -34,9 +34,9 @@ docker pull ghcr.io/pinoykrissmith/linkwarden:latest
 docker pull ghcr.io/pinoykrissmith/nitter:latest
 ```
 
-[![Build custom pgvecto.rs image, scan & push](https://github.com/pinoykrissmith/containers/actions/workflows/build-pgvecto.yml/badge.svg)](https://github.com/pinoykrissmith/containers/pkgs/container/pgvecto/versions?filters%5Bversion_type%5D=tagged)
+[![Build custom VectorChord image, scan & push](https://github.com/pinoykrissmith/containers/actions/workflows/build-vectorchord.yml/badge.svg)](https://github.com/pinoykrissmith/containers/pkgs/container/vectorchord/versions?filters%5Bversion_type%5D=tagged)
 ```
-docker pull ghcr.io/pinoykrissmith/pgvecto:latest
+docker pull ghcr.io/pinoykrissmith/vectorchord:latest
 ```
 
 [![Build custom Traccar image, scan & push](https://github.com/pinoykrissmith/containers/actions/workflows/build-traccar.yml/badge.svg)](https://github.com/pinoykrissmith/containers/pkgs/container/traccar/versions?filters%5Bversion_type%5D=tagged)

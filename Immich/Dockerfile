@@ -1,20 +1,22 @@
-ARG VERSION=0.2.0
-ARG POSTGRES=14
-FROM docker.io/library/postgres:${POSTGRES}
-ARG VERSION
-RUN apt-get update && apt-get install -y curl
-RUN curl -Lo /vectors.deb https://github.com/tensorchord/pgvecto.rs/releases/download/v${VERSION}/vectors-pg${PG_MAJOR}_${VERSION}_$(dpkg --print-architecture).deb
-RUN mkdir /install && dpkg-deb -xv /vectors.deb /install
-
-FROM docker.io/library/postgres:${POSTGRES}
+ARG PG_MAJOR=14
+FROM docker.io/library/postgres:${PG_MAJOR}
+ARG VERSION=0.3.0
 ARG UID=200012
-RUN apt-get update && apt-get upgrade -y && apt-get dist-upgrade -y \
-	&& rm -rf /var/cache/apt/* /var/lib/apt/lists/* /usr/local/bin/gosu
-COPY --from=0 /install/usr/lib/postgresql/${PG_MAJOR}/lib/vectors.so /usr/lib/postgresql/${PG_MAJOR}/lib/vectors.so
-COPY --from=0 /install/usr/share/postgresql/${PG_MAJOR}/extension /usr/share/postgresql/${PG_MAJOR}/extension
+
+RUN apt-get update && apt-get install -y ca-certificates postgresql-$PG_MAJOR-pgvector wget \
+	&& wget -nv -O /tmp/vchord.deb https://github.com/tensorchord/VectorChord/releases/download/$VERSION/postgresql-${PG_MAJOR%.*}-vchord_${VERSION#"v"}-1_$(dpkg --print-architecture).deb \
+	&& apt-get install -y /tmp/vchord.deb && apt-get purge -y ca-certificates wget && apt-get autoremove -y \
+	&& rm -rf /var/lib/apt/lists/* /var/cache/apt/* /tmp/vchord.deb
+
 RUN --network=none usermod -u ${UID} postgres && groupmod -g ${UID} postgres \
 	&& find / -path /proc -prune -o -user 999 -exec chown postgres {} + && find / -path /proc -prune -o -group 999 -exec chgrp postgres {} +
+
 RUN --network=none find /usr -type f -perm /4000 -exec chmod u-s {} \; && find /usr -type f -perm /2000 -exec chmod g-s {} \; \
 	&& rm -f /usr/bin/chsh /usr/bin/pkexec /usr/bin/sudo /usr/bin/su
+
+ADD --chmod=644 --chown=${UID}:${UID} https://github.com/immich-app/base-images/raw/refs/heads/main/postgres/postgresql.ssd.conf /etc/postgresql/postgresql.ssd.conf
+ADD --chmod=644 --chown=${UID}:${UID} https://github.com/immich-app/base-images/raw/refs/heads/main/postgres/postgresql.hdd.conf /etc/postgresql/postgresql.hdd.conf
+
 USER postgres
-CMD ["postgres", "-c", "shared_preload_libraries=vectors.so", "-c", "search_path=\"$user\", public, vectors", "-c", "logging_collector=on", "-c", "max_wal_size=2GB", "-c", "shared_buffers=512MB", "-c", "wal_compression=on"]
+HEALTHCHECK --interval=5m --start-interval=30s --start-period=5m CMD pg_isready --dbname="${POSTGRES_DB}" --username="${POSTGRES_USER}" || exit 1; Chksum="$(psql --dbname="${POSTGRES_DB}" --username="${POSTGRES_USER}" --tuples-only --no-align --command='SELECT COALESCE(SUM(checksum_failures), 0) FROM pg_stat_database')"; echo "checksum failure count is $Chksum"; [ "$Chksum" = '0' ] || exit 1
+CMD ["postgres", "-c", "config_file=/etc/postgresql/postgresql.ssd.conf"]
