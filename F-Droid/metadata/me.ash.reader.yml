@@ -1,0 +1,16 @@
+Categories:
+  - Reading
+License: GPL-3.0-only
+AuthorName: Ashinch
+AuthorEmail: Ashinch@outlook.it
+AuthorWebSite: https://www.ashinch.com/
+SourceCode: https://github.com/Ashinch/ReadYou
+IssueTracker: https://github.com/Ashinch/ReadYou/issues
+Changelog: https://github.com/Ashinch/ReadYou/releases
+
+AutoName: Read You
+
+RepoType: git
+Repo: https://github.com/Ashinch/ReadYou.git
+
+AllowedAPKSigningKeys: cef338a474523bdfcf3fb82cbee2d45f6fd9610e95902ba78c8c79a45e102ae9
