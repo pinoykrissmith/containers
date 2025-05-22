@@ -6,7 +6,7 @@ ARG UID=200012
 RUN apt-get update && apt-get install -y ca-certificates postgresql-$PG_MAJOR-pgvector wget \
 	&& wget -nv -O /tmp/vchord.deb https://github.com/tensorchord/VectorChord/releases/download/$VERSION/postgresql-${PG_MAJOR%.*}-vchord_${VERSION#"v"}-1_$(dpkg --print-architecture).deb \
 	&& apt-get install -y /tmp/vchord.deb && apt-get purge -y ca-certificates wget && apt-get autoremove -y \
-	&& rm -rf /var/lib/apt/lists/* /var/cache/apt/* /tmp/vchord.deb
+	&& rm -rf /var/lib/apt/lists/* /var/cache/apt/* /tmp/vchord.deb /usr/local/bin/gosu
 
 RUN --network=none usermod -u ${UID} postgres && groupmod -g ${UID} postgres \
 	&& find / -path /proc -prune -o -user 999 -exec chown postgres {} + && find / -path /proc -prune -o -group 999 -exec chgrp postgres {} +
