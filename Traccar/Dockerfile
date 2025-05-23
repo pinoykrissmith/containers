@@ -1,5 +1,5 @@
 FROM docker.io/library/alpine:latest
-ARG VERSION=6.6
+ARG VERSION=6.7.0
 ARG UID=200018
 ENV CONFIG_USE_ENVIRONMENT_VARIABLES=true \
 	DATABASE_DRIVER="org.postgresql.Driver" \
