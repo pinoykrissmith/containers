@@ -1,7 +1,7 @@
-FROM docker.io/library/alpine:3.20.6
+FROM docker.io/nimlang/nim:2.2.0-alpine-regular
 WORKDIR /src/
 ADD --keep-git-dir=true https://github.com/zedeus/nitter.git#master .
-RUN apk --no-cache add libsass-dev pcre gcc git libc-dev nim nimble
+RUN apk --no-cache add libsass-dev pcre
 RUN nimble install -y --depsOnly \
 	&& nimble build -d:danger -d:lto -d:strip --mm:refc \
 	&& nimble scss \
