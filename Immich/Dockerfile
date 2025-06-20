@@ -1,6 +1,6 @@
 ARG PG_MAJOR=14
 FROM docker.io/library/postgres:${PG_MAJOR}
-ARG VERSION=0.3.0
+ARG VERSION=0.4.3
 ARG UID=200012
 
 RUN apt-get update && apt-get install -y ca-certificates postgresql-$PG_MAJOR-pgvector wget \
