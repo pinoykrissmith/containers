@@ -1,6 +1,6 @@
 FROM docker.io/nginxinc/nginx-unprivileged:stable-bookworm
 USER root
-ARG VERSION=2.4.0
+ARG VERSION=2.4.2
 ARG UID=200008
 WORKDIR /fdroid
 ADD --chmod=644 https://gitlab.com/CalyxOS/calyxos-fdroid-repo/-/raw/99d7f16b53bf55b76bedc15985da1f1da7084c2b/download.py /download.py
