@@ -1,8 +1,10 @@
 FROM docker.io/louislam/uptime-kuma:beta-slim
 
-ENV GIN_MODE=release
-ENV MODE=native
-ENV AUTO_RECEIVE_SCHEDULE="0 22 * * *"
+ENV GIN_MODE=release \
+	MODE=native \
+	AUTO_RECEIVE_SCHEDULE="0 22 * * *" \
+	AUTO_RECEIVE_SCHEDULE_IGNORE_ATTACHMENTS=true \
+	AUTO_RECEIVE_SCHEDULE_IGNORE_STORIES=true
 COPY --from=docker.io/bbernhard/signal-cli-rest-api:latest /opt/ /opt/
 COPY --from=docker.io/bbernhard/signal-cli-rest-api:latest /usr/bin/signal-cli-rest-api /usr/bin/signal-cli-rest-api
 COPY ./supervisord.conf /etc/supervisord.conf
