@@ -1,6 +1,5 @@
-ARG VERSION=2.10.0
 FROM docker.io/library/golang:1
-ARG VERSION
+ARG VERSION=2.10.2
 ENV GO111MODULE=on \
 	CGO_ENABLED=0
 RUN go run github.com/caddyserver/xcaddy/cmd/xcaddy@latest build v${VERSION} --output /usr/bin/caddy \
@@ -10,15 +9,12 @@ RUN go run github.com/caddyserver/xcaddy/cmd/xcaddy@latest build v${VERSION} --o
 	--with github.com/tailscale/caddy-tailscale@fd3f49d73216641b9cbe9167bbb05250c0ffc6d6 \
 	--with github.com/hslatman/caddy-crowdsec-bouncer/http@28ef1be0db6542a5efd451009c72ec419b815faa
 
-FROM docker.io/library/caddy:${VERSION}
 FROM scratch
 ENV XDG_CONFIG_HOME=/config \
 	XDG_DATA_HOME=/data
 COPY --from=0 /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/ca-certificates.crt
 COPY --from=0 /usr/share/zoneinfo /usr/share/zoneinfo
 COPY --from=0 /usr/bin/caddy /usr/bin/caddy
-COPY --from=1 /etc/caddy/Caddyfile /etc/caddy/Caddyfile
-COPY --from=1 /usr/share/caddy/index.html /usr/share/caddy/index.html
 
 USER 200017
 EXPOSE 443
