@@ -1,4 +1,4 @@
-FROM registry.fedoraproject.org/fedora:41
+FROM registry.fedoraproject.org/fedora:42
 ARG VERSION=2.3.4
 RUN sed -i -e s,countme=1,countme=0, /etc/yum.repos.d/*.repo \
 	&& dnf install --skip-broken gcc make autoconf automake libtool rpm-build libtirpc-devel libblkid-devel \
