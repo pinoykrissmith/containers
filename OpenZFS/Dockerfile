@@ -17,7 +17,7 @@ RUN --network=none gpg --import /tmp/signers \
 	&& sh autogen.sh \
 	&& ./configure \
 	&& make -j$(nproc) rpm-utils rpm-dkms \
-	&& zip rpms.zip *.rpm -x '*src*.rpm'
+	&& zip rpms.zip *.rpm -x '*src*.rpm' -x '*test*.rpm'
 
 FROM scratch
 USER 3005
