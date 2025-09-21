@@ -1,7 +1,7 @@
 FROM docker.io/library/eclipse-temurin:21-alpine
 RUN jlink --module-path $JAVA_HOME/jmods \
 	--add-modules java.se,jdk.charsets,jdk.crypto.ec,jdk.unsupported \
-	--strip-debug --no-header-files --no-man-pages --compress=2 --output /javaruntime
+	--strip-debug --no-header-files --no-man-pages --compress=zip-6 --output /javaruntime
 
 FROM docker.io/library/alpine:latest
 ARG VERSION=6.8.1
