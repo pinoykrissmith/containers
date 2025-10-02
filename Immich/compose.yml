@@ -3,7 +3,7 @@ name: immich
 services:
   immich-server:
     container_name: immich_server
-    image: ghcr.io/immich-app/immich-server:${IMMICH_VERSION:-release}
+    image: ghcr.io/pinoykrissmith/immich-server:latest
     # extends:
     #   file: hwaccel.transcoding.yml
     #   service: cpu # set to one of [nvenc, quicksync, rkmpp, vaapi, vaapi-wsl] for accelerated transcoding
@@ -25,16 +25,19 @@ services:
       - "no-new-privileges=true"
     cap_drop:
       - "ALL"
-    user: "1000:1000"
+    user: "200014:200014"
     read_only: true
     networks:
       - caddy_net
+    labels:
+      com.centurylinklabs.watchtower.enable: "true"
+      io.containers.autoupdate: "registry"
 
   immich-machine-learning:
     container_name: immich_machine_learning
     # For hardware acceleration, add one of -[armnn, cuda, openvino] to the image tag.
     # Example tag: ${IMMICH_VERSION:-release}-cuda
-    image: ghcr.io/immich-app/immich-machine-learning:${IMMICH_VERSION:-release}
+    image: ghcr.io/pinoykrissmith/immich-machine-learning:latest
     # extends: # uncomment this section for hardware acceleration - see https://immich.app/docs/features/ml-hardware-acceleration
     #   file: hwaccel.ml.yml
     #   service: cpu # set to one of [armnn, cuda, openvino, openvino-wsl] for accelerated inference - use the `-wsl` version for WSL2 where applicable
@@ -51,13 +54,16 @@ services:
       - "no-new-privileges=true"
     cap_drop:
       - NET_RAW
-    user: "1000:1000"
+    user: "200013:200013"
     read_only: true
     tty: true
     tmpfs:
      - /tmp:noexec,nosuid,nodev
     networks:
       - caddy_net
+    labels:
+      com.centurylinklabs.watchtower.enable: "true"
+      io.containers.autoupdate: "registry"
 
   redis:
     container_name: immich_redis
@@ -78,6 +84,9 @@ services:
       LD_PRELOAD: ""
     networks:
       - caddy_net
+    labels:
+      com.centurylinklabs.watchtower.enable: "true"
+      io.containers.autoupdate: "registry"
 
   database:
     container_name: immich_postgres
@@ -102,6 +111,9 @@ services:
       - /var/run/postgresql:noexec,nosuid,nodev
     networks:
       - caddy_net
+    labels:
+      com.centurylinklabs.watchtower.enable: "true"
+      io.containers.autoupdate: "registry"
 
 networks:
   caddy_net:

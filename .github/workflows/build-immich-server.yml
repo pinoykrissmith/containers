@@ -1,4 +1,4 @@
-name: Build VectorChord
+name: Build Immich Server
 
 on:
   workflow_dispatch:
@@ -6,7 +6,7 @@ on:
     branches:
       - main
     paths:
-      - '.github/workflows/build-vectorchord.yml'
+      - '.github/workflows/build-immich-server.yml'
       - 'Immich/Dockerfile'
   schedule:
     # Build the image weekly
@@ -14,10 +14,10 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: pinoykrissmith/vectorchord
+  IMAGE_NAME: pinoykrissmith/immich-server
   TAG: latest
   CONTEXT: Immich
-  TARGET: vectorchord
+  TARGET: immich-server
   VERSIONED: true
 
 jobs:
@@ -101,7 +101,7 @@ jobs:
       - name: Get version string
         if: ${{ env.VERSIONED == 'true' }}
         run: |
-          echo "FULL_VERSION=$(grep -oP -m 1 '(?<=VC_VERSION=).*' ${{ env.CONTEXT }}/Dockerfile)" >> $GITHUB_ENV
+          echo "FULL_VERSION=$(grep -oP -m 1 '(?<=VERSION=).*' ${{ env.CONTEXT }}/Dockerfile)" >> $GITHUB_ENV
 
       - name: Login to registry
         if: github.event_name != 'pull_request'
