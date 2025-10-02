@@ -24,14 +24,14 @@ docker pull ghcr.io/pinoykrissmith/ebook2audiobookpiper:latest
 docker pull ghcr.io/pinoykrissmith/fdroid:latest
 ```
 
-[![Build custom Immich Server image, scan & push](https://github.com/pinoykrissmith/containers/actions/workflows/build-immich-server.yml/badge.svg)](https://github.com/pinoykrissmith/containers/pkgs/container/immich-server/versions?filters%5Bversion_type%5D=tagged)
-```
-docker pull ghcr.io/pinoykrissmith/immich-server:latest
-```
-
 [![Build custom Immich Machine Learning image, scan & push](https://github.com/pinoykrissmith/containers/actions/workflows/build-immich-machine-learning.yml/badge.svg)](https://github.com/pinoykrissmith/containers/pkgs/container/immich-machine-learning/versions?filters%5Bversion_type%5D=tagged)
 ```
 docker pull ghcr.io/pinoykrissmith/immich-machine-learning:latest
+```
+
+[![Build custom Immich Server image, scan & push](https://github.com/pinoykrissmith/containers/actions/workflows/build-immich-server.yml/badge.svg)](https://github.com/pinoykrissmith/containers/pkgs/container/immich-server/versions?filters%5Bversion_type%5D=tagged)
+```
+docker pull ghcr.io/pinoykrissmith/immich-server:latest
 ```
 
 [![Build custom Linkwarden image, scan & push](https://github.com/pinoykrissmith/containers/actions/workflows/build-linkwarden.yml/badge.svg)](https://github.com/pinoykrissmith/containers/pkgs/container/linkwarden/versions?filters%5Bversion_type%5D=tagged)
