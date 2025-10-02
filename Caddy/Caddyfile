@@ -225,7 +225,7 @@ immich.{$MY_DOMAIN} {
 	encode zstd gzip
 	route {
 		crowdsec
-		reverse_proxy immich_server:2283
+		reverse_proxy immich-server:2283
 	}
 }
 
