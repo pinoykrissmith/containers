@@ -1,7 +1,7 @@
-ARG VERSION=2.0.0
+ARG VERSION=2.0.1
 
 FROM docker.io/library/postgres:14 AS vectorchord
-ARG VC_VERSION=0.4.3
+ARG VC_VERSION=0.5.3
 ARG UID=200012
 
 RUN apt-get update && apt-get install -y ca-certificates postgresql-$PG_MAJOR-pgvector wget \
