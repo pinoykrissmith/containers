@@ -12,7 +12,7 @@ ARG UID=200013
 ENV NITTER_SESSIONS_FILE=/data/sessions.jsonl
 WORKDIR /app
 RUN apk --no-cache add pcre ca-certificates openssl
-RUN pip install --no-cache-dir pyotp requests
+RUN pip install --no-cache-dir pyotp requests cloudscraper
 RUN --network=none addgroup -g ${UID} --system nitter && adduser -u ${UID} --ingroup nitter --disabled-password -s /sbin/nologin -H --system nitter
 
 COPY --from=0 /src/nitter /app/nitter
