@@ -8,8 +8,7 @@ RUN printf 'APT::Install-Recommends "0";\nAPT::Install-Suggests "0";\nAPT::Acqui
 	&& apt-get update && apt-get upgrade && apt-get dist-upgrade \
 	&& apt-get install apksigner git lzip openjdk-17-jdk-headless python3 python3-pip wget \
 	&& rm -rf /var/cache/apt/* /var/lib/apt/lists/*
-RUN pip install --no-cache-dir --break-system-packages \
-		git+https://github.com/androguard/androguard@16a6bd21946bfe3d75639ffd3d96957971b6553f \
+RUN pip install --no-cache-dir --break-system-packages androguard \
 		git+https://gitlab.com/fdroid/fdroidserver@$VERSION \
 	&& sed -i -e '/repo_url/d' -e '/archive_url/d' /usr/local/lib/python*/dist-packages/fdroidserver/common.py
 RUN --network=none printf '#!/bin/sh\njava -jar /usr/lib/android-sdk/build-tools/debian/apksigner.jar "$@"' > /usr/local/bin/apksigner && chmod +x /usr/local/bin/apksigner \
