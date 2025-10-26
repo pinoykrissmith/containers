@@ -1,4 +1,4 @@
-FROM docker.io/louislam/uptime-kuma:beta-slim
+FROM docker.io/louislam/uptime-kuma:2-slim
 
 ENV GIN_MODE=release \
 	MODE=native \
