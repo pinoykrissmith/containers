@@ -3,7 +3,7 @@ WORKDIR /src/
 RUN apk --no-cache add libsass-dev pcre git
 
 RUN git init . && git remote add origin https://github.com/pinoykrissmith/nitter.git \
-	&& git fetch --depth 1 origin 68da4197a38d351fa2941287005c93918bbc7515 \
+	&& git fetch --depth 1 origin c548151500b6da342facdbacd8c7739ddeb988b6 \
 	&& git checkout FETCH_HEAD
 RUN nimble install -y --depsOnly \
 	&& nimble build -d:danger -d:lto -d:strip --mm:refc \
