@@ -14,7 +14,7 @@ ADD --chown=${UID}:${UID} https://github.com/DrewThomasson/ebook2audiobookpiper-
 RUN --network=none groupadd -g ${UID} -r piper && useradd -u ${UID} -r -M -g piper -s /usr/sbin/nologin piper
 
 RUN python3.10 -m ensurepip --upgrade && pip3.10 install --no-cache-dir --upgrade pip \
-	&& pip3.10 install --no-cache-dir --prefer-binary spacy piper-tts pydub nltk beautifulsoup4 ebooklib tqdm gradio \
+	&& pip3.10 install --no-cache-dir --prefer-binary spacy piper-tts pydub nltk beautifulsoup4 ebooklib tqdm gradio==5.30.0 \
 	&& python3.10 -m spacy download en_core_web_sm \
 	&& python3.10 -m nltk.downloader -d "/usr/share/nltk_data" punkt
 
