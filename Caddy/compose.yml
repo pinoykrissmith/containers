@@ -21,7 +21,6 @@ services:
       CLOUDFLARE_AUTH_TOKEN: "${CLOUDFLARE_AUTH_TOKEN}"
       MY_DOMAIN: "${MY_DOMAIN}"
       TORRENTS_PASS: "${TORRENTS_PASS}"
-      CROWDSEC_API_KEY: "${CROWDSEC_API_KEY}"
       TAILSCALE_AUTH_KEY: "${TAILSCALE_AUTH_KEY}"
       CADDY_ADMIN: "off"
     env_file:
@@ -34,37 +33,11 @@ services:
       - "ALL"
     networks:
       - caddy_net
-      - crowdsec
-    labels:
-      com.centurylinklabs.watchtower.enable: "true"
-      io.containers.autoupdate: "registry"
-
-  crowdsec:
-    image: docker.io/crowdsecurity/crowdsec
-    container_name: crowdsec
-    restart: unless-stopped
-    security_opt:
-      - "no-new-privileges=true"
-    environment:
-      GID: "65532"
-      COLLECTIONS: crowdsecurity/caddy crowdsecurity/http-cve crowdsecurity/whitelist-good-actors crowdsecurity/linux
-      BOUNCER_KEY_CADDY: "${CROWDSEC_API_KEY}"
-      PARSERS: crowdsecurity/whitelists
-      USE_WAL: true
-    env_file:
-      - .env
-    networks:
-      - crowdsec
-    volumes:
-      - ./acquis.yaml:/etc/crowdsec/acquis.yaml:Z,ro
-      - /elysium/crowdsec-data:/var/lib/crowdsec/data:Z
-      - /elysium/caddy-logs:/var/log/caddy:z,ro
     labels:
       com.centurylinklabs.watchtower.enable: "true"
       io.containers.autoupdate: "registry"
 
 networks:
-  crowdsec:
   caddy_net:
     name: caddy_net
     external: true

@@ -5,9 +5,7 @@ ENV GO111MODULE=on \
 RUN go run github.com/caddyserver/xcaddy/cmd/xcaddy@latest build v${VERSION} --output /usr/bin/caddy \
 	--with github.com/caddy-dns/cloudflare@2fc25ee62f40fe21b240f83ab2fb6e2be6dbb953 \
 	--with github.com/WeidiDeng/caddy-cloudflare-ip@f53b62aa13cb7ad79c8b47aacc3f2f03989b67e5 \
-	--with github.com/caddyserver/transform-encoder@47f376e021efdfdf2d47ca716c8f031b4fdfad92 \
-	--with github.com/tailscale/caddy-tailscale@5d28cc2642f4022afbd66b4815b467639f9dbc07 \
-	--with github.com/hslatman/caddy-crowdsec-bouncer/http@28ef1be0db6542a5efd451009c72ec419b815faa
+	--with github.com/tailscale/caddy-tailscale@5d28cc2642f4022afbd66b4815b467639f9dbc07
 
 FROM scratch
 ENV XDG_CONFIG_HOME=/config \

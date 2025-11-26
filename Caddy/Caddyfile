@@ -7,11 +7,6 @@
 			timeout 15s
 		}
 	}
-	crowdsec {
-		api_url http://crowdsec:8080
-		api_key "{env.CROWDSEC_API_KEY}"
-		ticker_interval 15s
-	}
 	tailscale {
 		auth_key "{env.TS_AUTHKEY}"
 		ephemeral true
@@ -212,10 +207,7 @@ logs.{$MY_DOMAIN} {
 	import log
 	import cloudflare
 	encode zstd gzip
-	route {
-		crowdsec
-		reverse_proxy linkwarden:3000
-	}
+	reverse_proxy linkwarden:3000
 }
 
 immich.{$MY_DOMAIN} {
@@ -223,10 +215,7 @@ immich.{$MY_DOMAIN} {
 	import log
 	import cloudflare
 	encode zstd gzip
-	route {
-		crowdsec
-		reverse_proxy immich-server:2283
-	}
+	reverse_proxy immich-server:2283
 }
 
 traccar.{$MY_DOMAIN} {
@@ -234,10 +223,7 @@ traccar.{$MY_DOMAIN} {
 	import log
 	import cloudflare
 	encode zstd gzip
-	route {
-		crowdsec
-		reverse_proxy traccar:8082
-	}
+	reverse_proxy traccar:8082
 }
 
 auditor.{$MY_DOMAIN} {
@@ -249,10 +235,7 @@ auditor.{$MY_DOMAIN} {
 		path /api/*
 		path /about
 	}
-	route {
-		crowdsec
-		reverse_proxy @allowed attestation:8080
-	}
+	reverse_proxy @allowed attestation:8080
 	redir / /about 301
 }
 
