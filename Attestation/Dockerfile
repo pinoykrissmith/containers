@@ -40,7 +40,8 @@ RUN --network=none ln -sf /dev/stdout /var/log/nginx/access.log && ln -sf /dev/s
 
 COPY --from=0 /app/nginx-tmp/mime.types /etc/nginx/
 COPY --from=0 /app/nginx-tmp/root_attestation.app.conf /etc/nginx/
-COPY --from=0 /app/nginx-tmp/snippets /etc/nginx/snippets
+COPY --from=0 /app/nginx-tmp/preload.conf /etc/nginx/
+COPY --from=0 /app/nginx-tmp/security-headers.conf /etc/nginx/
 COPY --from=0 /app/static-tmp /srv/attestation.app_a
 COPY --chmod=644 ./nginx.conf /etc/nginx/nginx.conf
 COPY --from=docker.io/nginxinc/nginx-unprivileged:stable-alpine-slim /etc/nginx/conf.d/default.conf /etc/nginx/conf.d/default.conf
