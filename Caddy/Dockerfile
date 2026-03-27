@@ -1,5 +1,5 @@
 FROM docker.io/library/golang:1
-ARG VERSION=2.10.2
+ARG VERSION=2.11.2
 ENV GO111MODULE=on \
 	CGO_ENABLED=0
 RUN go run github.com/caddyserver/xcaddy/cmd/xcaddy@latest build v${VERSION} --output /usr/bin/caddy \
