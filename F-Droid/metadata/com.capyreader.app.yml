@@ -1,0 +1,11 @@
+Categories:
+  - Internet
+  - News
+  - Reading
+License: GPL-3.0-only
+AuthorName: jocmp
+SourceCode: https://github.com/jocmp/capyreader
+IssueTracker: https://github.com/jocmp/capyreader/issues
+Donate: https://ko-fi.com/capyreader
+
+AllowedAPKSigningKeys: 67437375a161f420219ddff1f281df292ccb5f057aa0caf56568a782b2816465
