@@ -1,4 +1,4 @@
-FROM docker.io/nginxinc/nginx-unprivileged:stable-bookworm
+FROM docker.io/nginxinc/nginx-unprivileged:stable-trixie
 USER root
 ARG VERSION=2.4.3
 ARG UID=200008
@@ -6,7 +6,7 @@ WORKDIR /fdroid
 ADD --chmod=644 https://gitlab.com/CalyxOS/calyxos-fdroid-repo/-/raw/99d7f16b53bf55b76bedc15985da1f1da7084c2b/download.py /download.py
 RUN printf 'APT::Install-Recommends "0";\nAPT::Install-Suggests "0";\nAPT::Acquire::Retries "20";\nAPT::Get::Assume-Yes "true";\nDpkg::Use-Pty "0";\nquiet "1";' > /etc/apt/apt.conf.d/99github \
 	&& apt-get update && apt-get upgrade && apt-get dist-upgrade \
-	&& apt-get install apksigner git lzip openjdk-17-jdk-headless python3 python3-pip wget \
+	&& apt-get install apksigner git lzip openjdk-21-jdk-headless python3 python3-pip wget \
 	&& rm -rf /var/cache/apt/* /var/lib/apt/lists/*
 RUN pip install --no-cache-dir --break-system-packages androguard \
 		git+https://gitlab.com/fdroid/fdroidserver@$VERSION \
