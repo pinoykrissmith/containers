@@ -1,4 +1,4 @@
-FROM docker.io/library/eclipse-temurin:21-alpine
+FROM docker.io/library/eclipse-temurin:25-alpine
 ENV GITHUB_ACTIONS="true" \
 	PATH="/opt/venv/bin:$PATH" \
 	SKIP_REMOTE_PUBLISHING="1"
