@@ -13,7 +13,6 @@ services:
       - ./Caddyfile:/etc/caddy/Caddyfile:Z,ro
       - /elysium/caddy-data:/config:Z
       - /elysium/caddy-data:/data:Z
-      - /elysium/caddy-logs:/data/logs:z
     environment:
       TZ: UTC
       LOG_FILE: "/data/logs/access.log"
