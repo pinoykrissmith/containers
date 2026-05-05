@@ -59,6 +59,13 @@ docker pull ghcr.io/pinoykrissmith/traccar:latest
 - Ensures that the images are abled to be used unprivileged with Podman. Sets a custom UID in the Dockerfile.
 - Removed SUID and SGID bits in images.
 
+### Note on user ids
+Ensure that /etc/subuid and /etc/subgid has the following
+```
+user:589824:65536
+user:200000:200001
+```
+
 ### Licensing
 - Any file that isn't a binary such as the Dockerfile and compose.yml in this repository is licensed under the WTFPL.
 - Any image built by this repository is provided under the combination of license terms resulting from the use of individual packages.
