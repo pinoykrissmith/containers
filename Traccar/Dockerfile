@@ -1,4 +1,4 @@
-FROM docker.io/library/eclipse-temurin:21-alpine
+FROM docker.io/library/eclipse-temurin:25-alpine
 RUN jlink --module-path $JAVA_HOME/jmods \
 	--add-modules java.se,jdk.charsets,jdk.crypto.ec,jdk.unsupported \
 	--strip-debug --no-header-files --no-man-pages --compress=zip-6 --output /javaruntime
