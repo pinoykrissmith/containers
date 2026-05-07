@@ -25,6 +25,7 @@ CMD ["postgres", "-c", "config_file=/etc/postgresql/postgresql.ssd.conf"]
 FROM ghcr.io/immich-app/immich-machine-learning:v${VERSION} AS immich-machine-learning
 ARG UID=200013
 ENV GUNICORN_CMD_ARGS="--control-socket /tmp/gunicorn.ctl"
+ENV MPLCONFIGDIR="/.config/matplotlib"
 RUN apt-get update \
 	&& apt-get upgrade -y && apt-get dist-upgrade -y \
 	&& rm -rf /var/cache/apt/* /var/lib/apt/lists/*
