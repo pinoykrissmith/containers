@@ -48,14 +48,6 @@
     }
   },
   {
-    "name": "Orbot",
-    "baseUrl": "https://github.com/guardianproject/orbot/releases/download/{ver}/Orbot-{ver}-fullperm-arm64-v8a-release.apk",
-    "version": {
-      "url": "https://api.github.com/repos/guardianproject/orbot/releases/latest",
-      "json": "tag_name"
-    }
-  },
-  {
     "name": "TorBrowser",
     "baseUrl": "https://dist.torproject.org/torbrowser/{ver}/tor-browser-android-aarch64-{ver}.apk",
     "version": {
