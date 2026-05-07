@@ -23,5 +23,4 @@ RUN zip debs.zip openzfs-libuutil*.deb openzfs-libnvpair*.deb openzfs-libzfs*.de
 	openzfs-zfsutils*.deb -x *dev*
 
 FROM scratch
-USER 3005
 COPY --from=0 /tmp/debs.zip /install/debs.zip
