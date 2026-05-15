@@ -1,6 +1,6 @@
 FROM docker.io/nginxinc/nginx-unprivileged:stable-trixie
 USER root
-ARG VERSION=2.4.3
+ARG VERSION=2.4.4
 ARG UID=200008
 WORKDIR /fdroid
 ADD --chmod=644 https://gitlab.com/CalyxOS/calyxos-fdroid-repo/-/raw/aa942c7e1f22ad03e8bbcbe261696cc7469682e9/download.py /download.py
