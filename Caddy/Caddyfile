@@ -192,17 +192,6 @@ uptime.{$MY_DOMAIN} {
 	}
 }
 
-logs.{$MY_DOMAIN} {
-	import safe
-	import nolog
-	import cloudflare
-	import lan
-	encode zstd gzip
-	route @lan {
-		reverse_proxy host.containers.internal:8000
-	}
-}
-
 {$MY_DOMAIN} www.{$MY_DOMAIN} {
 	import safe
 	import log
@@ -233,7 +222,7 @@ auditor.{$MY_DOMAIN} {
 	import cloudflare
 	@allowed {
 		path /auditor/*
-		path /api/*
+		path /api/login
 		path /about
 	}
 	reverse_proxy @allowed attestation:8080
