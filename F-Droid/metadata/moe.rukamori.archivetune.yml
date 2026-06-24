@@ -1,0 +1,13 @@
+Categories:
+  - Local Media Player
+  - Multimedia
+License: GPL-3.0
+WebSite: https://archivetune.koiiverse.cloud
+SourceCode: https://github.com/ArchiveTuneApp/ArchiveTune
+IssueTracker: https://github.com/ArchiveTuneApp/ArchiveTune/issues
+Changelog: https://github.com/ArchiveTuneApp/ArchiveTune/releases
+
+Name: ArchiveTune
+
+RepoType: git
+Repo: https://github.com/ArchiveTuneApp/ArchiveTune.git
