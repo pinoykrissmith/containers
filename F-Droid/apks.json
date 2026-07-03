@@ -1,29 +1,5 @@
 [
   {
-    "name": "AuroraStore",
-    "baseUrl": "https://auroraoss.com/downloads/AuroraStore/Release/AuroraStore-{ver}.apk",
-    "version": {
-      "url": "https://gitlab.com/api/v4/projects/6922885/releases",
-      "regex": "\"tag_name\":\"(.+?)\""
-    }
-  },
-  {
-    "name": "Briar",
-    "baseUrl": "https://briarproject.org/fdroid/repo/{ver}",
-    "version": {
-      "fdroid": "org.briarproject.briar.android",
-      "fingerprint": "1FB874BEE7276D28ECB2C9B06E8A122EC4BCB4008161436CE474C257CBF49BD6"
-    }
-  },
-  {
-    "name": "DAVx5",
-    "baseUrl": "https://github.com/bitfireAT/davx5-ose/releases/download/v{ver}/davx5-ose-{ver}-release.apk",
-    "version": {
-      "url": "https://api.github.com/repos/bitfireAT/davx5-ose/releases/latest",
-      "regex": "\"tag_name\":\\s*\"v([^\\\"]+)\""
-    }
-  },
-  {
     "name": "F-DroidBasic",
     "baseUrl": "https://f-droid.org/repo/{ver}",
     "version": {
