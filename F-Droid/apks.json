@@ -53,7 +53,7 @@
   },
   {
     "name": "TermuxX11",
-    "baseUrl": "https://github.com/termux/termux-x11/releases/download/nightly/app-arm64-v8a-debug.apk",
+    "baseUrl": "https://github.com/termux/termux-x11/releases/download/nightly/termux-x11-universal-debug.apk",
     "version": {
       "url": "https://api.github.com/repos/termux/termux-x11/releases/latest",
       "json": "name"
