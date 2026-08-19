@@ -1,4 +1,4 @@
-ARG VERSION=2.16.0
+ARG VERSION=2.16.1
 
 FROM ghcr.io/linkwarden/linkwarden:v${VERSION}
 ARG UID=200015
