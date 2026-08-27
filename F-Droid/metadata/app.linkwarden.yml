@@ -11,6 +11,6 @@ Changelog: https://github.com/linkwarden/builds/releases
 Name: Linkwarden
 
 RepoType: git
-Repo: https://github.com/GrapheneOS/Auditor.git
+Repo: https://github.com/linkwarden/linkwarden.git
 
 AllowedAPKSigningKeys: 8ec49e91a32192e7a7228cd93dc2d85039e8754d18c178ad55db8ae4931bb4e7
