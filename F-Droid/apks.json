@@ -104,7 +104,7 @@
     "baseUrl": "https://dl.tailscale.com/stable/tailscale-android-universal-{ver}.apk",
     "version": {
       "url": "https://api.github.com/repos/tailscale/tailscale-android/releases/latest",
-      "regex": "\"tag_name\":\\s*\"v(\\d+\\.\\d+\\.\\d+)\""
+      "regex": "\"name\":\\s*\"v(\\d+\\.\\d+\\.\\d+)\""
     }
   },
   {
