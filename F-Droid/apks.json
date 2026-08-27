@@ -114,5 +114,13 @@
       "fdroid": "com.capyreader.app",
       "fingerprint": "43238D512C1E5EB2D6569F4A3AFBF5523418B82E0A3ED1552770ABB9A9C9CCAB"
     }
+  },
+  {
+    "name": "Linkwarden",
+    "baseUrl": "https://github.com/linkwarden/builds/releases/download/apk-v{ver}/linkwarden-v{ver}.apk",
+    "version": {
+      "url": "https://api.github.com/repos/linkwarden/builds/releases/latest",
+      "regex": "\"tag_name\":\\s*\"apk-v(\\d+\\.\\d+\\.\\d+)\""
+    }
   }
 ]
