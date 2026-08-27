@@ -11,6 +11,7 @@
 		auth_key "{env.TS_AUTHKEY}"
 		ephemeral true
 		state_dir "/data/tailscale"
+		tags tag:caddy
 		webui false
 	}
 }
