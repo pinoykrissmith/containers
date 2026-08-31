@@ -13,7 +13,8 @@ services:
     env_file:
       - .env
     volumes:
-      - /elysium/linkwarden-cache:/data/.next/cache:Z
+      - /elysium/linkwarden-data:/data/data:Z
+      - /elysium/linkwarden-data:/data/apps/web/.next/cache:Z
     restart: always
     labels:
       com.centurylinklabs.watchtower.enable: "true"
@@ -28,8 +29,6 @@ services:
       - "no-new-privileges=true"
     cap_drop:
       - ALL
-    tmpfs:
-      - /data/data:mode=777,noexec,nosuid,nodev
 
   postgres:
     container_name: lw-postgres
