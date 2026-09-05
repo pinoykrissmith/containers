@@ -1,4 +1,4 @@
-ARG VERSION=2.16.1
+ARG VERSION=2.16.2
 FROM ghcr.io/linkwarden/linkwarden:v${VERSION} AS build
 FROM docker.io/library/node:22-trixie-slim
 WORKDIR /data
