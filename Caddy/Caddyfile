@@ -136,6 +136,24 @@ fdroid.{$TAILNET} {
 	reverse_proxy fdroid:8080
 }
 
+music.{$MY_DOMAIN} {
+	import safe
+	import nolog
+	import cloudflare
+	import lan
+	encode zstd gzip
+	route @lan {
+		reverse_proxy navidrome:4533
+	}
+}
+
+music.{$TAILNET} {
+	import nolog
+	tailscale_auth
+	bind tailscale/music
+	reverse_proxy navidrome:4533
+}
+
 nitter.{$MY_DOMAIN} {
 	import safe
 	import nolog

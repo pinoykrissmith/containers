@@ -1,0 +1,24 @@
+services:
+  navidrome:
+    image: docker.io/deluan/navidrome:latest
+    user: 200020:200020 # must own the data folder and be able to read music folder(s). See Permissions below
+    restart: unless-stopped
+    environment:
+      # Optional: put your config options customization here. Examples:
+      # ND_LOGLEVEL: debug
+    volumes:
+      - "/elysium/navidrome-data:/data:Z"
+      - "/elysium/navidrome-music:/music:ro,Z"
+    labels:
+      com.centurylinklabs.watchtower.enable: "true"
+      io.containers.autoupdate: "registry"
+    networks:
+      - caddy_net
+    read_only: true
+    security_opt:
+      - "no-new-privileges=true"
+
+networks:
+  caddy_net:
+    name: caddy_net
+    external: true
