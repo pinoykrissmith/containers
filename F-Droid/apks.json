@@ -37,9 +37,9 @@
   },
   {
     "name": "TraccarClient",
-    "baseUrl": "https://github.com/traccar/traccar-client-android/releases/download/{ver}/app-regular-release.apk",
+    "baseUrl": "https://github.com/traccar/traccar-client/releases/download/{ver}/app-release.apk",
     "version": {
-      "url": "https://api.github.com/repos/traccar/traccar-client-android/releases/latest",
+      "url": "https://api.github.com/repos/traccar/traccar-client/releases/latest",
       "json": "tag_name"
     }
   },
