@@ -1,4 +1,4 @@
-ARG VERSION=3.2.0
+ARG VERSION=3.2.2
 
 FROM docker.io/library/postgres:17 AS vectorchord
 ARG VC_VERSION=0.5.3
