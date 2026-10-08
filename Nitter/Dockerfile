@@ -1,10 +1,8 @@
-FROM docker.io/nimlang/nim:2.2.0-alpine-regular
+FROM docker.io/nimlang/nim:2.2.6-alpine-regular
 WORKDIR /src/
 RUN apk --no-cache add libsass-dev pcre git
 
-RUN git init . && git remote add origin https://github.com/pinoykrissmith/nitter.git \
-	&& git fetch --depth 1 origin c78ed240a3457c701402d23a5b76808b5d57b0bd \
-	&& git checkout FETCH_HEAD
+ADD --keep-git-dir=true https://github.com/cmj/nitter.git .
 RUN nimble install -y --depsOnly \
 	&& nimble build -d:danger -d:lto -d:strip --mm:refc \
 	&& nimble scss \
