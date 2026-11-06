@@ -5,9 +5,7 @@ ENV PYTHONUNBUFFERED=1 \
 	GRADIO_ANALYTICS_ENABLED="False" \
 	GRADIO_SERVER_NAME=0.0.0.0 \
 	GRADIO_SERVER_PORT=8080
-RUN sed -i -e s,countme=1,countme=0, /etc/yum.repos.d/*.repo \
-	&& dnf install -y --setopt=install_weak_deps=False calibre ffmpeg git python3.10 which \
-	&& dnf clean all -y
+RUN dnf install -y --setopt=install_weak_deps=False calibre ffmpeg git python3.10 which && dnf clean all -y
 
 WORKDIR /app
 ADD --chown=${UID}:${UID} https://github.com/DrewThomasson/ebook2audiobookpiper-tts.git#main .
