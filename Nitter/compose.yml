@@ -1,86 +1,96 @@
 services:
-    nitter:
-      image: ghcr.io/pinoykrissmith/nitter:latest
-      container_name: nitter
-      user: "200013:200013"
-      labels:
-        com.centurylinklabs.watchtower.enable: "true"
-        io.containers.autoupdate: "registry"
-      volumes:
-        - ./nitter.conf:/app/nitter.conf:Z,ro
-        - /elysium/nitter-data:/data:Z
-      depends_on:
-        nitter-redis:
-          condition: service_healthy
-      restart: unless-stopped
-      cap_drop:
-        - "ALL"
-      security_opt:
-        - "no-new-privileges=true"
-      read_only: true
-      network_mode: service:nitter-gluetun
+  nitter:
+    image: ghcr.io/pinoykrissmith/nitter:latest
+    container_name: nitter
+    user: "200013:200013"
+    labels:
+      com.centurylinklabs.watchtower.enable: "true"
+      io.containers.autoupdate: "registry"
+    volumes:
+      - ./teapot.toml:/app/teapot.toml:Z,ro
+      - /elysium/nitter-data/sessions.jsonl:/app/sessions.jsonl:Z,ro
+      - /elysium/nitter-cache:/app/cache:Z
+    depends_on:
+      nitter-postgres:
+        condition: service_healthy
+      nitter-gluetun:
+        condition: service_started
+    restart: unless-stopped
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    read_only: true
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,nodev,size=64m
+    network_mode: service:nitter-gluetun
 
-    nitter-redis:
-      image: ghcr.io/polarix-containers/valkey:7
-      container_name: nitter-redis
-      volumes:
-        - /elysium/nitter-redis:/data:Z
-      restart: unless-stopped
-      networks:
-        - caddy_net
-      healthcheck:
-        test: ["CMD", "valkey-cli", "ping"]
-        interval: 5s
-        timeout: 5s
-        retries: 12
-      user: "200010:200010"
-      read_only: true
-      security_opt:
-        - "no-new-privileges=true"
-      cap_drop:
-        - ALL
-      environment:
-        LD_PRELOAD: ""
-      labels:
-        com.centurylinklabs.watchtower.enable: "true"
-        io.containers.autoupdate: "registry"
+  nitter-postgres:
+    container_name: nitter-postgres
+    image: ghcr.io/polarix-containers/postgres:17
+    restart: unless-stopped
+    volumes:
+      - /elysium/nitter-postgres:/var/lib/postgresql/data:Z
+    environment:
+      POSTGRES_DB: teapot
+      POSTGRES_USER: teapot
+      POSTGRES_PASSWORD: teapot
+      LD_PRELOAD: ""
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "teapot", "-d", "teapot"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+    user: "200012:200012"
+    read_only: true
+    tmpfs:
+      - /var/run/postgresql:rw,noexec,nosuid,nodev
+      - /tmp:rw,noexec,nosuid,nodev
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    labels:
+      com.centurylinklabs.watchtower.enable: "true"
+      io.containers.autoupdate: "registry"
+    networks:
+      - caddy_net
 
-    nitter-gluetun:
-      image: docker.io/qmcgaw/gluetun:latest
-      container_name: nitter-gluetun
-      restart: always
-      tty: true
-      read_only: true
-      labels:
-        com.centurylinklabs.watchtower.enable: "true"
-        io.containers.autoupdate: "registry"
-      cap_drop:
-        - ALL
-      cap_add:
-        - NET_ADMIN
-        - DAC_OVERRIDE
-        - CHOWN
-        - SETUID
-        - SETGID
-      security_opt:
-        - "no-new-privileges=true"
-        - "label=disable"
-      networks:
-        - caddy_net  
-      devices:
-        - /dev/net/tun:/dev/net/tun
-      env_file:
-        - .env  
-      environment:
-        - TZ=Europe/Paris
-        - FREE_ONLY=true
-        - DNS_KEEP_NAMESERVER=true
-      volumes:
-        - ./passwd:/etc/passwd:Z
-      tmpfs:
-        - /gluetun:noexec,nosuid,nodev
-        - /tmp:noexec,nosuid,nodev
-        - /etc/openvpn:noexec,nosuid,nodev
+  nitter-gluetun:
+    image: docker.io/qmcgaw/gluetun:latest
+    container_name: nitter-gluetun
+    restart: unless-stopped
+    tty: true
+    read_only: true
+    labels:
+      com.centurylinklabs.watchtower.enable: "true"
+      io.containers.autoupdate: "registry"
+    cap_drop:
+      - ALL
+    cap_add:
+      - NET_ADMIN
+    security_opt:
+      - no-new-privileges:true
+      - label=disable
+    networks:
+      - caddy_net
+    expose:
+      - "8080"
+    devices:
+      - /dev/net/tun:/dev/net/tun
+    env_file:
+      - .env
+    environment:
+      TZ: Europe/Paris
+      FREE_ONLY: "true"
+      DNS_KEEP_NAMESERVER: "true"
+    volumes:
+      - ./passwd:/etc/passwd:Z,ro
+    tmpfs:
+      - /gluetun:rw,noexec,nosuid,nodev
+      - /tmp:rw,noexec,nosuid,nodev
+      - /etc/openvpn:rw,noexec,nosuid,nodev
 
 networks:
   caddy_net:

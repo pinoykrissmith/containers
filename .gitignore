@@ -1,4 +1,5 @@
 */.env
 Nitter/nitter.conf
+Nitter/teapot.toml
 Traccar/traccar.xml
 F-Droid/keystore.p12
