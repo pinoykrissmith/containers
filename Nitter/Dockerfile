@@ -9,10 +9,8 @@ FROM docker.io/library/alpine:latest
 ARG UID=200013
 ENV TEAPOT_CONF_FILE=/app/teapot.toml \
 	TEAPOT_SESSIONS_FILE=/app/sessions.jsonl \
-	TEAPOT_SESSION_STATE_FILE=/app/cache/session-limits.json \
 	TEAPOT_GRAPHQL_OPS_FILE=/app/cache/graphql-ops.json \
-	TEAPOT_LIMITS_DATABASE_URL="host=nitter-postgres port=5432 user=teapot password=teapot dbname=teapot" \
-	TEAPOT_STATS_DATABASE_URL="host=nitter-postgres port=5432 user=teapot password=teapot dbname=teapot"
+	TEAPOT_LIMITS_DATABASE_URL="host=nitter-postgres port=5432 user=teapot password=teapot dbname=teapot"
 
 WORKDIR /app
 RUN apk --no-cache add pcre ca-certificates openssl ffmpeg
